@@ -1,0 +1,4 @@
+#Access to file structure will be denied when entering folder name.
+#Accessing file with its name will not have any problem
+
+Options All -Indexes

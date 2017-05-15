@@ -1,0 +1,5 @@
+delete from m_users where UserID!=1;
+delete from m_servicepermission where UserID!=-1 && UserID!=1;
+delete from m_servicepermissionassign where ServicePermissionID!=1 && ServicePermissionID!=2;
+delete from m_fat where IsRole!=1;
+delete from m_service where ServiceID!=1 && ServiceID!=2 && ServiceID!=3;
