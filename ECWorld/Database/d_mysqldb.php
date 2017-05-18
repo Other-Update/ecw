@@ -93,6 +93,20 @@ class mysqldb{
 			$errorlogObj->add($e->getMessage(),'0','$classname','$query');
 		}
 	}
+	//<<<<<<<<<<<<<, Prepare statements starts - to prevent SQL injections
+	//TODO write a common functions which can be re-used not like Login()
+	function login($username,$password,$classname){
+		$sql = 'SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee FROM m_users WHERE Mobile = :username AND Password = :password';
+
+		$sth = $this->conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$sth->setFetchMode(PDO::FETCH_CLASS,$classname);
+		$sth->execute(array(':username' => $username, ':password' => $password));
+
+		$res = $sth->fetchAll();
+		//echo "Login res=".json_encode($res);
+		return $res;
+	}
+	//>>>>>>>>>>>>> Prepare statements - end
 	//<<<<<<<,,,Transaction & Lock related
 	function beginTransaction(){
 		try {

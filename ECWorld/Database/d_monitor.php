@@ -15,6 +15,7 @@ class d_monitor{
 		//echo "<br/> islogerror=".$mysqlObj->configuration["general"]["islogerror"];
 	}
 	function add($userID,$type,$isSuccess,$otherInfo){
+		//echo "d_monitor add.<<<<<<<<";
 		if($type=="LoginAttempt" && $this->logEnabledForLoginAttempt==false )
 			return false;
 		if($type=="URL" && $this->logEnabledForUrlAccess==false )
@@ -23,13 +24,16 @@ class d_monitor{
 		 die('Filename='.$this->filename.'Error='.mysql_error());
 		};
 		$ip = $_SERVER["REMOTE_ADDR"];
-		$url = $_SERVER['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING'];
+		$headers = apache_request_headers();
+		$url = $headers['Referer'].$_SERVER['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING'];
+		//$url = $headers['Referer'].'?'.$_SERVER['QUERY_STRING'];
 		$get = json_encode($_GET);
 		$post = json_encode($_POST);
 		
 		$iquery="INSERT INTO `$this->tablename`(`IPAddress`,`UserID`,`Type`,`IsSuccess`,`GET`,`POST`,`URL`,`OtherInfo`) VALUES('$ip','$userID','$type','$isSuccess','$get','$post','$url','$otherInfo') ";
 		//echo "<br/><br/>".$iquery;
 		$res = $this->db->execute($iquery);
+		//echo "d_monitor add.>>>>>>>>>>>>>>>";
 	}
 }
 ?>

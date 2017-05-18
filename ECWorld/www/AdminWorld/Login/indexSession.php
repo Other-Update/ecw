@@ -5,6 +5,7 @@ include_once APPROOT_URL.'/Resource/User.php';
 include_once APPROOT_URL.'/Business/b_users.php';
 $username = $_POST['Name'];
 $password = $_POST['Password'];
+//die;
 $userObj=new b_users('',$mysqlObj,$lang);
 $loginResult = $userObj->login($username,$password);
 $loginResultJson = json_decode($loginResult);

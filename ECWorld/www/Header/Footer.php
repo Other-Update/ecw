@@ -22,7 +22,7 @@
 <script src="<?php echo $WebsiteUrl; ?>/Assets/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="<?php echo $WebsiteUrl; ?>/Assets/plugins/iCheck/icheck.min.js"></script>
 
-<script src="<?php echo $WebsiteUrl; ?>/Assets/js/Common/ajax.js"></script>
+<script src="<?php echo $WebsiteUrl; ?>/Assets/js/Common/ajax.js?v=1.1"></script>
 <script src="<?php echo $WebsiteUrl; ?>/Assets/js/Common/Ecwdatatable.js"></script>
 <script src="<?php echo $WebsiteUrl; ?>/Assets/js/Common/Common.js"></script>
 

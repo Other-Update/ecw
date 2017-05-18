@@ -12,6 +12,7 @@ include_once APPROOT_URL.'/Business/b_sms.php';
 include_once APPROOT_URL.'/Business/b_http.php';
 include_once APPROOT_URL.'/Business/b_generalsettings.php';
 $action = $_POST['Action'];
+
 switch($action){
 	case 'Upsert':
 		//$mysqlObj - deifned in mysql file,$lang-defined in resource file

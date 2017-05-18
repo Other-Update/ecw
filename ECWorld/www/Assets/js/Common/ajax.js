@@ -1,3 +1,7 @@
+//To add request header to all ajax request.
+$.ajaxSetup({
+    headers: { 'Token': sessionStorage.Token }
+});
 function getLoader(){
 	var loader='<div class="ajaxloaderContainer">'
 		+'<div class="ajaxloader"></div>'
@@ -33,7 +37,6 @@ function logout(data){
 var loggedOut=0;//To not to call subsequent ajax response. Because it was throwing some err.
 function ajaxRequest(ajaxObj,customData){
 	if(customData.isLoader) showloader(customData.loaderElem);
-	debugger;
 	$.extend( ajaxObj.data, {"Token":sessionStorage.Token?sessionStorage.Token:""} );
 	$.ajax({
 		type: ajaxObj.type,

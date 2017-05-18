@@ -14,7 +14,9 @@ class d_users{
 		$password=md5($password);//.'_'.$password;
 		//$q="SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee FROM m_users WHERE (Mobile='$username' OR DisplayID='$username') and Password='$password'";
 		$q="SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee FROM m_users WHERE Mobile='$username' and Password='$password'";
-		$arr=$this->db->selectArray($q,'e_users');
+		//echo $q;
+		//$arr=$this->db->selectArray($q,'e_users');
+		$arr=$this->db->login($username,$password,'e_users');
 		return $arr;
 	}
 	function getByID($userID){

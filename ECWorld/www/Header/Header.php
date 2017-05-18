@@ -222,7 +222,7 @@ function getPageName(){//AdminWorld or Distributor
 				<i class="fa fa-circle-o"></i>Recharge Permission</a>
 			</li>
 			<?php } ?>
-			<?php if(isAdmin($role) || hasReadAccess($fat,"Rechargegateway")){?>
+			<?php if(isAdmin($role) || hasReadAccess($fat,"Rechargegateway") && false){?>
 			<li id="idMainMenuRechargeGateway" class="clsSubMenuName">
 				<a href="<?php echo $WebsiteUrl.getPageName(); ?>/RechargeGateway/RechargeGateway">
 				<i class="fa fa-circle-o"></i>Recharge Gateway</a>

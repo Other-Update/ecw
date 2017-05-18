@@ -1,6 +1,7 @@
 <?php
 	include '../../WebsiteUrl/WebsiteUrl.php';
 	include "../../../BaseUrl.php";
+	include_once APPROOT_URL.'/Business/Token/b_token.php';
 	include_once APPROOT_URL.'/www/Session/Session.php';
 	if(Session_IsUserLoggedIn()){
 		s_redirect($WebsiteUrl."/AdminWorld/User");
@@ -32,11 +33,11 @@
 
     <form id="idFormLogin" action="" method="post">
       <div class="form-group has-feedback">
-        <input name="Name" type="type" value="" class="form-control" placeholder="Email">
+        <input name="Name" type="type" value="" class="form-control" placeholder="Mobile" required />
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input name="Password" value="" type="password" class="form-control" placeholder="Password">
+        <input name="Password" value="" type="password" class="form-control" placeholder="Password" required />
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -75,6 +76,8 @@
 			success: function(data){
 				var jsonData = JSON.parse(data);
 				if(jsonData.isSuccess==true){
+					var jsonUserDetails = JSON.parse(jsonData.data);
+					sessionStorage.Token = jsonUserDetails.token;
 					var jsonUserDetails = JSON.parse(jsonData.data);
 					//alert(jsonData.message+'-'+jsonUserDetails.user.Name);
 					window.location.href = '../User' ;

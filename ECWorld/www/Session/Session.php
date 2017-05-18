@@ -2,8 +2,16 @@
 include_once APPROOT_URL.'/Database/d_monitor.php';
 include_once APPROOT_URL.'/Database/d_usersession.php';
 include_once APPROOT_URL.'/General/general.php';
+//include_once APPROOT_URL.'../../Business/Token/b_token.php';
 
 session_start();
+
+/* $headers = apache_request_headers();
+echo "Token from Session=".$headers['Token'];die;
+if(isset($headers['Token']){
+} */
+
+
 $GLOBALS['tempMysqlObj'] = $mysqlObj;
 function addMonitorLogs($isSuccess,$info){
 	$meObj =json_decode($_SESSION['me']);
@@ -47,7 +55,7 @@ function verifyToken(){
 	$tokenEnc = "";
 	$isValid = false;
 	try{	
-		if(isset($_GET['Token'])){
+		/* if(isset($_GET['Token'])){
 			$tokenEnc = $_GET['Token'];
 		}else if(isset($_POST['Token'])){
 			$tokenEnc = $_POST['Token'];
@@ -58,8 +66,13 @@ function verifyToken(){
 				//echo ",obj=".$obj;
 				$tokenEnc=$obj->Token;
 			 }
+		} */
+		$headers = apache_request_headers();
+
+		if(isset($headers['Token'])){
+			$tokenEnc = $headers['Token'];
 		}
-		//echo "tokenEnc=".$tokenEnc;
+		//echo "tokenEnc=".$tokenEnc.",";
 		$ecwToken =$GLOBALS['EcwToken'];//Get global object
 		
 		$token = $ecwToken->decrypt($tokenEnc);
@@ -71,7 +84,7 @@ function verifyToken(){
 		//else
 			//echo "Token expired";
 	}catch(Exception $ex){
-		echo "Token Tambered-2.Token=".$tokenEnc;
+		//echo "Token Tambered-2.Token=".$tokenEnc.", ex=".$ex;
 	}
 	return $isValid;
 	//echo ",Token = ".$tokenEnc;die;

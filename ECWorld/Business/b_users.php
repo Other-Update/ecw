@@ -49,7 +49,9 @@ class b_users{
 	}
 	function login($username,$password){
 		$userArr = $this->dUserObj->login($username,$password);
-		//echo count($result);
+		//echo "Active=".json_encode($userArr[0]).",";
+		////echo count($result);
+		$this->monitorObj->add(-1,$this->monitorObj->enumLoginAttemptName,0,"BeforeLogin");
 		$resultObj = new httpresult();
 		$tokenEnc = "";
 		if(count($userArr)==0){//echo '123';

@@ -79,7 +79,7 @@
 				if(jsonData.isSuccess==true){
 					var jsonUserDetails = JSON.parse(jsonData.data);
 					sessionStorage.Token = jsonUserDetails.token;
-					console.log(sessionStorage.Token);
+					//console.log(sessionStorage.Token);
 					window.location.href = '../Dashboard/' ;
 					//window.location.reload();
 				}else
