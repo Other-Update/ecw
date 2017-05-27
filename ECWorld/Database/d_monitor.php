@@ -32,8 +32,22 @@ class d_monitor{
 		
 		$iquery="INSERT INTO `$this->tablename`(`IPAddress`,`UserID`,`Type`,`IsSuccess`,`GET`,`POST`,`URL`,`OtherInfo`) VALUES('$ip','$userID','$type','$isSuccess','$get','$post','$url','$otherInfo') ";
 		//echo "<br/><br/>".$iquery;
-		$res = $this->db->execute($iquery);
+		//$res = $this->db->addMonitor($ip,$userID,$type,$isSuccess,$get,$post,$url,$otherInfo,'e_monitor');
+		//$res = $this->db->execute($iquery);
 		//echo "d_monitor add.>>>>>>>>>>>>>>>";
+		
+        try{
+	   $today =date('Y-m-d H:i:s');
+        $myFile =$_SERVER["DOCUMENT_ROOT"].'/t_monitor.txt';
+        $fh = fopen($myFile, 'a+') or die("can't open file");
+        $stringData = "\n".$today." || \n";
+        $stringData.="".$iquery;
+        fwrite($fh, $stringData);
+        fclose($fh);
+        }catch(Exception $ex){
+            echo "Exception = ".json_encode($ex);
+        }
+		$res = $this->db->execute($iquery);
 	}
 }
 ?>
