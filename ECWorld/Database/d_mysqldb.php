@@ -106,6 +106,33 @@ class mysqldb{
 		//echo "Login res=".json_encode($res);
 		return $res;
 	}
+	function addMonitor($ip,$userID,$type,$isSuccess,$get,$post,$url,$otherInfo,$classname){
+		try{
+			/* $sql = 'INSERT INTO `$this->tablename`(`IPAddress`,`UserID`,`Type`,`IsSuccess`,`GET`,`POST`,`URL`,`OtherInfo`) VALUES(:ip,:userID,:type,:isSuccess,$get,$post,$url,$otherInfo)';
+
+			$sth = $this->conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$sth->setFetchMode(PDO::FETCH_CLASS,$classname);
+			$sth->execute(array(':ip' => $ip, ':userID' => $userID, ':type' => $type, ':isSuccess' => $isSuccess, ':get' => $get, ':post' => $post, ':url' => $url, ':otherInfo' => $otherInfo)); */
+
+			/* $statement = $this->conn->prepare("INSERT INTO t_monitor(IPAddress,UserID,Type,IsSuccess,GET,POST,URL,OtherInfo) VALUES(?,?,?,?,?,?,?,?)");
+			//echo json_encode($statement);
+			$res =$statement->execute(array($ip,$userID,$type,$isSuccess,$get,$post,$url,$otherInfo)); */
+			$get="";
+			$otherInfo="";
+			$post="";
+			$url="";
+			$isSuccess=1;
+			$sql = $this->conn->prepare("INSERT INTO t_monitor(IPAddress,UserID,Type,IsSuccess,GET,POST,URL,OtherInfo) VALUES(:ip,:userid,:type,:issuccess,:get,:post,:url,:otherinfo)");
+			//echo json_encode($sql);
+			$res = $sql->execute(array(':ip' => $ip, ':userid' => $userID, ':type' => $type, ':issuccess' => $isSuccess, ':get' => $get, ':post' => $post, ':url' => $url, ':otherinfo' => $otherInfo));
+			//echo $sql->debugDumpParams();
+			echo var_export($sql->errorInfo());
+			//echo "Login res=".json_encode($res);
+			return $res;
+		}catch(Exception $ex){
+			echo "Error:".json_decode($ex);
+		}
+	}
 	//>>>>>>>>>>>>> Prepare statements - end
 	//<<<<<<<,,,Transaction & Lock related
 	function beginTransaction(){
