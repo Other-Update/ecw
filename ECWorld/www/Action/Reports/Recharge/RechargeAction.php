@@ -6,6 +6,7 @@ include_once APPROOT_URL.'/Resource/Sms.php';
 include_once APPROOT_URL.'/General/general.php';
 include_once APPROOT_URL.'/Business/b_recharge.php';
 include_once APPROOT_URL.'/Business/b_generalsettings.php';
+include_once APPROOT_URL.'/Business/b_transaction.php';
 $action = $_POST['Action'];
 switch($action){
 	case 'RechargeReport_DT':

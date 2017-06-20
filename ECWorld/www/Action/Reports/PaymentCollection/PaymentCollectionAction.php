@@ -4,6 +4,7 @@ include_once APPROOT_URL.'/www/Session/Session.php';
 include_once APPROOT_URL.'/Resource/Reports/PayemntCollection.php';
 include_once APPROOT_URL.'/General/general.php';
 include_once APPROOT_URL.'/Business/b_paycollectionreport.php';
+include_once APPROOT_URL.'/Business/b_transaction.php';
 $action = $_POST['Action'];
 switch($action){
 	case 'PayCollectionReport_DT':

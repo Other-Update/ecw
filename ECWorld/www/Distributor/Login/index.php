@@ -1,6 +1,7 @@
 <?php
 	include '../../WebsiteUrl/WebsiteUrl.php';
 	include "../../../BaseUrl.php";
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 	include_once APPROOT_URL.'/www/Session/Session.php';
 	//Session_Signout();
 	if(Session_IsUserLoggedIn()){
