@@ -25,7 +25,7 @@ class d_monitor{
 		};
 		$ip = $_SERVER["REMOTE_ADDR"];
 		$headers = apache_request_headers();
-		$url = $headers['Referer'].$_SERVER['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING'];
+		$url = isset($headers['Referer'])?$headers['Referer']:"".$_SERVER['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING'];
 		//$url = $headers['Referer'].'?'.$_SERVER['QUERY_STRING'];
 		$get = json_encode($_GET);
 		$post = json_encode($_POST);
