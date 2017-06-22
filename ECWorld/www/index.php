@@ -49,7 +49,7 @@
                      <li><a href="#services">Features</a></li>
 					 <li><a href="#about-us">About Us</a></li>
                      <li><a href="#contact">Contact Us</a></li>
-					 <li><a href="http://ecworld.co.in/Distributor/Login/">Login</a></li>
+					 <li><a href="http://ecworld.info/Distributor/Login/">Login</a></li>
                   </ul>
                </div>
             </div>
@@ -212,7 +212,7 @@
                <p>Copyrights © <?php echo date('Y'); ?> ECworld</p>
             </div>
             <div class="s-12 l-6">
-               <a class="right" target="_blank" href="http://www.ecword.co.in" title="ECworld :: Easy Recharge">Dsigned by ECWorld</a>
+               <a class="right" target="_blank" href="http://www.ecword.info" title="ECworld :: Easy Recharge">Dsigned by ECWorld</a>
             </div>
          </div>
       </footer>
