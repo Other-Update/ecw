@@ -4,6 +4,7 @@ include_once APPROOT_URL.'/www/Session/Session.php';
 include_once APPROOT_URL.'/Business/b_service.php';
 include_once APPROOT_URL.'/Resource/GeneralSettings.php';
 include_once APPROOT_URL.'/Business/b_generalsettings.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 /* include_once APPROOT_URL.'/Resource/service.php';
 include_once APPROOT_URL.'/Business/b_servicepermission.php';
 include_once APPROOT_URL.'/Database/d_servicepermission.php';

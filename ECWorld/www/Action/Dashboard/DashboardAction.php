@@ -11,6 +11,7 @@ include_once APPROOT_URL.'/Business/b_generalsettings.php';
 /* My Code Added By Reghu */
 include_once APPROOT_URL.'/Business/b_transaction.php';
 include_once APPROOT_URL.'/Business/b_payment.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 /* End Code */
 //echo "test";
 $action = $_POST['Action'];
@@ -67,7 +68,7 @@ function getUserDetails($mysqlObj,$lang){
 function getRechargeReportDashboard($mysqlObj,$lang,$langSMS,$langAPI){
 	$limit = 8;
 	$mobile = '';
-	$fromDate = '2017-01-01';
+	$fromDate = date('Y-m-d');
 	$toDate = date('Y-m-d');
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
 	$userId = $loggedInUserDetails->user->UserID;

@@ -7,6 +7,7 @@ include_once APPROOT_URL.'/Database/d_servicepermission.php';
 include_once APPROOT_URL.'/Business/b_users.php';
 include_once APPROOT_URL.'/Database/d_users.php';
 include_once APPROOT_URL.'/General/general.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 
 $action = $_POST['Action'];
 switch($action){

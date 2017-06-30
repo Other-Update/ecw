@@ -8,6 +8,7 @@ include_once APPROOT_URL.'/Business/b_rcgateway.php';
 include_once APPROOT_URL.'/Business/b_rcgatewaydetails.php';
 include_once APPROOT_URL.'/Business/b_rcusergateway.php';
 include_once APPROOT_URL.'/Business/b_rcgeneralgatewayassign.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 $action = $_POST['Action'];
 switch($action){
 	case 'GetUserGateway_DT':

@@ -4,6 +4,7 @@ include_once APPROOT_URL.'/www/Session/Session.php';
 include_once APPROOT_URL.'/General/general.php';
 include_once APPROOT_URL.'/Resource/User.php';
 include_once APPROOT_URL.'/Business/b_distmargin.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 $action = $_POST['Action'];	
 switch($action){
 	case 'GetDistMarginUsers_DT':

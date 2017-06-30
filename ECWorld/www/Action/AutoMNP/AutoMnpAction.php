@@ -5,6 +5,7 @@ include_once APPROOT_URL.'/Resource/AutoMnpRecharge.php';
 include_once APPROOT_URL.'/General/general.php';
 include_once APPROOT_URL.'/Business/b_common.php';
 include_once APPROOT_URL.'/Business/b_automnp.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
 $action = $_POST['Action'];
 switch($action){
 	case 'UpsertAuto':
