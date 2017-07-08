@@ -77,7 +77,7 @@
 				var jsonData = JSON.parse(data);
 				if(jsonData.isSuccess==true){
 					var jsonUserDetails = JSON.parse(jsonData.data);
-					sessionStorage.Token = jsonUserDetails.token;
+					localStorage.Token = jsonUserDetails.token;
 					var jsonUserDetails = JSON.parse(jsonData.data);
 					//alert(jsonData.message+'-'+jsonUserDetails.user.Name);
 					window.location.href = '../User' ;

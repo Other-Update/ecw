@@ -42,7 +42,7 @@
 				data: "Action=Signout",
 				success: function(data){	
 					if(data==true){
-						sessionStorage.Token = "";
+						localStorage.Token = "";
 						window.location.href=redirectUrl;
 					}
 				},

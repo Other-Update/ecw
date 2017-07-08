@@ -1,6 +1,6 @@
 //To add request header to all ajax request.
 $.ajaxSetup({
-    headers: { 'Token': sessionStorage.Token }
+    headers: { 'Token': localStorage.Token }
 });
 function getLoader(){
 	var loader='<div class="ajaxloaderContainer">'
@@ -31,13 +31,12 @@ function logout(data){
 		url = '../../../Action/User/UserAction.php';
 		redirectUrl = '../../Login';
 	}
-	sessionStorage.Token = "";
+	localStorage.Token = "";
 	window.location.href=redirectUrl;
 }
 var loggedOut=0;//To not to call subsequent ajax response. Because it was throwing some err.
 function ajaxRequest(ajaxObj,customData){
 	if(customData.isLoader) showloader(customData.loaderElem);
-	$.extend( ajaxObj.data, {"Token":sessionStorage.Token?sessionStorage.Token:""} );
 	$.ajax({
 		type: ajaxObj.type,
 		url: ajaxObj.url,

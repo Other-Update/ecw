@@ -79,7 +79,7 @@ include_once APPROOT_URL.'/Business/Token/b_token.php';
 				var jsonData = JSON.parse(data);
 				if(jsonData.isSuccess==true){
 					var jsonUserDetails = JSON.parse(jsonData.data);
-					sessionStorage.Token = jsonUserDetails.token;
+					localStorage.Token = jsonUserDetails.token;
 					//console.log(sessionStorage.Token);
 					window.location.href = '../Dashboard/' ;
 					//window.location.reload();
