@@ -68,11 +68,11 @@ function Upsert($mysqlObj,$lang,$langSMS){
 		if($res->isSuccess && $res->InsertedUserID!="0"){
 			$bReqObj->Status="3";
 			$bReqObj->Remark="Successfully added user";
-			$bSMSObj->userCreation(1,$bReqObj,$res->InsertedUserID,$userObj->Mobile,$userObj->Name,$userObj->RoleID,$userObj->Password,$bReqObj->Remark);
+			$bSMSObj->userCreation(1,$bReqObj,$res->InsertedUserID,$userObj->Mobile,$userObj->Name,$userObj->getRoleName($userObj->RoleID),$userObj->Password,$bReqObj->Remark);
 		}else{
 			$bReqObj->Status="4";
 			$bReqObj->Remark="Failed to add user";
-			$bSMSObj->userCreation(0,$bReqObj,"",$userObj->Mobile,$userObj->Name,$userObj->RoleID,$userObj->Password,$bReqObj->Remark);
+			$bSMSObj->userCreation(0,$bReqObj,"",$userObj->Mobile,$userObj->Name,$userObj->getRoleName($userObj->RoleID),$userObj->Password,$bReqObj->Remark);
 		}
 		$bReqObj->update($bReqObj);
 	}

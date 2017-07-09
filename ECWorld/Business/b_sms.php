@@ -145,8 +145,8 @@ class b_sms{
 		//echo "<br/> userCreation -msg to parent=".$msg;
 		$isSMSReq = $this->bReqObj->isSMSRequest($reqObj);
 		//echo "<br/> Req disp id=".$reqObj->DisplayID;die;
-		if($isSMSReq)
-			$this->sendSMS($this->me->Mobile,$reqObj->TargetNo,$msg,"0",$reqObj->RequestID,"t_request","Unknown");
+		//if($isSMSReq)
+		$this->sendSMS($this->me->Mobile,$reqObj->TargetNo,$msg,"0",$reqObj->RequestID,"t_request","Unknown");
 		
 		//Send to New UserID
 		if($isSuccess){
