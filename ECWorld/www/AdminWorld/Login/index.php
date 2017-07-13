@@ -33,7 +33,7 @@
 
     <form id="idFormLogin" action="" method="post">
       <div class="form-group has-feedback">
-        <input name="Name" type="type" value="" class="form-control" placeholder="Mobile" required />
+        <input name="Name" type="type" value="" class="form-control" placeholder="" required />
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

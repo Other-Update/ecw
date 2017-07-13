@@ -34,7 +34,7 @@ include_once APPROOT_URL.'/Business/Token/b_token.php';
 
     <form id="idFormLogin" action="" method="post">
       <div class="form-group has-feedback">
-        <input name="Name" type="type" value="" class="form-control" placeholder="Email">
+        <input name="Name" type="type" value="" class="form-control" placeholder="">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
