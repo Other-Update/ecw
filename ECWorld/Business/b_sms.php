@@ -28,7 +28,7 @@ class b_sms{
 		//echo "<br/><hr/> user =".json_encode($thisUser);
 		$this->dObj=new d_sms($mysqlObj,$thisUser);
 		$this->setSMSApiForAction();
-		$this->footerMsg="www.ecworld.co.in, Thanks";
+		$this->footerMsg="www.ecworld.info, Thanks";
 	}
 	//General functions start
 	function updateUserMe($user){

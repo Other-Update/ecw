@@ -148,7 +148,7 @@ $langAPI['217']='Not Enough Balance.';//Covered by 17
 $langSMS['218']='Dear [CUSTOMERNAME], [MESSAGE].[CUSTOMERMESSAGE]. [FOOTERMESSAGE].';//Working 31 . Fixed.
 $langAPI['218']='[MESSAGE]';
 
-$langSMS['Payment_s']="Dear [CUSTOMERNAME], Fund Rs.[AMOUNT] successfully transferred to [RECEIVERROLE] ID:[RECEIVERUSERID]([RECEIVERUSERNAME]). Your Bal is [WALLETBALANCE]. www.ecworld.co.in, Thanks";
+$langSMS['Payment_s']="Dear [CUSTOMERNAME], Fund Rs.[AMOUNT] successfully transferred to [RECEIVERROLE] ID:[RECEIVERUSERID]([RECEIVERUSERNAME]). Your Bal is [WALLETBALANCE]. www.ecworld.info, Thanks";
 //Payment-3
 //Working 32. Fixed.
 $langAPI['Payment_s']="Balance of Rs. [AMOUNT] successfully transferred to [RECEIVERROLE] [RECEIVERUSERNAME] ID:[RECEIVERUSERID]([RECEIVERMOBILE]). Ref id is:[TRANSREQUESTID]. Your Balance is [WALLETBALANCE].";
