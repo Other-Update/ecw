@@ -228,7 +228,7 @@ tbody {
 				</ul>
 			</div>
 			<div class="col-xs-9">
-				<div class="tab-content custom-tab-f clsRechargeContainer">
+				<div class="tab-content custom-tab-f clsRechargeContainer" data-userrole="<?php echo $role->RoleID;?>">
 				  <?php if(!isRetailer($role)){?>
 					<div class="tab-pane active" id="fund">
 						<ul class="nav nav-tabs cus-inside-tab">

@@ -516,9 +516,15 @@ function getUserDetails(userID){
 		alert('Failed to recharge');
 	});
 };
-
+function isRetailer(roleID){
+	return roleID==6;
+}
+var userRoleID = 6;
 $(function(){
-	loadUsersFundTransafer();
+	userRoleID = $(".clsRechargeContainer").data("userrole");
+	if(!isRetailer(userRoleID)){
+		loadUsersFundTransafer();
+	}
 	GetServiceList();
 	GetDashboardData();
 	loadRechargeReportDashboard();
