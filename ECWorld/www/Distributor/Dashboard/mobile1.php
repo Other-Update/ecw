@@ -27,7 +27,7 @@
 				<label>Amount<span class="PreAmountErr error "></span></label>
 				<div class="input-group">
 				  <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-				  <input type="number"  class="form-control" id="rcAmountPrepaid" name="rcAmountPrepaid" >
+				  <input type="text"  class="form-control" id="rcAmountPrepaid" name="rcAmountPrepaid" >
 				</div>
 			</div>
 			</div>
