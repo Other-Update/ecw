@@ -404,7 +404,7 @@ class b_webservice{
 				$this->bReqObj->TargetNo=$param2;
 				//echo "<br/>FT request";
 				//echo "<br/> Req Obj =".json_encode($this->bReqObj);die;
-				$userToTransfer = $this->bUserObj->getByDisplayIDByParent($this->me->UserID,$param2);
+				$userToTransfer = $this->bUserObj->getByDisplayIDByAncestor($this->me->UserID,$param2);
 				$fromUserWallet = $this->bUserObj->getWalletBalance($this->me->UserID);
 				$fromUserWalletJson = json_decode(json_encode($fromUserWallet));
 				if(!$userToTransfer){	

@@ -86,6 +86,13 @@ class d_users{
 		//echo json_encode($json);
 		return $json;
 	}
+	function getByDisplayIDByAncestor($ancestorID, $userID){
+		$q="SELECT * FROM m_users WHERE (UserID='$userID' OR DisplayID='$userID') AND Ancestors LIKE '%/$ancestorID/%'";
+		//echo $q;die;
+		$json=$this->db->selectArray($q,'e_users');
+		//echo json_encode($json);
+		return $json;
+	}
 	
 	function getClientCount($userID){
 		$q="SELECT COUNT(*) as Count FROM m_users WHERE ParentID='$userID'";

@@ -106,6 +106,14 @@ class b_users{
 		else
 			return null;
 	}
+	function getByDisplayIDByAncestor($parentID,$userDisplayID)
+	{
+		$userArr = $this->dUserObj->getByDisplayIDByAncestor($parentID,$userDisplayID);
+		if(count($userArr)>0)
+			return $userArr[0];
+		else
+			return null;
+	}
 	function getByMobile($mobileNo)
 	{
 		$userArr = $this->dUserObj->getByMobile($mobileNo);
