@@ -54,13 +54,21 @@ class b_users{
 		$this->monitorObj->add(-1,$this->monitorObj->enumLoginAttemptName,0,"BeforeLogin");
 		$resultObj = new httpresult();
 		$tokenEnc = "";
-		if(count($userArr)==0){//echo '123';
+		/* echo "<br/> Allowed IPS=".$userArr[0]->AllowedIPs;
+		echo "<br/>contais ip=0.0.0.0=".(strpos($userArr[0]->AllowedIPs, '0.0.0.0'));
+		echo "<br/>contais ip=".$_SERVER["REMOTE_ADDR"]."=".(strpos($userArr[0]->AllowedIPs, $_SERVER["REMOTE_ADDR"])); */
+		
+		if(count($userArr)==0){
 			$resultObj->isSuccess=false;
 			$resultObj->message=$this->lang['login_failed'];
 		}
 		else if(!$userArr[0]->Active){
 			$resultObj->isSuccess=false;
 			$resultObj->message=$this->lang['login_disabled'];
+		}
+		else if((strpos($userArr[0]->AllowedIPs, $_SERVER["REMOTE_ADDR"])===FALSE) && (strpos($userArr[0]->AllowedIPs, '0.0.0.0')===FALSE)){
+			$resultObj->isSuccess=false;
+			$resultObj->message=$this->lang['login_ip_not_allowed'];
 		}
 		else if ((strpos($_SERVER['REQUEST_URI'], 'AdminWorld') >0) && $userArr[0]->RoleID!='1'){
 			//Deny any user tries to login from Admin login
@@ -225,6 +233,7 @@ class b_users{
 		$newUser->CreatedDate = date('Y-m-d H:i:s');
 		$newUser->CreatedBy = $user->UserID;
 		$newUser->ModifiedBy = $user->UserID;
+		$newUser->AllowedIPs = '0.0.0.0';
 		//echo "<br/>newUserObj=".json_encode($newUser);
 		$isExists = $this->isMobileNoExists($newUser->Mobile,$newUser->UserID);
 		if(!$isExists){

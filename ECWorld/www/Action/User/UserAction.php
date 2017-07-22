@@ -248,6 +248,7 @@ function Upsert($mysqlObj,$lang,$langSMS){
 	if($_POST['RoleID'] != 2 ){ $userObj->Refundable = $_POST['Refundable']; } else { $userObj->Refundable = 0;  }
 	$userObj->Gender = isset($_POST['Gender'])?$_POST['Gender']:"Male";
 	$userObj->MinOpenBalanceMargin = 0;
+	$userObj->AllowedIPs = isset($_POST['AllowedIPs'])?$_POST['AllowedIPs']:"0.0.0.0";
 	$res = $userObj->upsert($userObj,$bReqObj);
 	//echo "<br/> Upsert res=".json_encode($res);	
 	

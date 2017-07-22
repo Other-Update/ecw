@@ -23,6 +23,7 @@ class e_users{
 	var $RoleID;
 	var $Refundable;
 	var $MinOpenBalanceMargin;
+	var $AllowedIPs;
 	var $CreatedDate;
 	var $CreatedBy;
 	var $Modifiedby;

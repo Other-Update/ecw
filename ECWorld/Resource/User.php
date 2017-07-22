@@ -5,6 +5,7 @@ $lang = array();
 $lang['login_success']='Login Success';
 $lang['login_failed']='Login Failed';
 $lang['login_disabled']='User is disabled';
+$lang['login_ip_not_allowed']='IP address not allowed';
 
 //Add user
 $lang['au_create_user'] = 'Create New User';

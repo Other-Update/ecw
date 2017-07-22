@@ -132,6 +132,16 @@
 						<input type="text" name="Password" id="password" placeholder="Enter Password" class="form-control">
 					</div>
 				</div>
+				<div class="col-md-6 ">
+					<div class="form-group">
+						<label>Allowed IPs </label><span class="allowedIPErr error">*</span>
+						<input type="text" name="AllowedIPs" id="allowedIP" class="form-control" >
+					</div>
+				</div>
+				<div class="col-md-6 ">
+					<div class="form-group">
+					</div>
+				</div>
 				
 				<div class="col-md-6">
 				<div class="form-group">

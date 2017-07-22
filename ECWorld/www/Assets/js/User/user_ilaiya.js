@@ -197,6 +197,7 @@ function showEditUserDetails(jsonData){
 	$("#remarks").val(jsonData.Remarks);
 	$('#password').val('********');
 	$("#mobileNo").data('isExists',0);
+	$('#allowedIP').val(jsonData.AllowedIPs);
 	var RoleID = jsonData.RoleID;
 	
 	if(RoleID != 2){

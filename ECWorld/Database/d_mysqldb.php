@@ -96,7 +96,7 @@ class mysqldb{
 	//<<<<<<<<<<<<<, Prepare statements starts - to prevent SQL injections
 	//TODO write a common functions which can be re-used not like Login()
 	function login($username,$password,$classname){
-		$sql = 'SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee FROM m_users WHERE Mobile = :username AND Password = :password';
+		$sql = 'SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee,AllowedIPs FROM m_users WHERE Mobile = :username AND Password = :password';
 
 		$sth = $this->conn->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$sth->setFetchMode(PDO::FETCH_CLASS,$classname);

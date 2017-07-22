@@ -17,6 +17,7 @@ class d_users{
 		//echo $q;
 		//$arr=$this->db->selectArray($q,'e_users');
 		$arr=$this->db->login($username,$password,'e_users');
+		//echo json_encode($arr);die;
 		return $arr;
 	}
 	function getByID($userID){
@@ -47,8 +48,9 @@ class d_users{
 	}
 	function add($userObj){
 		$userObj->Password=md5($userObj->Password);//.'_'.$userObj->Password;
-		$q="INSERT INTO m_users(Name,ParentID,Ancestors,Mobile,Gender,DOB,Email,Address,ClientLimit,BalanceLevel,DistributorFee,MandalFee,RetailerFee,Deposit,Remarks,PAN,Password,RoleID,Refundable,MinOpenBalanceMargin,CreatedDate,CreatedBy,ModifiedBy) 
-		VALUE('$userObj->Name','$userObj->ParentID','$userObj->Ancestors','$userObj->Mobile','$userObj->Gender','$userObj->DOB','$userObj->Email','$userObj->Address','$userObj->ClientLimit','$userObj->BalanceLevel','$userObj->DistributorFee','$userObj->MandalFee','$userObj->RetailerFee','$userObj->Deposit','$userObj->Remarks','$userObj->PAN','$userObj->Password','$userObj->RoleID','$userObj->Refundable','$userObj->MinOpenBalanceMargin','$userObj->CreatedDate','$userObj->CreatedBy','$userObj->ModifiedBy')";
+		$userObj->AllowedIPs=$userObj->AllowedIPs=='' ? '0.0.0.0':$userObj->AllowedIPs;
+		$q="INSERT INTO m_users(Name,ParentID,Ancestors,Mobile,Gender,DOB,Email,Address,ClientLimit,BalanceLevel,DistributorFee,MandalFee,RetailerFee,Deposit,Remarks,PAN,Password,RoleID,Refundable,MinOpenBalanceMargin,AllowedIPs,CreatedDate,CreatedBy,ModifiedBy) 
+		VALUE('$userObj->Name','$userObj->ParentID','$userObj->Ancestors','$userObj->Mobile','$userObj->Gender','$userObj->DOB','$userObj->Email','$userObj->Address','$userObj->ClientLimit','$userObj->BalanceLevel','$userObj->DistributorFee','$userObj->MandalFee','$userObj->RetailerFee','$userObj->Deposit','$userObj->Remarks','$userObj->PAN','$userObj->Password','$userObj->RoleID','$userObj->Refundable','$userObj->MinOpenBalanceMargin','$userObj->AllowedIPs','$userObj->CreatedDate','$userObj->CreatedBy','$userObj->ModifiedBy')";
 		//echo $q;
 		$res=$this->db->insert($q);
 		return $res;
@@ -62,7 +64,8 @@ class d_users{
 			$qp="UPDATE m_users SET Password='$userObj->Password' WHERE UserID=$userObj->UserID;";
 			$PassRes=$this->db->execute($qp);
 		}
-		$q="UPDATE m_users SET Name='$userObj->Name',ParentID='$userObj->ParentID',Mobile='$userObj->Mobile',Gender='$userObj->Gender',DOB='$userObj->DOB',Email='$userObj->Email',Address='$userObj->Address',ClientLimit='$userObj->ClientLimit',BalanceLevel='$userObj->BalanceLevel',DistributorFee='$userObj->DistributorFee',MandalFee='$userObj->MandalFee',RetailerFee='$userObj->RetailerFee',Remarks='$userObj->Remarks',PAN='$userObj->PAN',RoleID='$userObj->RoleID',Refundable='$userObj->Refundable',ModifiedBy='$userObj->ModifiedBy' WHERE UserID=$userObj->UserID;";
+		$userObj->AllowedIPs=$userObj->AllowedIPs=='' ? '0.0.0.0':$userObj->AllowedIPs;
+		$q="UPDATE m_users SET Name='$userObj->Name',ParentID='$userObj->ParentID',Mobile='$userObj->Mobile',Gender='$userObj->Gender',DOB='$userObj->DOB',Email='$userObj->Email',Address='$userObj->Address',ClientLimit='$userObj->ClientLimit',BalanceLevel='$userObj->BalanceLevel',DistributorFee='$userObj->DistributorFee',MandalFee='$userObj->MandalFee',RetailerFee='$userObj->RetailerFee',Remarks='$userObj->Remarks',PAN='$userObj->PAN',RoleID='$userObj->RoleID',Refundable='$userObj->Refundable',AllowedIPs='$userObj->AllowedIPs',ModifiedBy='$userObj->ModifiedBy' WHERE UserID=$userObj->UserID;";
 		//echo '<br/>'.$q;
 		$res=$this->db->execute($q);
 		return $res;
