@@ -172,9 +172,10 @@ class d_users{
 			else $qANDs.=" AND RoleID!=$roleID";
 			$i++;
 		}
-		$q="SELECT * FROM m_users WHERE ParentID='$parentID' $qANDs $qORs";
+		$properties = 'UserID,GUID,DisplayID,ParentID,Ancestors,Name,Mobile,Gender,DOB,Email,Address,Wallet,ClientLimit,BalanceLevel,DistributorFee,MandalFee,RetailerFee,Deposit,Remarks,PAN,ID,RoleID,Refundable,MinOpenBalanceMargin,Active';
+		$q="SELECT ".$properties." FROM m_users WHERE ParentID='$parentID' $qANDs $qORs";
 		if($includeAllSubUsers)
-			$q="SELECT * FROM m_users WHERE Ancestors LIKE '%$parentID%' $qANDs $qORs";
+			$q="SELECT ".$properties." FROM m_users WHERE Ancestors LIKE '%$parentID%' $qANDs $qORs";
 		//Ref: http://stackoverflow.com/questions/20215744/how-to-create-a-mysql-hierarchical-recursive-query#answer-20216006
 		/* if($includeAllSubUsers)
 		$q="select  *

@@ -165,6 +165,7 @@ try{
 	$user = $userObj->getByID($token->data->userId);//TODO: get user id from token
 	//echo "<br/> userObj=".json_encode($me);
 	//echo "<br/> User=".json_encode($user);
+	//echo "<br/> Action=".$Action;
 	switch($Action){
 		case "Chat":
 			$message = $_GET['Message'];
@@ -199,6 +200,18 @@ try{
 			$res = addUser($wsObj,$roleID,$bReqObj,"",$mobile,$name,$password);
 			echo json_encode($res);
 			//echo $amount.",";
+			break;
+			
+		case "GetUsers":
+			$userId =$user->UserID;
+			$bUserObj=new b_users($user,$mysqlObj,"");
+			$userList = $bUserObj->getAllUsers($user->UserID,false,true,'1');
+			$resultObj = new httpresult();	
+			if($userList)
+				$resultObj->getHttpResultObj(true,"Success",$userList);
+			else 
+				$resultObj->getHttpResultObj(false,"No data found","");
+			echo json_encode($resultObj);
 			break;
 		case "Report":
 			//echo "Recharge report";
