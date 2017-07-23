@@ -58,13 +58,13 @@ function loadServiceList(mode,dropdownID){
 		console.log(value.Name);
 		console.log("----------"); */
 		//debugger;
-		//if(value.NetworkMode==mode){
+		if(value.NetworkMode==mode){
 			if(value.RechargeCode != ''){
-			dd.append("<option value='"+value.RechargeCode+"' >"+value.Name+"</option>");
+			dd.append("<option style='color: #000;font-weight: 700;' value='"+value.RechargeCode+"' >"+value.Name+"</option>");
 			} else {
-			dd.append("<option value='"+value.TopupCode+"' >"+value.Name+"</option>");
+			dd.append("<option style='color: #000;font-weight: 700;' value='"+value.TopupCode+"' >"+value.Name+"</option>");
 			}
-		//}
+		}
 	});
 }
 function GetServiceList(){
