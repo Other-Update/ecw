@@ -15,8 +15,8 @@ include_once APPROOT_URL.'/Business/b_payment.php';
 
 //To set IST time in all functions by default
 //date_default_timezone_set('Asia/Calcutta');
-$doCheckToken = false;
-//Expires in 1 year //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0ODg3MzUxODMsImp0aSI6InFSSWdqRkdibkx4UnJGaXI4cjVEd2ZtZ1FUS3BcL0MzclRSKzM1TnJyNzJjPSIsImlzcyI6IkVDV1NlcnZlciIsIm5iZiI6MTQ4ODczNTE4MywiZXhwIjoxODQ4NzM1MTgzLCJkYXRhIjp7InVzZXJJZCI6IjEiLCJ1c2VyTmFtZSI6IkFkbWluIn19.aftWxYdjc022nEd-7AqEQIY2qivmB4_w1tX7jNWj9bc
+$doCheckToken = false; //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0ODg3MzUxODMsImp0aSI6InFSSWdqRkdibkx4UnJGaXI4cjVEd2ZtZ1FUS3BcL0MzclRSKzM1TnJyNzJjPSIsImlzcyI6IkVDV1NlcnZlciIsIm5iZiI6MTQ4ODczNTE4MywiZXhwIjoxODQ4NzM1MTgzLCJkYXRhIjp7InVzZXJJZCI6IjEiLCJ1c2VyTmFtZSI6IkFkbWluIn19.aftWxYdjc022nEd-7AqEQIY2qivmB4_w1tX7jNWj9bc
+//Develper - //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MDA3NTIxMzUsImp0aSI6InBncVZmdVk1NU5lMkFQMFJDSVdmbmp6K1hveFU4ZUxNWnMzY05taE5tM2s9IiwiaXNzIjoiRUNXU2VydmVyIiwibmJmIjoxNTAwNzUyMTM1LCJleHAiOjM2MDE1MDA3NTIxMzUsImRhdGEiOnsidXNlcklkIjoiMTA4IiwidXNlck5hbWUiOiJEZXZlbG9wZXJzIn19.EivZhpiLVCgnVFhAZLaMLWN3vPcE8RcVH-LQ2PSB0rU
 
 function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDate){
 	switch($reportName){
@@ -44,9 +44,9 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			$res = $rcObj->getRechargeReport_DT($userId,$mobile,$startDate,$endDate,0,true);
 			$resultObj = new httpresult();	
 			if($res)
-				$resultObj->getHttpResultObj(true,"Success",json_encode($res));
+				$resultObj->getHttpResult(true,"Success",json_encode($res));
 			else 
-				$resultObj->getHttpResultObj(false,"No data found","");
+				$resultObj->getHttpResult(false,"No data found","");
 			echo json_encode($resultObj);
 			break;
 		case "MyPayment":
@@ -60,9 +60,9 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			$res = $payObj->getTransfersByDateRange_DT($userId,$startDate, $endDate,$onlyMyPayments,true);
 			$resultObj = new httpresult();	
 			if($res)
-				$resultObj->getHttpResultObj(true,"Success",$res);
+				$resultObj->getHttpResult(true,"Success",$res);
 			else 
-				$resultObj->getHttpResultObj(false,"No data found","");
+				$resultObj->getHttpResult(false,"No data found","");
 			echo json_encode($resultObj);
 			break;
 		default:
@@ -155,7 +155,7 @@ try{
 	//Controll will not go to the next line
 	if(!$ecwToken->isValid($token)){
 		$resultObj = new httpresult();	
-		$resultObj->getHttpResultObj(false,"Token Tampered 3","");
+		$resultObj->getHttpResult(false,"Token Tampered 3","");
 		echo json_encode($resultObj);
 		return false;
 	}
@@ -208,9 +208,9 @@ try{
 			$userList = $bUserObj->getAllUsers($user->UserID,false,true,'1');
 			$resultObj = new httpresult();	
 			if($userList)
-				$resultObj->getHttpResultObj(true,"Success",$userList);
+				$resultObj->getHttpResult(true,"Success",$userList);
 			else 
-				$resultObj->getHttpResultObj(false,"No data found","");
+				$resultObj->getHttpResult(false,"No data found","");
 			echo json_encode($resultObj);
 			break;
 		case "Report":
@@ -232,7 +232,7 @@ try{
 	
 }catch(Exception $ex){
 	$resultObj = new httpresult();	
-	$resultObj->getHttpResultObj(false,"Token Tampered 2","");
+	$resultObj->getHttpResult(false,"Token Tampered 2","");
 	echo json_encode($resultObj);
 }
 ?>

@@ -6,6 +6,9 @@ class httpresult{
 	var $otherInfo;
 	var $code;
 	var $data;
+	var $IsSuccess;
+	var $Message;
+	var $Data;
 	function __construct(){
 		$isSuccess=false;
 	}
@@ -13,6 +16,12 @@ class httpresult{
 		$this->isSuccess = $isSuccess;
 		$this->message = $message;
 		$this->data = $data;
+		return $this;
+	}
+	function getHttpResult($isSuccess,$message,$data){
+		$this->IsSuccess = $isSuccess;
+		$this->Message = $message;
+		$this->Data = $data;
 		return $this;
 	}
 }
