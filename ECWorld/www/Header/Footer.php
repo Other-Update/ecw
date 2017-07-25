@@ -1,6 +1,6 @@
 <footer class="main-footer">
 	<div class="pull-right hidden-xs">
-	  <b>IR</b>
+	  <b></b>
 	</div>
 	<strong>Copyright &copy; 2015 - <?php echo date('Y');?> <a href="#">EC World</a>.</strong> All rights reserved.
 </footer>
