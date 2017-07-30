@@ -10,7 +10,7 @@ if(isset($report)){
 }
 
 $loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
-if(strpos($_SERVER['REQUEST_URI'], 'AdminWorld') >0 && $loggedInUserDetails->user->RoleID!='1'){
+if(strpos($_SERVER['REQUEST_URI'], 'AdminWorld') >0 && $loggedInUserDetails->user->RoleID!='1' && $loggedInUserDetails->user->RoleID!='2'){
 	
 	session_redirect($WebsiteUrl."/Distributor/Dashboard");
 }

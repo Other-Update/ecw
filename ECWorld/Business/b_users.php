@@ -70,7 +70,7 @@ class b_users{
 			$resultObj->isSuccess=false;
 			$resultObj->message=$this->lang['login_ip_not_allowed'];
 		}
-		else if ((strpos($_SERVER['REQUEST_URI'], 'AdminWorld') >0) && $userArr[0]->RoleID!='1'){
+		else if ((strpos($_SERVER['REQUEST_URI'], 'AdminWorld') >0) && $userArr[0]->RoleID!='1' && $userArr[0]->RoleID!='2'){
 			//Deny any user tries to login from Admin login
 			$resultObj->isSuccess=false;
 			$resultObj->message=$this->lang['login_failed'];
