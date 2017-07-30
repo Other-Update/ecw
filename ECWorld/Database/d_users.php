@@ -167,18 +167,18 @@ class d_users{
 		$qANDs = " ";
 		$qORs = " ";
 		if($includeParent)
-			$qORs = $qORs." OR UserID='$parentID'";
+			$qORs = $qORs." OR u.UserID='$parentID'";
 		$i=0;
 		while($i<count($excludeRoleIDs)){
 			$roleID = $excludeRoleIDs[$i];
-			if($i==0) $qANDs.=" AND RoleID!=$roleID";
-			else $qANDs.=" AND RoleID!=$roleID";
+			if($i==0) $qANDs.=" AND u.RoleID!=$roleID";
+			else $qANDs.=" AND u.RoleID!=$roleID";
 			$i++;
 		}
-		$properties = 'UserID,GUID,DisplayID,ParentID,Ancestors,Name,Mobile,Gender,DOB,Email,Address,Wallet,ClientLimit,BalanceLevel,DistributorFee,MandalFee,RetailerFee,Deposit,Remarks,PAN,ID,RoleID,Refundable,MinOpenBalanceMargin,Active';
+		/* $properties = 'UserID,GUID,DisplayID,ParentID,Ancestors,Name,Mobile,Gender,DOB,Email,Address,Wallet,ClientLimit,BalanceLevel,DistributorFee,MandalFee,RetailerFee,Deposit,Remarks,PAN,ID,RoleID,Refundable,MinOpenBalanceMargin,Active';
 		$q="SELECT ".$properties." FROM m_users WHERE ParentID='$parentID' $qANDs $qORs";
 		if($includeAllSubUsers)
-			$q="SELECT ".$properties." FROM m_users WHERE Ancestors LIKE '%$parentID%' $qANDs $qORs";
+			$q="SELECT ".$properties." FROM m_users WHERE Ancestors LIKE '%$parentID%' $qANDs $qORs"; */
 		//Ref: http://stackoverflow.com/questions/20215744/how-to-create-a-mysql-hierarchical-recursive-query#answer-20216006
 		/* if($includeAllSubUsers)
 		$q="select  *
@@ -189,7 +189,15 @@ class d_users{
 			and     @pv := concat(@pv, ',', UserID))
 			$qANDs $qORs"; */
 		//echo '<br/>'.$q." -";
-		$arr=$this->db->selectArray($q,'e_users');
+		
+		$where = " u.ParentID='$parentID' $qANDs $qORs ";
+		if($includeAllSubUsers)
+			$where =" u.Ancestors LIKE '%$parentID%' $qANDs $qORs";
+		$qClientCount='SELECT COUNT(*) FROM m_users WHERE ParentID=u.UserID';
+		$qCurrentBalance='SELECT p.ClosingBalance FROM t_transaction AS p WHERE UserID=u.UserID ORDER BY p.CreatedDate DESC LIMIT 1';
+		$query="SELECT SQL_CALC_FOUND_ROWS u.DisplayID as UserID, u.Name, r.Name as RoleName, u.Mobile, u.Refundable, IFNULL((SELECT DisplayID from m_users where UserID=u.ParentID),0) AS ParentID,u.ClientLimit-($qClientCount) as ClientLimit, IFNULL(u.DOB,'0000-0000') AS DOB,IFNULL(($qCurrentBalance),'0') AS Wallet, u.Active as Status,u.UserID as UniqueUserID FROM m_users as u left join m_role as r on u.RoleID=r.RoleID WHERE $where ORDER BY u.UserID ASC";
+		echo $query;
+		$arr=$this->db->selectArray($query,'e_users');
 		return $arr;
 	}
 	function updateAdminUserFee($feesObj){
