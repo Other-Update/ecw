@@ -196,7 +196,7 @@ class d_users{
 		$qClientCount='SELECT COUNT(*) FROM m_users WHERE ParentID=u.UserID';
 		$qCurrentBalance='SELECT p.ClosingBalance FROM t_transaction AS p WHERE UserID=u.UserID ORDER BY p.CreatedDate DESC LIMIT 1';
 		$query="SELECT SQL_CALC_FOUND_ROWS u.DisplayID as UserID, u.Name, r.Name as RoleName, u.Mobile, u.Refundable, IFNULL((SELECT DisplayID from m_users where UserID=u.ParentID),0) AS ParentID,u.ClientLimit-($qClientCount) as ClientLimit, IFNULL(u.DOB,'0000-0000') AS DOB,IFNULL(($qCurrentBalance),'0') AS Wallet, u.Active as Status,u.UserID as UniqueUserID FROM m_users as u left join m_role as r on u.RoleID=r.RoleID WHERE $where ORDER BY u.UserID ASC";
-		echo $query;
+		//echo $query;
 		$arr=$this->db->selectArray($query,'e_users');
 		return $arr;
 	}
