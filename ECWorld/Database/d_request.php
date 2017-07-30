@@ -154,9 +154,10 @@ class d_request{
 		//echo "d_request test1";
 		$this->db->errorlog->addLog("WebserviceProcess",$this->fileName,$fnName,$message,$deveMsg,$type,$id,$more);
 	}
+	//Send SMS only if request is from SMS or if request is FAILED.
 	function isSMSRequest($req){
 		//S means SMS
-		if (strpos($req->DisplayID, 'S') !== false)
+		if ((strpos($req->DisplayID, 'S') !== false) || $req->Status==4)
 			return true;
 		else return false;
 	}
