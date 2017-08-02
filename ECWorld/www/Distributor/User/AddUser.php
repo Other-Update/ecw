@@ -12,11 +12,25 @@ include '../../Header/Header.php';
       <div class="box box-default">
 			<div class="box-body">
 			  <div class="row">
-				<form method="post" action="" id="idDistUserForm" >
+				<form method="post" action="" id="idUserForm" >
 				<input type="hidden" value="Upsert" name="Action" />
 				<input type="hidden" name="UserID" id="UserID" value="<?php echo isset($_GET['userid'])?($_GET['userid']==""?0:$_GET['userid']):0; ?>" />
 				<div class="col-md-3"></div>
  				<div class="col-md-6">
+ 					<div class="hiddenfields">
+ 					<input type="hidden" value="0" name="ClientLimit" id="clientLimit" >
+ 					<input type="hidden" name="Email" id="emailId">
+ 					<input type="hidden"  name="MandalFee" id="subDistributorFee" value="0">
+ 					<input type="hidden" name="DistributorFee" id="distributorFee" value="0" >
+ 					<input type="hidden" name="RetailerFee" id="retailerFees"  >
+ 					<input type="hidden" name="BalanceLevel" id="balanceLevel" value="0">
+ 					<input type="hidden" name="Deposit" id="depositeAmt" value="0">
+ 					<input type="hidden" value="2" name="Refundable" id="refundable" >
+ 					<input type="hidden" name="Password" id="password" >
+ 					<input type="hidden" name="Remarks" id="remarks" >
+ 					<input type="hidden" name="Address" id="address">
+ 					<input type="hidden" name="PAN" id="PAN">
+ 					</div>
 					  <div class="form-group" style="display: none;">
 						<label>Parent ID</label><span class="ParentIDErr error">*</span>
 						<select class="form-control select2" name="ParentID" id="parentId" style="width: 100%;">
@@ -52,6 +66,7 @@ include '../../Header/Header.php';
 						<label>Date Of Birth</label>
 						<input type="text" name="DOB" id="dob" class="form-control" >
 					</div>
+					
 					<div class="form-group" style="text-align: center;margin-top: 10px;">
 						<label>&nbsp;</label>
 						<input type="submit" value="Submit" class="btn btn-success " id="idBtnDistUserForm"/> 

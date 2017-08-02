@@ -84,7 +84,7 @@ jQuery(function($) {
 			$('#idBtnDistUserForm').attr('disabled', true);
 			validation_holder = 0; 
 			$("div.validate_msg").slideUp("fast"); 
-			AddDistUser(); return false;
+			AddUser(); return false;
 		}
 	}); 
 
@@ -95,4 +95,42 @@ $(function () {
 	  format: 'yyyy-mm-dd',
       autoclose: true
     });
+});
+
+
+$(function() {
+	var chars = "23456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghikmnopqrstuvwxyz";
+	var string_length = 8;
+	var randomstring = '';
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+	$('#password').val(randomstring);
+});
+
+
+
+$(document).ready(function () {
+  $("#mobileNo").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //display error message
+        $(".mobileNoErr").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
+
+
+//ID Proof == Check file type PDF or not 
+$(document).ready(function () {
+	$('#idProof').change(function () {
+	var val = $(this).val().toLowerCase();
+	var regex = new RegExp("(.*?)\.(pdf)$");
+		if(!(regex.test(val))) {
+			$(this).val('');
+			alert('Please select correct file format');
+		} 
+	}); 
 });
