@@ -172,6 +172,7 @@ function rechargePrepaidNumber(){
 		$('#errorMsgPrepaid').fadeOut(10000,function(){});
 		alert(jsonData.Message);
 		$("#rcAmountPrepaid").val('');
+		$('#idFrmRCPrepaid')[0].reset();
 		$("#idBtnRcPrepaid").prop('disabled', false);
 		GetDashboardData();
 	},function(error){
@@ -205,6 +206,7 @@ function rechargePostpaidNumber(){
 		$('#errorMsgPostpaid').fadeIn(100,function(){});
 		$('#errorMsgPostpaid').fadeOut(5000,function(){});
 		alert(jsonData.Message);
+		$('#idFrmRCPostpaid')[0].reset();
 		GetDashboardData();
 	},function(error){
 		alert('Failed to recharge');
@@ -235,6 +237,7 @@ function rechargeDthNumber(){
 		$('#errorMsgDth').fadeIn(100,function(){});
 		$('#errorMsgDth').fadeOut(5000,function(){});
 		alert(jsonData.Message);
+		$('#idFrmRcDTH')[0].reset();
 		GetDashboardData();
 	},function(error){
 		alert('Failed to recharge');
@@ -266,6 +269,7 @@ function rechargeDatacardNumber(){
 		$('#errorMsgDatacard').fadeIn(100,function(){});
 		$('#errorMsgDatacard').fadeOut(5000,function(){});
 		alert(jsonData.Message);
+		$('#idFrmRcDatacard')[0].reset();
 		$("#idBtnRcDatacard").prop('disabled', false);
 		GetDashboardData();
 	},function(error){
