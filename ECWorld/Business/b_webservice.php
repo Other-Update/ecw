@@ -764,7 +764,7 @@ class b_webservice{
 		//TODO
 	}
 	
-	function processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$inputAsIs){
+	function processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$inputAsIs,$apiType){
 		//First thing is to record the response time
 		$receivedDT =date('d/M/Y H:i:s');
 		$reqObj = $this->bReqObj->getByID($respRcID);
@@ -796,7 +796,7 @@ class b_webservice{
 		$res = $rcObj->getByRequestID($rcObj->RequestID);
 		//echo "<br/> res=".json_encode($res);
 		$rcObj->NetworkProviderName = $res->NetworkProviderName;
-		$res = $rcObj->processResponse($reqObj[0],$rcObj,$respStatus);
+		$res = $rcObj->processResponse($reqObj[0],$rcObj,$respStatus,$apiType);
 		//echo "<br/> processResponse=".$res;
 		$this->bReqObj->RequesterMobile=$this->me->Mobile;
 		

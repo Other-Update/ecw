@@ -171,14 +171,17 @@ class b_marsapi{
 			case "SUCCESS":
 				$details = '{"Description":"Success","ECWStatus":3}';
 				break;
-			case "CANCEL":
-				$details = '{"Description":"Cancel","ECWStatus":4}';
-				break;
 			case "FAILURE":
 				$details = '{"Description":"Failure","ECWStatus":4}';
 				break;
 			case "SUSPENSE":
 				$details = '{"Description":"Suspense","ECWStatus":2}';
+				break;
+			case "POWER ON DEL":
+				$details = '{"Description":"POWER ON DEL","ECWStatus":4}';
+				break;
+			case "ABORTED":
+				$details = '{"Description":"ABORTED","ECWStatus":4}';
 				break;
 			default:
 				$details = '{"Description":"Unknown Response","ECWStatus":2}';

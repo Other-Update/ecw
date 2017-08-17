@@ -66,7 +66,7 @@ try{
 		
 		$mysqlObj->errorlog->addLog("RechargeResponse","APIResponse.php","Common",$_SERVER['QUERY_STRING'],"QueryString","t_request",$respRcID,$respStatus);
 		//$wsObj->saveQueryStringTesting('APIResponse',$_SERVER['QUERY_STRING']);
-		$res = $wsObj->processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$_SERVER['QUERY_STRING']);
+		$res = $wsObj->processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$_SERVER['QUERY_STRING'],"Cloud");
 		
 		$jsonRes=json_decode(json_decode($res));
 		echo json_encode($jsonRes);

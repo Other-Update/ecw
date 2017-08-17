@@ -995,12 +995,17 @@ class b_recharge{
 		$this->resultMessage=$res->Message;
 		return $this->returnMessage();
 	}
-	function processResponse($reqObj,$rcObj,$respStatus){	
+	function processResponse($reqObj,$rcObj,$respStatus,$apiType){	
 		$this->bReqObj = $reqObj;
 		//echo "<br/><hr/>< processResponse ><br/>";
 		 /* echo "<br/> Mobile=".$rcObj->me->Mobile;
 		echo "<br/> rcObj=".json_encode($rcObj);  */
-		$urlObj = new b_cloudapi();//b_http.php
+		$urlObj = '';//b_http.php
+		if($apiType=="Mars"){
+			$urlObj = new b_marsapi();
+		}else{
+			$urlObj = new b_cloudapi();//b_http.php
+		}
 		$respDetails = $urlObj->getDetailsByResponseCode($respStatus);
 		$rcObj->Status = $respDetails->ECWStatus;
 		//echo "<br/> respDetails=".json_encode($respDetails);

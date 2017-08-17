@@ -21,6 +21,11 @@ class d_request{
 		$res=$this->db->selectArray($q,'e_request');
 		return $res;
 	}
+	function getByApiRefID($id){
+		$q= "SELECT * FROM t_request WHERE RcApiRefID='$id'";
+		$res=$this->db->selectArray($q,'e_request');
+		return $res;
+	}
 	
 	function getDuplicateRequest($mobile,$amount,$sameNoAmountDelay,$sameNoDiffAmountDelay){
 		$q= "SELECT * FROM t_request WHERE TargetNo='$mobile' AND ((TargetAmount='$amount' AND TIMESTAMPDIFF(MINUTE, CreatedDate, now())<'$sameNoAmountDelay') OR (TargetAmount!='$amount' AND TIMESTAMPDIFF(MINUTE, CreatedDate, now())<'$sameNoDiffAmountDelay'))  AND Status!=4 AND Status!=3 ORDER BY CreatedDate DESC LIMIT 1";

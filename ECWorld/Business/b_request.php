@@ -17,6 +17,9 @@ class b_request{
 	function getByID($id){
 		return $this->dObj->getByID($id);
 	}
+	function getByApiRefID($id){
+		return $this->dObj->getByApiRefID($id);
+	}
 	function getDuplicateRequest($mobile,$amount,$sameNoAmountDelay,$sameNoDiffAmountDelay){
 		return $this->dObj->getDuplicateRequest($mobile,$amount,$sameNoAmountDelay,$sameNoDiffAmountDelay);
 	}
