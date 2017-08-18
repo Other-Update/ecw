@@ -20,7 +20,7 @@ class d_rcgeneralgatewayassign{
 		return $res;
 	}
 	function isUserAssigned($userID,$ancestorID){
-		$q="SELECT * from m_rcgeneralgatewayassign WHERE Active=1 AND UserID=";
+		$q="SELECT * from m_rcgeneralgatewayassign WHERE Active=1 AND IsAssigned=1 AND UserID=";
 		$qGenGateway = $q.$userID;
 		//echo $q;	
 		$res=$this->db->selectArray($qGenGateway,'e_rcgeneralgatewayassign');

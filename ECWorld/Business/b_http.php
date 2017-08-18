@@ -269,6 +269,9 @@ class b_marsapi{
 				$details = '{"Description":"Unknown Response","Retry":0,"ECWStatus":2}';
 				break;
 		}
+		if (strpos($respCode, 'REQUEST ACCEPTED') !== false) {
+			$details = '{"Description":"Request Accepted","Retry":0,"ECWStatus":2}';
+		}
 		return json_decode($details);
 	}
 }
