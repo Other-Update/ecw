@@ -17,6 +17,7 @@ class mysqldb{
 			$this->driver = $dbConfig['driver'];
 			//echo $this->config['driver'];
 			$this->host = $dbConfig['host'];
+			$this->port = $dbConfig['port'];
 			
 			$this->database = $dbConfig['database'];//'ecworldserver';
 			$this->user = $dbConfig['username'];
@@ -25,7 +26,7 @@ class mysqldb{
 			$this->user = 'ecworld_eworld';
 			$this->pass = '5WbE]ArJ@?Q5';*/
 		
-			$this->conn = new PDO("$this->driver:host=$this->host; dbname=$this->database", $this->user, $this->pass);
+			$this->conn = new PDO("$this->driver:host=$this->host;port=$this->port;dbname=$this->database", $this->user, $this->pass);
 		} catch (PDOException $e) {
 			return $e->getMessage();
 			die();
