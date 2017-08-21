@@ -811,6 +811,8 @@ class b_recharge{
 		return true;
 	}
 	function processRecharge($reqObj,$code,$targetNumber,$amount){
+	
+		$amount = intval($amount);
 		$this->bReqObj=$reqObj;
 		$this->bSMSObj->customerInputSMS=$this->bReqObj->Message;
 		//Check. Same no same amount
