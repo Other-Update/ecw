@@ -1000,8 +1000,8 @@ class b_recharge{
 	function processResponse($reqObj,$rcObj,$respStatus,$apiType){	
 		$this->bReqObj = $reqObj;
 		//echo "<br/><hr/>< processResponse ><br/>";
-		 /* echo "<br/> Mobile=".$rcObj->me->Mobile;
-		echo "<br/> rcObj=".json_encode($rcObj);  */
+		//echo "<br/> rcObj=".json_encode($rcObj); 
+		//echo "<br/> reqObj=".json_encode($this->bReqObj); 
 		$urlObj = '';//b_http.php
 		if($apiType=="Mars"){
 			$urlObj = new b_marsapi();
@@ -1010,10 +1010,12 @@ class b_recharge{
 		}
 		$respDetails = $urlObj->getDetailsByResponseCode($respStatus);
 		$rcObj->Status = $respDetails->ECWStatus;
-		//echo "<br/> respDetails=".json_encode($respDetails);
-		$targetMob = $urlObj->getTargetMobileFromResponse($rcObj->RcResponse);
-		$targetAmount = $urlObj->getTargetAmountFromResponse($rcObj->RcResponse);
-		//echo "<br/> Resp targetn amnt=".$targetAmount;
+		//echo "<br/> respDetails=".json_encode($respDetails);die;
+		//$targetMob = $urlObj->getTargetMobileFromResponse($rcObj->RcResponse);
+		//$targetAmount = $urlObj->getTargetAmountFromResponse($rcObj->RcResponse);
+		$targetMob = $this->bReqObj->TargetNo;
+		$targetAmount = $this->bReqObj->TargetAmount;
+		//echo "<br/> Resp targetn amnt=".$targetAmount;die;
 		$rcObj->ReachargeNo=$targetMob;
 		$rcObj->Amount=$targetAmount;
 		//echo "<br/>Me=".json_encode($this->me);
