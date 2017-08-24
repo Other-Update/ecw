@@ -463,7 +463,9 @@ class b_webservice{
 					$msg = str_replace("[RECEIVERUSERID]",$userToTransfer->DisplayID,$msg);
 					$msg = str_replace("[RECEIVERMOBILE]",$userToTransfer->Mobile,$msg);
 					$msg = str_replace("[TRANSREQUESTID]",$this->bReqObj->DisplayID,$msg);
-					//$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$msg);
+					$fromUserWallet = $this->bUserObj->getWalletBalance($this->me->UserID);
+					$fromUserWalletJson = json_decode(json_encode($fromUserWallet));
+					$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$msg);
 					$this->resultMessage=$this->resultSmsMessage=$msg;
 					$this->bReqObj->Status = 3;
 					$this->bSMSObj->paymentTransfer(true,"Payment_s",$param2,$userToTransfer,$this->bReqObj->TotalAmount,0,0,$this->bReqObj);
