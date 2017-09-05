@@ -394,17 +394,18 @@ function validateAddTransferForm(){
 	//alert(isValidated);
 	return isValidated;
 }
-function addTransfer(){
+function addTransfer(callbackFn){
 	if(validateAddTransferForm()){
 		paymentAjax($('form#idFrmAddTransfer').serialize(),function(res){
-			//var jsonData = JSON.parse(data);
-			//alert(res.isSuccess);
+			callbackFn();
 			if(res.isSuccess){
 				onAddTransferOpeningPoup();
 			}
 			$("#idSpnSuccessErr").html(res.message).css({'color':'green'}).show();
 			reloadTransfers_DT();
 		},function(){});
+	}else{	
+		callbackFn();
 	}
 	return false;
 }
@@ -440,7 +441,10 @@ $(function(){
 		onAddTransferOpeningPoup();
 	});
 	$("#idBtnAddTransfer").click(function(){
-		addTransfer();
+		$("#idBtnAddTransfer").prop('disabled', true);
+		addTransfer(function(){
+			$("#idBtnAddTransfer").prop('disabled', false);
+		});
 		return false;
 	});
 	$("#idSelectFromUser").change(function(){
