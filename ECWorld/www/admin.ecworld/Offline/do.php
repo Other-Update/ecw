@@ -1,5 +1,5 @@
 <?php
-include_once "../../BaseUrl.php";
+include_once "../../../BaseUrl.php";
 include_once APPROOT_URL.'/Resource/User.php';
 include_once APPROOT_URL.'/Resource/Sms.php';
 include_once APPROOT_URL.'/Business/Token/b_token.php';

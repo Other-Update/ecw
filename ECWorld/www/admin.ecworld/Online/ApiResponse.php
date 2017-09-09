@@ -1,9 +1,9 @@
 <?php
 include_once "../../../BaseUrl.php";
-include_once APPROOT_URL.'../Resource/User.php';
-include_once APPROOT_URL.'../Resource/Sms.php';
-include_once APPROOT_URL.'../Business/Token/b_token.php';
-include_once APPROOT_URL.'../Business/b_webservice.php';
+include_once APPROOT_URL.'/Resource/User.php';
+include_once APPROOT_URL.'/Resource/Sms.php';
+include_once APPROOT_URL.'/Business/Token/b_token.php';
+include_once APPROOT_URL.'/Business/b_webservice.php';
 /*include_once APPROOT_URL.'/Business/b_users.php';
 include_once APPROOT_URL.'/Business/b_service.php';
 include_once APPROOT_URL.'/Business/b_webserviceactions.php';
@@ -55,18 +55,18 @@ try{
 	$tokenEnc="";//getTokenByGuid($_GET["Token"]);
 	$token = "";//$ecwToken->decrypt($tokenEnc);
 	if(isTokenValid($token,$ecwToken)){
-		$respRcID = $_GET["yourref"];
+		$respRcID = $_GET["transid"];
 		$respStatus = $_GET["status"];
-		$respOpTransID = $_GET["transid"];
-		$respOpMsg = $_GET["message"];
-		$respBal = $_GET["balance"];	
+		$respOpTransID = $_GET["optransid"];
+		$respOpMsg = $_GET["opmsg"];
+		$respBal = $_GET["bal"];	
 		//echo $respOpMsg;
 		//$wsObj = new b_webservice('',$mysqlObj,'',$langSMS);
 		$wsObj = new b_webservice('',$mysqlObj,'',$langSMS,$langAPI);
 		
 		$mysqlObj->errorlog->addLog("RechargeResponse","APIResponse.php","Common",$_SERVER['QUERY_STRING'],"QueryString","t_request",$respRcID,$respStatus);
 		//$wsObj->saveQueryStringTesting('APIResponse',$_SERVER['QUERY_STRING']);
-		$res = $wsObj->processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$_SERVER['QUERY_STRING'],"Mars");
+		$res = $wsObj->processRCApiResponse($respRcID,$respStatus,$respOpTransID,$respOpMsg,$respBal,$_SERVER['QUERY_STRING'],"Cloud");
 		
 		$jsonRes=json_decode(json_decode($res));
 		echo json_encode($jsonRes);
