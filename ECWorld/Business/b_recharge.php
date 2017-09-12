@@ -518,13 +518,13 @@ class b_recharge{
 		//$rcObj->RechargeID this should be request ID
 		/* echo "<br/>isImmediateUpdate=".$isImmediateUpdate;
 		echo "<br/> before sending sms call status=".$rcObj->Status; */
-		if(($isImmediateUpdate && $rcObj->Status==4) || (!$isImmediateUpdate)){
-			$this->sendResponseSMS($userMobile,$rcObj,"t_request");	//$this->sendResponseSMS($userMobile,$rcObj->ReachargeNo,$rcObj->Status,$rcObj->RechargeID,"t_request");
+		if(($isImmediateUpdate && $rcObj->Status==4) || (!$isImmediateUpdate)){	//$this->sendResponseSMS($userMobile,$rcObj->ReachargeNo,$rcObj->Status,$rcObj->RechargeID,"t_request");
 			//if(!$isImmediateUpdate){
 				//echo "<br/> a1111".json_encode($this->bReqObj);
 				$this->bReqObj->Status = $rcObj->Status;
 				//echo "<br/> s1111".json_encode($this->bReqObj);
 				$this->dReqObj->updateStatus($this->bReqObj);
+			$this->sendResponseSMS($userMobile,$rcObj,"t_request");
 			//}
 		}
 		else{
