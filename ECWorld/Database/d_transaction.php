@@ -44,7 +44,7 @@ class d_transaction{
 		$index_column = 'TransactionID';
 		$columns = array('TransactionID','UserID','UserName','Request_ID','ReqDateTime','ResponseTime','Trans_ID','MobileNo','TargetAmount','Amount','Network', 'Description', 'Status', 'Balance', 'Type', 'OpeningBalance');
 	//rch.`RcResReceivedDateTime`
-			$select = "SELECT DISTINCT trans.`TransactionID`, user.`DisplayID` AS UserID, user.Name as UserName,req.`DisplayID` AS 'Request_ID', req.`ReqDateTime`, DATE_FORMAT(trans.`CreatedDate`,'%H:%i:%s') AS ResponseTime, rch.`RcResOpTransID` AS 'Trans_ID', req.`TargetNo` AS 'MobileNo', req.`TargetAmount`, trans.`Amount`, rch.`NetworkProviderName` AS 'Network', trans.`Remark` AS 'Description', req.`Status`, trans.`ClosingBalance` AS 'Balance', trans.`TransactionType` AS 'Type', trans.`OpeningBalance` FROM t_transaction AS trans
+			$select = "SELECT DISTINCT trans.`TransactionID`, user.`DisplayID` AS UserID, user.Name as UserName,req.`DisplayID` AS 'Request_ID', req.`ReqDateTime`, DATE_FORMAT(req.`ModifiedDate`,'%H:%i:%s') AS ResponseTime, rch.`RcResOpTransID` AS 'Trans_ID', req.`TargetNo` AS 'MobileNo', req.`TargetAmount`, trans.`Amount`, rch.`NetworkProviderName` AS 'Network', trans.`Remark` AS 'Description', req.`Status`, trans.`ClosingBalance` AS 'Balance', trans.`TransactionType` AS 'Type', trans.`OpeningBalance` FROM t_transaction AS trans
 		LEFT JOIN t_request AS req ON
 			trans.RequestID = req.RequestID
 		LEFT JOIN t_recharge AS rch ON
