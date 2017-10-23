@@ -80,7 +80,7 @@
 					localStorage.Token = jsonUserDetails.token;
 					var jsonUserDetails = JSON.parse(jsonData.data);
 					//alert(jsonData.message+'-'+jsonUserDetails.user.Name);
-					window.location.href = '../User' ;
+					window.location.href = '../Reports/Recharge' ;
 					//window.location.reload();
 				}else
 					alert(jsonData.message);

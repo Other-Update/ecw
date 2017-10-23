@@ -4,7 +4,8 @@ class ECWToken{
 	//Can be generated with base64_encode(openssl_random_pseudo_bytes(64));
 	//$secretKey = base64_decode($config->get('jwtKey'));
 	var $secretKey = "ECWSecretKey";
-	var $tokenExpiryInSec = 3600;//1 hour
+	// 3600 hrs is 1 hour
+	var $tokenExpiryInSec = 36000;//This is 10 hours
 	function __construct(){
 	}
 	function isValid($token){
