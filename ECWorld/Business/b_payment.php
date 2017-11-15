@@ -88,5 +88,9 @@ class b_payment{
 			$errorlogObj->add($ex->getMessage(),'0','Testing','Testing');
 		}
 	}
+	
+	function DeleteOldPayments($userID,$date){
+		return $this->dbObj->DeleteOldPayments($userID,$date);
+	}
 }
 ?>

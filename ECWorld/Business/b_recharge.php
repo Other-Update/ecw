@@ -1063,6 +1063,9 @@ class b_recharge{
 		return json_encode($jsonStr);
 	}
 	
+	function DeleteOldRecharges($userID,$date){
+		return $this->dObj->DeleteOldRecharges($userID,$date);
+	}
 	function addErrorlog($fnName,$message,$deveMsg,$type,$id,$more){
 		//echo "test1";
 		$this->mysql->errorlog->addLog("WebserviceProcess",$this->fileName,$fnName,$message,$deveMsg,$type,$id,$more);

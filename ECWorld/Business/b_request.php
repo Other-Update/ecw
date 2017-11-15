@@ -97,6 +97,9 @@ class b_request{
 	function getRequestStatus($reqID){
 		return $this->dObj->getRequestStatus($reqID);
 	}
+	function DeleteOldRequests($userID,$date){
+		return $this->dObj->DeleteOldRequests($userID,$date);
+	}
 	/* Incoming Request */
 	function getIncoming_DT($userId, $message, $server_no, $fromDate, $toDate){
 		return $this->dObj->getIncoming_DT($userId, $message, $server_no, $fromDate, $toDate);

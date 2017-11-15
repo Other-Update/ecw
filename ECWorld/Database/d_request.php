@@ -167,6 +167,12 @@ class d_request{
 		else return false;
 	}
 	
+	function DeleteOldRequests($userID,$date){
+		$q="DELETE FROM t_request WHERE UserID='$userID' AND CreatedDate <= '$date'";
+		//echo $q;
+		$res=$this->db->execute($q);
+		return $res;
+	}
 	/* Incoming Request */
 	function getIncoming_DT($userId, $message, $server_no, $fromDate, $toDate){
 		$table = 't_request';

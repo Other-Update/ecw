@@ -5,8 +5,8 @@ class d_monitor{
 	private $filename='t_monitor.php';
 	private $tablename='t_monitor';
 	
-	var $logEnabledForLoginAttempt = true;
-	var $logEnabledForUrlAccess = true;
+	var $logEnabledForLoginAttempt = false;
+	var $logEnabledForUrlAccess = false;
 	
 	public $enumLoginAttemptName = "LoginAttempt";
 	public $enumUrlAccessName = "UrlAccess";

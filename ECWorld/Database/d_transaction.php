@@ -38,6 +38,8 @@ class d_transaction{
 		return $this->add($transtype,$reqObj->RequestID,$reqObj->UserID,$reqObj->TotalAmount*-1,"Recharge","t_recharge",$rechargeID,$reqObj->UserID);
 	}
 	#REGION Add transaction >>>>>>>>>>>>
+	//TransactionType
+	//1-Payment,2-recharge,3-SMS,4-Add Use, 5-System
 	function getTransactionReport_DT($userId, $mobile, $network, $requestId, $fromDate, $toDate,$isWebservice){
 		//echo json_encode($this->db->executeSP("CALL UpdateWallet(1,1)"));
 		$table = 't_transaction';
@@ -55,7 +57,7 @@ class d_transaction{
 			//req.RequestID = sms.ReferenceID			";
 		//echo "USerID:".$userId."Mobile:".$mobile."requestId:".$requestId."network:".$network;
 		//trans.Amount!=0 is to avoid new user first transaction record in the report.
-		$where= "WHERE trans.TransactionID!=0 AND trans.Amount!=0";//sms.IsFirstSMSForReq!=0 ";
+		$where= "WHERE trans.TransactionID!=0 AND (trans.Amount!=0 OR (trans.Amount=0 AND trans.TransactionType='5'))";//sms.IsFirstSMSForReq!=0 ";
 		$orderBy =" ORDER BY trans.TransactionID DESC ";
 		$groupBy = " GROUP BY req.RequestID ";
 		
@@ -144,6 +146,24 @@ class d_transaction{
 		$arr=$this->db->selectArray($q,'e_transaction');
 		if(count($arr)>0) return $arr[0]->ClosingBalance;
 		else return 0;
+	}
+	function getLatestTransaction($userID,$date,$properties){
+		if($properties=="") $properties="*";
+		$createdDateCondition = " and CreatedDate > '$date'";
+		if($date=="") $createdDateCondition = "";
+		$q="SELECT $properties FROM t_transaction WHERE UserID='$userID' $createdDateCondition ORDER BY CreatedDate DESC,TransactionID DESC LIMIT 1;";
+		
+		//echo $q;
+		$arr=$this->db->selectArray($q,'e_transaction');
+		return $arr;
+		/* if(count($arr)>0) return $arr[0]->ClosingBalance;
+		else return 0; */
+	}
+	function DeleteOldTransaction($userID,$date){
+		$q="DELETE FROM t_transaction WHERE UserID='$userID' AND CreatedDate <= '$date'";
+		//echo $q;
+		$res=$this->db->execute($q);
+		return $res;
 	}
 	function addErrorlog($fnName,$message,$deveMsg,$type,$id,$more){
 		//echo "test1";

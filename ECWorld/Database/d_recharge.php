@@ -182,8 +182,12 @@ class d_recharge{
 		$this->db->errorlog->addLog("WebserviceProcess",$this->fileName,$fnName,$message,$deveMsg,$type,$id,$more);
 	}
 	
-	
-	
+	function DeleteOldRecharges($userID,$date){
+		$q="DELETE FROM t_recharge WHERE UserID='$userID' AND CreatedDate <= '$date'";
+		//echo $q;
+		$res=$this->db->execute($q);
+		return $res;
+	}	
 	function getCurrentRechargeReport_DT(){
 		$table = 't_recharge';
 		$index_column = 'RechargeID';

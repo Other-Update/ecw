@@ -5,12 +5,15 @@ class d_usersession{
 	private $db;
 	private $filename='t_usersession.php';
 	private $tablename='t_usersession';
+	var $logEnabledForUserSession = false;
 	
 	function __construct($mysqlObj){
 		$this->db = $mysqlObj;
 		//echo "<br/> islogerror=".$mysqlObj->configuration["general"]["islogerror"];
 	}
 	function add($userID,$ecwToken){
+		if($this->logEnabledForUserSession==false )
+			return false;
 		$phpSessionID = md5(session_id()).'_'.md5(md5($userID.'PreventHack')).'_'.session_id();//Do not store PHPSESSID anywhere w/o encryption. it is like a password.
 		if($ecwToken=="") $ecwToken="NotIssued";
 		if(!$this->db){
@@ -23,6 +26,8 @@ class d_usersession{
 		$res = $this->db->execute($iquery);
 	}
 	function updateSessionAccess($us){
+		if($this->logEnabledForUserSession==false )
+			return false;
 		$q = "UPDATE `$this->tablename` SET LastAccessed=now() WHERE UserSessionID='$us->UserSessionID'";
 		$res=$this->db->execute($q);
 	}

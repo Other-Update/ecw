@@ -142,6 +142,12 @@ class d_payment{
 		return $this->dtObj->get($table, $index_column, $columns,$query);
 	}
 	
+	function DeleteOldPayments($userID,$date){
+		$q="DELETE FROM t_payment WHERE UserID='$userID' AND CreatedDate <= '$date'";
+		//echo $q;
+		$res=$this->db->execute($q);
+		return $res;
+	}
 	function addErrorlog($fnName,$message,$deveMsg,$type,$id,$more){
 		//echo "test1";
 		$this->db->errorlog->addLog("WebserviceProcess",$this->fileName,$fnName,$message,$deveMsg,$type,$id,$more);
