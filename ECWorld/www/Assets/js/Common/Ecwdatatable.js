@@ -3,7 +3,7 @@ var ecwDatatable = {};
 ecwDatatable.refresh = function(){
 	this.dt.DataTable().ajax.reload();
 }
-ecwDatatable.init = function(elem,ajax,pageLength,isEdit,isDelete,isBasic,uniqueIdColumnIndex,nameColumnIndex,exclude,columns,editCallbackFn,deletCallbackFn){
+ecwDatatable.init = function(elem,ajax,pageLength,isEdit,isDelete,isBasic,uniqueIdColumnIndex,nameColumnIndex,exclude,columns,editCallbackFn,deletCallbackFn,dataLoadCallBack){
 	var editDelete = {"mData" : null,'sTitle':'Action', "bSortable":false,"mRender" : function(data){
 				var uniqueID=data[uniqueIdColumnIndex];
 				if(exclude!=uniqueID){
@@ -30,7 +30,10 @@ ecwDatatable.init = function(elem,ajax,pageLength,isEdit,isDelete,isBasic,unique
 		"ajax": ajax,
 		"sEcho":10,
 		"pageLength":pageLength,
-		"order": [[1, "desc"]]
+		"order": [[1, "desc"]],
+		"fnDrawCallback": function (oSettings) {
+			if(dataLoadCallBack!=null) dataLoadCallBack(oSettings);
+		}
 	});
 	//alert(elem.attr("id"));
 	$(elem).on("click",".clsBtnDtEdit",function(e){

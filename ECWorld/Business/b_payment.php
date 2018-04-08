@@ -28,8 +28,8 @@ class b_payment{
 	function getBalanceToBePaidByParent_DT($parentID){
 		return $this->dbObj->getBalanceToBePaidByParent_DT($parentID);
 	}
-	function getTransfers_DT($parentID){
-		return $this->dbObj->getTransfers_DT($parentID);
+	function getTransfers_DT($parentID,$fromDate,$toDate){
+		return $this->dbObj->getTransfers_DT($parentID,$fromDate,$toDate);
 	}
 	function getTransfersByDateRange_DT($parentID,$startDate,$endDate,$onlyMyPayments=false,$isDataTable=false){
 		return $this->dbObj->getTransfersByDateRange_DT($parentID,$startDate,$endDate,$onlyMyPayments,$isDataTable=false);

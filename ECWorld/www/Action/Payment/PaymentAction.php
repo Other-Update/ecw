@@ -25,7 +25,7 @@ switch($action){
 		getBalanceToBePaid_NIU($mysqlObj,$lang);
 		break;
 	case 'GetTransfers_DT':
-		if($_POST['ParentID']!='null')
+		if($_POST['ParentID']!='null' || $_POST['SearchStr']!='null')
 			getTransfers_DT($mysqlObj,$lang);
 		break;
 	case 'GetBalanceToBePaidByParent_DT':
@@ -197,6 +197,40 @@ function addTransfer($mysqlObj,$lang,$langSMS){
 function getTransfers_DT($mysqlObj,$lang){
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
 	$sObj=new b_payment($loggedInUserDetails->user,$mysqlObj,$lang);
-	echo $sObj->getTransfers_DT($_POST["ParentID"]);
+	$userObj = new b_users($loggedInUserDetails->user,$mysqlObj,$lang);
+	$searchStr= $_POST["SearchStr"];
+	$fromDate 	= $_POST['fromDate'];
+	$toDate 	= $_POST['toDate'];
+	$parentId= $_POST["ParentID"];
+	$parentUer=null;
+	//If searchStr and ParentID are equal then that means parent has been loaded already. No need to load the user again
+	if($searchStr != $parentId)
+	{
+		$parentUer=$userObj->getBySearchStr($searchStr,1);
+		//echo "Userid=".$userObj->UserID;
+		if($parentUer!=null) $parentId=$parentUer->UserID;
+		else $parentId = -1;
+	}
+	//$parentId=$searchStr;
+	// echo "searchstr=".$searchStr;
+	//echo "Parent=".$parentId; 
+	$response="";
+	if($parentId==null || $parentId==-1 || $parentId==""){
+		//echo "a";
+		$response='{"sEcho":3,"iTotalRecords":"2","iTotalDisplayRecords":"0","aaData":[],"ecwIsUserFound":"0","ecwMessage":"* User Not Found","ecwUser":""}';
+		
+		$response = json_decode($response);
+		//echo $response;
+	}else{
+		//echo "b";
+		$response= $sObj->getTransfers_DT($parentId,$fromDate,$toDate);
+		$response = json_decode($response);
+		//echo "type=".gettype($response);
+		//$response["ecwIsUserFound"]="1";
+		$response->ecwIsUserFound="1";
+		$response->ecwMessage="User found";
+		$response->ecwUser=$parentUer;
+	}
+	echo  json_encode($response);
 }
 ?>

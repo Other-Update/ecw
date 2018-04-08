@@ -53,6 +53,7 @@ function getPaymentDescription(user,fromtouser,amount,totalAmount,type){
 }
 function loadTransfers_DT(){
 	//alert($("#idSelectUserID").val());
+	
 	var dt=ecwDatatable.init(
 		$("#idPaymentTransfer"),
 		{			
@@ -60,7 +61,10 @@ function loadTransfers_DT(){
 			"type" : "POST",
 			"data" : {
 				"Action" : "GetTransfers_DT",
-				"ParentID" : function(d){ return $("#idSelectUserID").val();}
+				"SearchStr" : function(d){ return $("#idSelectUserID").val();},
+				"ParentID" : function(d){ return $("#idSelectUserID").attr("data-userid");},
+				"fromDate"	: function(d){ return $("#fromDate").val();},
+				"toDate"	: function(d){ return $("#toDate").val();} 				
 			}
 		},
 		500,
@@ -108,9 +112,18 @@ function loadTransfers_DT(){
 		},function(e,id,name,all){
 			alert('Delete');
 			e.preventDefault();
+		},function(oSettings){
+			if(oSettings.json)
+			if(oSettings.json.ecwIsUserFound=="0")
+				$("#idLabelUserName").html(oSettings.json.ecwMessage);
+			else 
+				$("#idLabelUserName").html(oSettings.json.ecwUser.Name);
+			console.log(oSettings.json);
+			//alert(JSON.stringify(oSettings));
 		});
 }
 function reloadTransfers_DT(){
+	//alert('table reload');
 	$('#idPaymentTransfer').DataTable().ajax.reload();
 }
 function changeUserSelectionPopup(triggeredBy,from,to){	
@@ -434,9 +447,9 @@ function reCalculateTransfer_NIU(){
 $(function(){
 	//getUserDetailsForTranser(200,function(){},function(){});
 	loadTransfers_DT();
-	loadDDusers($("#idSelectUserID"),1,true,"2",function(){
-		reloadTransfers_DT();
-	});
+	//loadDDusers($("#idSelectUserID"),1,true,"2",function(){
+		//reloadTransfers_DT();
+	//});
 	$("#idBtnPayTransferPopup").click(function(){
 		onAddTransferOpeningPoup();
 	});
@@ -496,9 +509,9 @@ $(function(){
 		//reCalculateTransfer();
 	});
 	//calculateMargin();
-	$("#idSelectUserID").change(function(){
-		reloadTransfers_DT();
-	});
+	//$("#idSelectUserID").change(function(){
+		//reloadTransfers_DT();
+	//});
 	$("#idType").change(function(){
 		//alert($("#idMode").children('option').length);
 		$("#idMode").children('option').remove();
@@ -508,5 +521,14 @@ $(function(){
 			$("#idMode").append($("#idModeOptionsBackup").find(".clsCreditModes").clone());
 		}
 		calculateMargin();
+	});
+	$("#idBtnSearch").click(function(){
+		var userSearchStr=$("#idSelectUserID").val();
+		if(userSearchStr!=""){
+			reloadTransfers_DT();
+		}else{
+			alert("Enter User ID/Mobile");
+			$("#idSelectUserID").focus();
+		}
 	});
 });

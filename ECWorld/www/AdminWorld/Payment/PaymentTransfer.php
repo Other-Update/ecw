@@ -19,8 +19,10 @@
             <div class="box-header">
 				<div class="col-md-3">
 					<div class="form-group">
-					 <select class="form-control select2" name="userId" id="idSelectUserID" style="width: 100%;">
-						</select>
+					 <!-- <select class="form-control select2" name="userId" id="idSelectUserID" style="width: 100%;">
+						</select> -->
+						<input type="text" class="form-control" name="userId" id="idSelectUserID" style="width: 100%;" placeholder="User ID/Mobile" data-isuserloaded="0" data-userid="">
+						</input>
 					</div>
 				</div>
 				<div class="col-md-2">
@@ -34,9 +36,14 @@
 					  <input type="text"  class="form-control" id="toDate"  name="toDate" placeholder="To Date" >
 					</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-1">
 					<div class="form-group">
-					  <input type="submit"  class="btn btn-primary" id="search"  name="search" value="Search" >
+					  <input type="submit"  class="btn btn-primary" id="idBtnSearch"  name="search" value="Search" >
+					</div>
+				</div>
+				<div class="col-md-2" style="margin-top: 8px;">
+					<div class="form-group">
+					  <label id="idLabelUserName"></label>
 					</div>
 				</div>
                <div align="right" style="padding:2px">
@@ -81,7 +88,7 @@
     $(".select2").select2();
   });
 $('#fromDate, #toDate').datepicker({
-	  format: 'dd-mm-yyyy',
+	  format: 'yyyy-mm-dd',
       autoclose: true
  });
 $(function () {

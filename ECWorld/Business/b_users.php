@@ -130,6 +130,18 @@ class b_users{
 		else
 			return null;
 	}
+	//$noOfUsers =0 means unlimited
+	function getBySearchStr($searchStr,$noOfUsers)
+	{
+		$userArr = $this->dUserObj->getBySearchStr($searchStr,"");
+		if(count($userArr)>0)
+			if($noOfUsers==1)
+				return $userArr[0];
+			else
+				return $userArr;
+		else
+			return null;
+	}
 	
 	function isClientLimitReached($userObj){
 		$clientCount = $this->dUserObj->getClientCount($userObj->UserID);

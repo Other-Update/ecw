@@ -198,6 +198,7 @@ class d_users{
 		$query="SELECT SQL_CALC_FOUND_ROWS u.DisplayID, u.UserID, u.Name, r.Name as RoleName, u.Mobile, u.Refundable,u.MinOpenBalanceMargin,u.BalanceLevel,u.DistributorFee,u.MandalFee,u.RetailerFee,u.Deposit, IFNULL((SELECT DisplayID from m_users where UserID=u.ParentID),0) AS ParentID,u.ClientLimit-($qClientCount) as ClientLimit, IFNULL(u.DOB,'0000-0000') AS DOB,IFNULL(($qCurrentBalance),'0') AS Wallet, u.Active as Status,u.UserID as UniqueUserID FROM m_users as u left join m_role as r on u.RoleID=r.RoleID WHERE $where ORDER BY u.UserID ASC";
 		//echo $query;
 		$arr=$this->db->selectArray($query,'e_users');
+		//echo "".json_encode($arr);
 		return $arr;
 	}
 	function updateAdminUserFee($feesObj){
@@ -361,6 +362,30 @@ class d_users{
 		$resRCG=$this->db->execute($qDelRCG);
 		
 		return $resRCG;
+	}
+	//UserID is priority1
+	//DisplayID is priority2
+	//Mobile is priority3
+	function getBySearchStr($searchStr,$fields){
+		if($fields==null || $fields=="") $fields="UserID,DisplayID,Name,Mobile";
+		$q="SELECT $fields FROM m_users WHERE UserID='$searchStr'";
+		$arr=$this->db->selectArray($q,'e_users');
+		if(count($arr)>0){
+			return $arr;
+		}
+		else{
+			$q="SELECT $fields FROM m_users WHERE DisplayID='$searchStr'";
+			$arr=$this->db->selectArray($q,'e_users');
+			if(count($arr)>0){
+				return $arr;
+			}
+			else{
+				$q="SELECT $fields FROM m_users WHERE Mobile='$searchStr'";
+				$arr=$this->db->selectArray($q,'e_users');
+				return $arr;
+			}
+		}
+		//echo $q;
 	}
 	function prepareToChangeParent($userID){
 	}

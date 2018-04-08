@@ -86,14 +86,26 @@ class d_payment{
 			$errorlogObj->add($ex->getMessage(),'0','Testing','Testing');
 		}
 	}
-	function getTransfers_DT($parentID,$isDataTable=false){
+	function getTransfers_DT($parentID,$fromDate,$toDate,$isDataTable=false){
 		$table = 't_payment';
 		$index_column = 'PaymentID';
 		$columns = array('PaymentID','CreatedDate', 'UserID','FromOrToUserID','DisplayUserID','Name','Mobile', 'Description', 'Amount','Commission','Type','Wallet','Remark','Mode','TotalAmount');
 		
 		$commissionAmntCalc="TRUNCATE(ABS(p.TotalAmount-ABS(p.Amount)),2)";
+		$whereFromToDateCond="";
+		//Filter for today if date is not passwed
+		$today =date('Y-m-d');
+		if($fromDate=="" && $toDate=="")
+		{
+			$fromDate=$today;
+			$toDate=$today;
+		}else if($fromDate=="")
+			$fromDate=$toDate;
+		else if($toDate=="")
+			$toDate=date($fromDate);
+		$whereFromToDateCond .="AND DATE(p.`CreatedDate`) >= STR_TO_DATE('$fromDate 00:00:00', '%Y-%m-%d %H:%i:%s') AND DATE(p.`CreatedDate`)<= STR_TO_DATE('$toDate 23:59:59', '%Y-%m-%d %H:%i:%s') ";
 		$qSelectDisplayUserID = 'SELECT DisplayID FROM m_users WHERE UserID=p.FromOrToUserID';
-		$query="SELECT SQL_CALC_FOUND_ROWS p.PaymentID,0 as SNo,p.CreatedDate,p.UserID,IFNULL(($qSelectDisplayUserID),'System') AS FromOrToUserID,u.DisplayID as DisplayUserID,u.Name,u.Mobile, p.Description, p.Amount,$commissionAmntCalc as Commission,p.Type,p.ClosingBalance AS Wallet,p.Remark,p.Mode,p.TotalAmount FROM t_payment as p LEFT JOIN m_users as u ON p.UserID=u.UserID WHERE (p.UserID='$parentID') AND p.TotalAmount>0 AND u.Active=1 ORDER BY p.PaymentID DESC";
+		$query="SELECT SQL_CALC_FOUND_ROWS p.PaymentID,0 as SNo,p.CreatedDate,p.UserID,IFNULL(($qSelectDisplayUserID),'System') AS FromOrToUserID,u.DisplayID as DisplayUserID,u.Name,u.Mobile, p.Description, p.Amount,$commissionAmntCalc as Commission,p.Type,p.ClosingBalance AS Wallet,p.Remark,p.Mode,p.TotalAmount FROM t_payment as p LEFT JOIN m_users as u ON p.UserID=u.UserID WHERE (p.UserID='$parentID') AND p.TotalAmount>0 AND u.Active=1 $whereFromToDateCond ORDER BY p.PaymentID DESC";
 		//echo $query;
 		return $this->dtObj->get($table, $index_column, $columns,$query);
 	}
