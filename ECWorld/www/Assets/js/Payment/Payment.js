@@ -18,8 +18,7 @@ function paymentAjax(postData,successFn,errorFn){
 	});
 }
 function getUserDetails(userID,callbackFn){
-	
-	paymentAjax("Action=GetUserDetailsForTranser&UserID="+userID,function(json){
+	paymentAjax("Action=GetUserDetailsForTranser&UserID="+userID+"&SearchStr="+userID,function(json){
 		callbackFn(json);
 	});
 }

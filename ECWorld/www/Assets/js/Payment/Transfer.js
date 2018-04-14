@@ -151,16 +151,27 @@ function changeUserSelectionPopup(triggeredBy,from,to){
 	//$(from).select2();
 }
 
-function getUserDetailsForTranser(elem,userID,callbackFn){
-	getUserDetails(userID,function(json){
+function getUserDetailsForTranser(searchStr,userElem,balanceElem,callbackFn){
+	getUserDetails(searchStr,function(json){
 		//console.log("getUserDetailsForTranser="+JSON.stringify(json));
 		if(json.isSuccess){
+			
+			//ar resp=JSON.parse(json);
+			var label=$(userElem).parent().find("label");
+			if(json.ecwIsUserFound=="0")
+				$(label).html($(label).html()+"("+json.ecwMessage+")");
+			else {
+				$(label).html($(label).html()+"("+json.ecwUser.Name+")");
+				//$(userElem).find("label").html(json.ecwUser.Name);
+				$(userElem).val(json.ecwUser.UserID);
+			}
+				
 			var data=JSON.parse(json.data);
 			//var userWallet = JSON.parse(data.UserWallet);
 			//alert(isNaN(data.UserWallet.Wallet)?0:data.UserWallet.Wallet);
-			elem.val(data.UserWallet.Wallet);
-			elem.data("balancelevel",isNaN(data.UserWallet.BalanceLevel)?0:data.UserWallet.BalanceLevel);
-			elem.data("actualbalance",isNaN(data.UserWallet.Wallet)?0:data.UserWallet.Wallet);
+			balanceElem.val(data.UserWallet.Wallet);
+			balanceElem.data("balancelevel",isNaN(data.UserWallet.BalanceLevel)?0:data.UserWallet.BalanceLevel);
+			balanceElem.data("actualbalance",isNaN(data.UserWallet.Wallet)?0:data.UserWallet.Wallet);
 			//alert(data.todayPurchase);
 			
 			if(callbackFn) callbackFn(data.IsOpeningBalReached,data.YesterdayPurchase,data.YesterdayBilling,data.TodayPurchase,data.TodayBilling,data.Margin);
@@ -283,11 +294,12 @@ function calculateMarginForCredit(amountToTransfer){
 function onAddTransferOpeningPoup(){
 	var selectedUser = $("#idSelectUserID").val();
 	//Load all users all time in the from DD
-	loadDDusers($("#idSelectFromUser"),1,true,"2,6",function(){
+	/*loadDDusers($("#idSelectFromUser"),1,true,"2,6",function(){
 		//$("#idSelectFromUser").val(selectedUser).select2().change();
 		$("#idSelectFromUser").change();
 		getUserDetailsForTranser($("#idBalanceFromUser"),$("#idSelectFromUser").val());
-	});
+	});*/
+	getUserDetailsForTranser($("#idSelectFromUserSearch").val(),$("#idSelectFromUser"),$("#idBalanceFromUser"));
 	/* loadDDusers($("#idSelectToUser"),selectedUser,false,"0",function(){
 		getUserDetailsForTranser($("#idBalanceToUser"),$("#idSelectToUser").val(),function(isOpeningBalReached,yesterdayPurchase,yesterdayBilling,todayPurchase,todayBilling,margin){
 			//alert(lastPurchase);
@@ -450,6 +462,7 @@ $(function(){
 	//loadDDusers($("#idSelectUserID"),1,true,"2",function(){
 		//reloadTransfers_DT();
 	//});
+	
 	$("#idBtnPayTransferPopup").click(function(){
 		onAddTransferOpeningPoup();
 	});
@@ -460,7 +473,14 @@ $(function(){
 		});
 		return false;
 	});
-	$("#idSelectFromUser").change(function(){
+	
+	$("#idSelectFromUserSearch").change(function(){
+		getUserDetailsForTranser($(this).val(),$("#idSelectFrom"),$("#idBalanceFromUser"));
+	});
+	$("#idSelectToUserSearch").change(function(){
+		getUserDetailsForTranser($(this).val(),$("#idSelectToUser"),$("#idBalanceToUser"));
+	});
+	/*$("#idSelectFromUser").change(function(){
 		changeUserSelectionPopup("from","#idSelectFromUser","#idSelectToUser");
 		getUserDetailsForTranser($("#idBalanceFromUser"),$(this).val());
 		//alert($("#idSelectFromUser").val());
@@ -484,8 +504,8 @@ $(function(){
 				});
 		});
 		}
-	});
-	$("#idSelectToUser").change(function(){
+	});*/
+	/*$("#idSelectToUser").change(function(){
 		//changeUserSelectionPopup("to","#idSelectToUser","#idSelectFromUser");
 		
 		getUserDetailsForTranser($("#idBalanceToUser"),$("#idSelectToUser").val(),function(isOpeningBalReached,yesterdayPurchase,yesterdayBilling,todayPurchase,todayBilling,margin){
@@ -499,7 +519,7 @@ $(function(){
 			//alert(JSON.stringify(margin));
 			calculateMargin();
 		});
-	});
+	});*/
 	$("#idCommissionPercent").keyup(function(){
 		//reCalculateTransfer();
 		validateAddTransferForm();

@@ -15,8 +15,11 @@
 				<div class="col-md-6">
 					<div class="form-group">
 					  <label style="color:#000"><?php echo $lang['from']; ?></label><span class="error"></span>
-					   <select class="form-control select2" name="FromUserID" id="idSelectFromUser" style="width: 100%;">
-						</select>
+					   <!--<select class="form-control select2" name="FromUserID" id="idSelectFromUser" style="width: 100%;">
+						</select>-->
+						<input type="text" class="form-control" name="FromUserIDSearch" id="idSelectFromUserSearch" style="width: 100%;" placeholder="User ID/Mobile" data-isuserloaded="0" value="1">
+						<input type="hidden" class="form-control" name="FromUserID" id="idSelectFromUser" style="width: 100%;" placeholder="User ID/Mobile" data-isuserloaded="0" value="1">
+						</input>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -28,8 +31,10 @@
 				<div class="col-md-6">
 					<div class="form-group">
 					  <label style="color:#000"><?php echo $lang['to']; ?></label><span class="error"></span>
-					  <select class="form-control select2" name="ToUserID" id="idSelectToUser" style="width: 100%;">
-						</select>
+					  <!--<select class="form-control select2" name="ToUserID" id="idSelectToUser" style="width: 100%;">
+						</select>-->
+						<input type="text" class="form-control" name="ToUserIDSearch" id="idSelectToUserSearch" style="width: 100%;" placeholder="User ID/Mobile" data-isuserloaded="0">
+						<input type="hidden" class="form-control" name="ToUserID" id="idSelectToUser" style="width: 100%;" placeholder="User ID/Mobile" data-isuserloaded="0" value="1">
 					</div>
 				</div>
 				<div class="col-md-6">

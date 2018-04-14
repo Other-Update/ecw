@@ -55,50 +55,82 @@ function getUserDetailsForTranser($mysqlObj,$lang){
 	$resultObj = new httpresult();
 	$userDetails = s_GetUserDetails();
 	
+	$userObj = new b_users($userDetails->user,$mysqlObj,$lang);
 	$pObj=new b_payment($userDetails->user,$mysqlObj,$lang);
 	
-	//date_default_timezone_set('Asia/Calcutta');
-	$yesterday =date('Y-m-d',strtotime("-1 days"));
-	$yestPurchase = $pObj->getTransferByDate($_POST['UserID'],$yesterday);
-	$yestPurchaseAmnt = count($yestPurchase)>0?$yestPurchase[0]->Amount:0;
-	$yestBilling = $pObj->getBillingByDate($_POST['UserID'],$yesterday);
-	$yestBillingPer = count($yestBilling)>0?$yestBilling[0]->CommissionPercent:0;
-	$yestBillingPer = $yestBillingPer?$yestBillingPer:0;
-	//echo json_encode($yestBilling);
-	$today =date('Y-m-d');
-	//echo $today;
-	$todayPurchase = $pObj->getTransferByDate($_POST['UserID'],$today);
-	$todayPurchaseAmnt = count($todayPurchase)>0?$todayPurchase[0]->Amount:0;
-	$todayBilling = $pObj->getBillingByDate($_POST['UserID'],$today);
-	$todayBillingPer = count($todayBilling)>0?$todayBilling[0]->CommissionPercent:0;
-	$todayBillingPer = $todayBillingPer?$todayBillingPer:0;
-	//echo "<br /> todayPurchaseAmnt="+$todayPurchaseAmnt;
-	$dObj=new b_distmargin($userDetails->user,$mysqlObj,$lang);
-	$margin = $dObj->getByUserID($_POST['UserID']);
-	//$todayMargin = $dObj->getByUserID($_POST['UserID'],$todayPurchaseAmnt);
+	//Search user by search string
+	$searchStr= $_POST["SearchStr"];
+	$userId= $_POST["UserID"];
+	$user=null;
+	//If searchStr and userId are equal then that means user has been loaded already. No need to load the user again
+	//if($searchStr != $userId)
+	//{
+		$user=$userObj->getBySearchStr($searchStr,1);
+		//echo "Userid=".$userObj->UserID;
+		if($user!=null) $userId=$user->UserID;
+		else $userId = -1;
+	//}	
+	//echo "111";
+	$response="";
+	if($userId==null || $userId==-1 || $userId==""){
+			
+		$response='{"data":"","ecwIsUserFound":"0","ecwMessage":"* User Not Found","ecwUser":""}';
+		
+		$response = json_decode($response);
+	}else{
 	
-	$minOpeningBlance = $dObj->getUserMinOpeningBalance($_POST['UserID']);
-	$dObj=new b_transaction($userDetails->user,$mysqlObj,$lang);
-	$openingBalance = $dObj->getOpeningBlanceByUserID($_POST['UserID']);
-	//echo 'minOpeningBlance='.$minOpeningBlance.',openingBalance='.$openingBalance;
-	$isOpeningBalReached = $minOpeningBlance<=$openingBalance?1:0;
-	//echo 'isOpeningBalReached='.$isOpeningBalReached;
-	
-	$userObj=new b_users($userDetails->user,$mysqlObj,$lang);
-	$wallet = $userObj->getWalletBalance($_POST['UserID']);
-	if(isset($_POST['ParentID']))
-		$balanceToBePaid = $pObj->getBalanceToBePaid($_POST['UserID'],$_POST['ParentID']);
-	else
-		$balanceToBePaid=0;
+		//date_default_timezone_set('Asia/Calcutta');
+		$yesterday =date('Y-m-d',strtotime("-1 days"));
+		$yestPurchase = $pObj->getTransferByDate($userId,$yesterday);
+		$yestPurchaseAmnt = count($yestPurchase)>0?$yestPurchase[0]->Amount:0;
+		$yestBilling = $pObj->getBillingByDate($userId,$yesterday);
+		$yestBillingPer = count($yestBilling)>0?$yestBilling[0]->CommissionPercent:0;
+		$yestBillingPer = $yestBillingPer?$yestBillingPer:0;
+		//echo json_encode($yestBilling);
+		$today =date('Y-m-d');
+		//echo $today;
+		$todayPurchase = $pObj->getTransferByDate($userId,$today);
+		$todayPurchaseAmnt = count($todayPurchase)>0?$todayPurchase[0]->Amount:0;
+		$todayBilling = $pObj->getBillingByDate($userId,$today);
+		$todayBillingPer = count($todayBilling)>0?$todayBilling[0]->CommissionPercent:0;
+		$todayBillingPer = $todayBillingPer?$todayBillingPer:0;
+		//echo "<br /> todayPurchaseAmnt="+$todayPurchaseAmnt;
+		$dObj=new b_distmargin($userDetails->user,$mysqlObj,$lang);
+		$margin = $dObj->getByUserID($userId);
+		//$todayMargin = $dObj->getByUserID($_POST['UserID'],$todayPurchaseAmnt);
+		
+		$minOpeningBlance = $dObj->getUserMinOpeningBalance($userId);
+		$dObj=new b_transaction($userDetails->user,$mysqlObj,$lang);
+		$openingBalance = $dObj->getOpeningBlanceByUserID($userId);
+		//echo 'minOpeningBlance='.$minOpeningBlance.',openingBalance='.$openingBalance;
+		$isOpeningBalReached = $minOpeningBlance<=$openingBalance?1:0;
+		//echo 'isOpeningBalReached='.$isOpeningBalReached;
+		
+		$userObj=new b_users($userDetails->user,$mysqlObj,$lang);
+		$wallet = $userObj->getWalletBalance($userId);
+		if(isset($_POST['ParentID']))
+			$balanceToBePaid = $pObj->getBalanceToBePaid($userId,$_POST['ParentID']);
+		else
+			$balanceToBePaid=0;
 
-	$resultObj->isSuccess=true;
-	$resultObj->message='success';
-	/* echo $yestBillingPer;
-	echo "<br />";
-	echo $todayBillingPer; */
-	$resultObj->data='{"IsOpeningBalReached":'.$isOpeningBalReached.',"YesterdayPurchase":'.$yestPurchaseAmnt.',"YesterdayBilling":'.$yestBillingPer.',"TodayPurchase":'.$todayPurchaseAmnt.',"TodayBilling":'.$todayBillingPer.',"Margin":'.json_encode($margin).',"BalanceToBePaid":'.json_encode($balanceToBePaid).',"UserWallet":'.json_encode($wallet).'}';
+		$resultObj->isSuccess=true;
+		$resultObj->message='success';
+		/* echo $yestBillingPer;
+		echo "<br />";
+		echo $todayBillingPer; */
+		$resultObj->data='{"IsOpeningBalReached":'.$isOpeningBalReached.',"YesterdayPurchase":'.$yestPurchaseAmnt.',"YesterdayBilling":'.$yestBillingPer.',"TodayPurchase":'.$todayPurchaseAmnt.',"TodayBilling":'.$todayBillingPer.',"Margin":'.json_encode($margin).',"BalanceToBePaid":'.json_encode($balanceToBePaid).',"UserWallet":'.json_encode($wallet).'}';
+		$response=$resultObj;
+		
+		$response->ecwIsUserFound="1";
+		$response->ecwMessage="User found";
+		$response->ecwUser=$user;
+		//User wouldn't have loaded fo admin. so say it is admin
+		//if($userId==1)
+			//$response->ecwUser='{"Name":"Admin"}';
+	}
+	echo  json_encode($response);
 	
-	echo json_encode($resultObj);
+	//echo json_encode($resultObj);
 }
 function getBalanceToBePaid_NIU($mysqlObj,$lang){
 	$userDetails = s_GetUserDetails();
