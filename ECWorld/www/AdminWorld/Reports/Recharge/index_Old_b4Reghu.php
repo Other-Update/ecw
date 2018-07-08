@@ -2,9 +2,6 @@
 	include_once '../../../../Resource/Reports/Recharge.php';
 	$report =true;
 	include '../../../Header/Header.php';
-	include '../../Connect/config.php';
-	$query = "SELECT UserID,DisplayID,Name,Mobile FROM m_users WHERE Active=1 ORDER BY Name ASC " ;
-    $res = $connect->query($query);
 ?>
 <style>
 .form-group { margin-bottom: 5px !important; }
@@ -23,10 +20,6 @@
 				<div class="col-md-3">
 					<div class="form-group">
 					 <select class="form-control select2" name="userId" id="idSelectUserID" style="width: 100%;">
-					 	<option selected="selected" value=""> Select User </option>
-					 	<?php while($row = $res->fetch()){  ?>
-					 	<option data-mobile="<?php echo $row['Mobile']; ?>" value="<?php echo $row['UserID']; ?>" > <?php echo $row['DisplayID'].'-'.$row['Name']; ?></option>
-					 	<?php } ?>
 					</select>
 					</div>
 				</div>

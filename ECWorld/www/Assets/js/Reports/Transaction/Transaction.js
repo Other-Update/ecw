@@ -180,7 +180,7 @@ function  getOpenCloseBalance() {
 	});
 } 
  
-function showUsers(){
+/* function showUsers(){
 	loadUsersForReport($("#idSelectUserID"),{
 		"Action":"GetAllUsers",
 		"ParentID":"0",
@@ -217,11 +217,11 @@ function getNetworkList(){
 		loaderElem:$('body')
 	});
 }
-
+ */
 
 $(function(){
-	showUsers();
-	getNetworkList();
+	//showUsers();
+	//getNetworkList();
 	$("#Search_PayCollection").click(function(e){
 		refreshTransactions();
 		return false;

@@ -167,7 +167,7 @@ function searchUsers(){
 	//alert($("#idSelectUser").val()+", "+$("#idSelectRole").val());
 	reloadUsers_DT();
 }
-function loadUsersAutoSelect(){
+/* function loadUsersAutoSelect(){
 	
 	loadUsers($("#idSelectUser"),{
 		"Action":"GetAllUsers",
@@ -203,13 +203,13 @@ function loadRolesAutoSelect(){
 		loaderElem:$('body')
 	});
 }
-
+ */
 $(function(){
 	//Loading users might be slower than loading roles.
 	//So load data table user inside success of load dropdown users.
 	//So that roles and users dropdown will have data to filter data table users.
-	loadRolesAutoSelect();
-	loadUsersAutoSelect();
+	//loadRolesAutoSelect();
+	//loadUsersAutoSelect();
 	
 	$("#idSelectUser, #idSelectRole").change(function(){
 		searchUsers();

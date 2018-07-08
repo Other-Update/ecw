@@ -2,13 +2,6 @@
 	include_once '../../../../Resource/Reports/Transaction.php';
 	$report =true;
 	include '../../../Header/Header.php';
-	
-	include '../../Connect/config.php';
-	$query = "SELECT UserID,DisplayID,Name,Mobile FROM m_users WHERE Active=1 ORDER BY Name ASC " ;
-    $res = $connect->query($query);
-    
-    $query1 = "SELECT Name FROM m_networkprovider WHERE Active=1 ORDER BY Name ASC " ;
-    $res1 = $connect->query($query1);
 ?>
 <style>
 .form-group { margin-bottom: 5px !important; }
@@ -36,14 +29,9 @@ table tr th, tr td {
 				<div class="col-md-2">
 					<div class="form-group">
 					 <select class="form-control select2" name="userId" id="idSelectUserID" style="width: 100%;">
-					     <option selected="selected" value=""> Select User </option>
-					 	<?php while($row = $res->fetch()){  ?>
-					 	<option value="<?php echo $row['UserID']; ?>" > <?php echo $row['DisplayID'].'-'.$row['Name'].'-'.$row['Mobile'];?></option>
-					 	<?php } ?>
 					</select>
 					</div>
 				</div>
-				
 				<div class="col-md-2">
 					<div class="form-group">
 					  <input type="number"  class="form-control" id="mobile_no"  name="mobile_no" placeholder="User mobile no" >
@@ -56,10 +44,7 @@ table tr th, tr td {
 				</div>
 				<div class="col-md-2" >
 					<div class="form-group">
-					 <select class="form-control SelectedNetwork" name="network" id="network"> <option selected="selected" value=""> Select network </option>
-					     <?php while($row1 = $res1->fetch()){  ?>
-					 	<option value="<?php echo $row1['Name']; ?>" > <?php echo $row1['Name']; ?> </option>
-					 	<?php } ?>
+					 <select class="form-control SelectedNetwork" name="network" id="network">
 					</select>
 					</div>
 				</div>

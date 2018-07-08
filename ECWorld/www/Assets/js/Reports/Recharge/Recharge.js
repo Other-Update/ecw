@@ -125,7 +125,7 @@ function refreshRechargeReport(){
 	});
 } */
 
-function showUsers(){
+/* function showUsers(){
 	loadUsersForReport($("#idSelectUserID"),{
 		"Action":"GetAllUsers",
 		"ParentID":"0",
@@ -135,10 +135,10 @@ function showUsers(){
 	},true,function(isSuccess){
 		$('#idSelectUserID').prepend('<option selected="selected" value=""> Select User </option>');
 	});
-}
+} */
 
 $(function(){
-	showUsers();
+	//showUsers();
 	//getNetworkList();
 	$("#Search_PayCollection").click(function(e){
 		refreshRechargeReport();

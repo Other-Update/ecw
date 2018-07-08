@@ -2,9 +2,6 @@
 	include_once '../../../../Resource/Payment.php';
 	$report =true;
 	include '../../../Header/Header.php';
-	include '../../Connect/config.php';
-	$query = "SELECT UserID,DisplayID,Name,Mobile FROM m_users WHERE Active=1 ORDER BY Name ASC " ;
-    $res = $connect->query($query);
 ?>
 <style>
 .errorMsg { display:none; color:red;}
@@ -24,11 +21,7 @@
 				<div class="col-md-3">
 					<div class="form-group">
 					 <select class="form-control select2" name="userId" id="idSelectUserID" style="width: 100%;">
-					 	<option selected="selected" value=""> Select User </option>
-					 	<?php while($row = $res->fetch()){  ?>
-					 	<option value="<?php echo $row['UserID']; ?>" > <?php echo $row['DisplayID'].'-'.$row['Name'].'-'.$row['Mobile'];; ?></option>
-					 	<?php } ?>
-					</select>
+						</select>
 					</div>
 				</div>
 				<div class="col-md-2">
@@ -88,9 +81,10 @@
     $(".select2").select2();
   });
 $('#fromDate, #toDate').datepicker({
-	  format: 'dd-mm-yyyy',
+	  format: 'yyyy-mm-dd',
       autoclose: true
- });
+ }).datepicker("setDate", new Date());
+ //$("#mydate").datepicker().datepicker("setDate", new Date());
 $(function () {
    $('#idPaymentTransfer').DataTable({
       "paging": true,

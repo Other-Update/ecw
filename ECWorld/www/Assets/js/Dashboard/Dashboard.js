@@ -542,7 +542,7 @@ $(function(){
 		var mobile   		= $("#Pre_mobile").val();
 		var operator	 	= $("#idSelectMobilePrepaidOperator").val();
 		var rechargeAmount 	= $("#rcAmountPrepaid").val(); 
-		var mobile_regex    = /^[789]\d{9}$/;
+		var mobile_regex    = /^[56789]\d{9}$/;
 
 		if(mobile_regex.test(mobile) && mobile.length==10){
 			$("span.PreNumberErr").html("");
@@ -574,7 +574,7 @@ $(function(){
 		var mobile   		= $("#Post_Mobile").val();
 		var operator	 	= $("#idSelectMobilePostpaidOperator").val();
 		var rechargeAmount 	= $("#rcAmountPostpaid").val(); 
-		var mobile_regex    = /^[789]\d{9}$/;
+		var mobile_regex    = /^[56789]\d{9}$/;
 
 		if(mobile_regex.test(mobile) && mobile.length==10){
 			$("span.PostNumberErr").html("");
