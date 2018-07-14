@@ -2,9 +2,9 @@
 date_default_timezone_set("Asia/Kolkata");
 $driver = 'mysql';
 $host = 'localhost';
-$database = 'ecworld1_live';
-$user = 'ecworld1_ecworld';
-$pass = '_F9N@_{QtN05';
+$database = 'ecworld';
+$user = 'root';
+$pass = '';
 
 global $connect;
 $connect = connect($driver, $host, $database, $user, $pass);
