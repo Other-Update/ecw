@@ -5,7 +5,7 @@ class d_usersession{
 	private $db;
 	private $filename='t_usersession.php';
 	private $tablename='t_usersession';
-	var $logEnabledForUserSession = false;
+	var $logEnabledForUserSession = true;
 	
 	function __construct($mysqlObj){
 		$this->db = $mysqlObj;
