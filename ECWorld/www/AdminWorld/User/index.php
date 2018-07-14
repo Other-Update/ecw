@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                  <td colspan="10">Loading users...</td>
+                  <td colspan="10">Select user and role to load the user list...</td>
                 </tr>
                 </tbody>
                 <!--<tfoot>
