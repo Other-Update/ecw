@@ -3,6 +3,8 @@ $config = '';//require '../../../Settings/config.php';
 //echo 'report='.$report;
 if(isset($report) && $report==true)
 	$config = require '../../../../Settings/config.php';
+else if(isset($mainfolder) && $mainfolder==true)
+	$config = require '../../Settings/config.php';
 else
 	$config = require '../../../Settings/config.php';
 $WebsiteUrl=$config['general']['websiteurl'];
