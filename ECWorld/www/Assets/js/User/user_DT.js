@@ -210,7 +210,7 @@ $(function(){
 	//So that roles and users dropdown will have data to filter data table users.
 	//loadRolesAutoSelect();
 	//loadUsersAutoSelect();
-	
+	loadUsers_DT();
 	$("#idSelectUser, #idSelectRole").change(function(){
 		searchUsers();
 	});
