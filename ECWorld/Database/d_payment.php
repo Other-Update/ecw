@@ -17,7 +17,7 @@ class d_payment{
 		try{
 			$q="SELECT BalanceToBePaid FROM t_payment WHERE UserID='$userID' AND FromOrToUserID='$parentID' ORDER BY CreatedDate DESC LIMIT 1"; 
 			
-			echo '<br />DB- Query = '.$q;
+			//echo '<br />DB- Query = '.$q;
 			$res=$this->db->selectArray($q,'e_payment');
 			return $res;
 		}catch(Exception $ex){
