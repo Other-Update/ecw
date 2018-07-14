@@ -69,6 +69,7 @@
       increaseArea: '20%' // optional
     });
 	$('#idbtnLogin').click(function(){
+		sessionStorage.removeItem("AllUsersJson");//Clear up this data, so that this will load fresh data for the first time after login
 		ajaxRequest({
 			type: 'post',
 			url: 'indexSession.php',

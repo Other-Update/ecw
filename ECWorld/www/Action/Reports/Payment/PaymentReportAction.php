@@ -190,6 +190,6 @@ function addTransfer($mysqlObj,$lang,$langSMS){
 function getTransfers_DT($mysqlObj,$lang,$parentID){
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
 	$sObj=new b_payment($loggedInUserDetails->user,$mysqlObj,$lang);
-	echo $sObj->getTransfers_DT($parentID);//$_POST["ParentID"]);
+	echo $sObj->getTransfers_DT($parentID,$_POST["FromDate"],$_POST["ToDate"]);//$_POST["ParentID"]);
 }
 ?>

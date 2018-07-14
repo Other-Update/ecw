@@ -53,7 +53,9 @@ function loadTransfers_DT(){
 			"type" : "POST",
 			"data" : {
 				"Action" : "GetTransfers_DT",
-				"ParentID" : function(d){ return $("#idSelectUserID").val();}
+				"ParentID" : function(d){ return $("#idSelectUserID").val();},
+				"FromDate" : function(d){ return $("#fromDate").val();},
+				"ToDate" : function(d){ return $("#toDate").val();}
 			}
 		},
 		500,
@@ -104,6 +106,7 @@ function loadTransfers_DT(){
 		});
 }
 function reloadTransfers_DT(){
+	//loadTransfers_DT();
 	$('#idPaymentTransfer').DataTable().ajax.reload();
 }
 function changeUserSelectionPopup(triggeredBy,from,to){	
@@ -385,10 +388,15 @@ function addTransfer(){
 
 $(function(){
 	//getUserDetailsForTranser(200,function(){},function(){});
+
 	loadTransfers_DT();
+	$("#search").click(function(){
+	debugger;
+		reloadTransfers_DT();
+	});
 	loadDDusers($("#idSelectUserID"),1,true,"2",function(){
 		//$("#idSelectUserID").val(1).select2().change();
-		reloadTransfers_DT();
+		//reloadTransfers_DT();
 	});
 	$("#idBtnPayTransferPopup").click(function(){
 		onAddTransferOpeningPoup();

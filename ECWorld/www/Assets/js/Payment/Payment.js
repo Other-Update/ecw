@@ -27,7 +27,7 @@ function loadDDusers(elem,parentID,addSystemUser,excludeRoleIDs,callbackFn){
 	//loadUsers($("#idSelectUserID, #idSelectFromUser, #idSelectToUser"),{
 	elem.html();
 	loadUsers(elem,{
-		"Action":"GetAllUsers",
+		"Action":"GetUsersByParent",
 		"ParentID":parentID,
 		"IncludeParent":1,
 		"IncludeAllSubUsers":1,

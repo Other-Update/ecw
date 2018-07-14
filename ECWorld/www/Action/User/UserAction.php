@@ -141,6 +141,8 @@ function getUsersByParent($mysqlObj,$lang){
 	echo json_encode($userObj->getUsersByParentID($parentID,$includeParent,$excludeRoleIDs,$includeAllSubUsers));
 }
 function GetAllUsers($mysqlObj,$lang){
+	$today =date('Y-m-d H:i:s');
+	//echo ",Call started=".$today;
 	$parentID = $_POST['ParentID'];
 	$includeAllSubUsers = $_POST['IncludeAllSubUsers'];
 	//echo "<br/> includeAllSubUsers".$includeAllSubUsers;
@@ -157,10 +159,16 @@ function GetAllUsers($mysqlObj,$lang){
 	$parentID = $parentID==0?$userDetails->user->UserID:$parentID;
 	$userObj=new b_users($userDetails->user,$mysqlObj,$lang);
 	//$roles = explode(',',$roleIDs);
-	$fatObj = new b_fat($userDetails->user,$mysqlObj);
-	$fatRes = $fatObj->getByParent($parentID);
+	//$fatObj = new b_fat($userDetails->user,$mysqlObj);
+	//$fatRes = $fatObj->getByParent($parentID);
+	
+	$today =date('Y-m-d H:i:s');
+	//echo ",Before get users=".$today;
 	$userRes = $userObj->getAllUsers($parentID,$includeParent,$includeAllSubUsers,$excludeRoleIDs);
-	$returnRes = '{"fat":'.json_encode($fatRes).',"users":'.json_encode($userRes).'}';
+	$today =date('Y-m-d H:i:s');
+	//echo ",After get users=".$today;
+	//echo "UsersCount=".count($userRes);
+	$returnRes = '{"fat":[],"users":'.json_encode($userRes).'}';
 	echo json_encode($returnRes);
 }
 

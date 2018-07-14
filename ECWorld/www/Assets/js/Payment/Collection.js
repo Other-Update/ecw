@@ -159,7 +159,7 @@ function reloadCollection_DT(){
 	$('#idTblCollectionList').DataTable().ajax.reload();
 }
 function getUserDetailsForCollection(elem,userID,parentID,callbackFn){
-	paymentAjax("Action=GetUserDetailsForTranser&UserID="+userID+"&ParentID="+parentID,function(json){
+	paymentAjax("Action=GetUserDetailsForTranser&UserID="+userID+"&SearchStr="+userID+"&&ParentID="+parentID,function(json){
 		//alert(JSON.stringify(json));
 		if(json.isSuccess){
 			var data=JSON.parse(json.data);

@@ -2,7 +2,24 @@
 var _currentPage = 'UserPermission';
 var _curFormElem = null;
 var _curTabContentElem = null;
-function loadUsers(){
+
+function loadUsers_new(){
+
+	var elem = $("#idSelectUserID");
+	elem.html();
+	loadUsers(elem,{
+			"Action":"GetUsersByParent",
+			"ParentID":1,
+			"IncludeParent":1,
+			"IncludeAllSubUsers":1,
+			"ExcludeRoleIDs":"2",
+			"IncludeFeatureAccess":1
+	},true,function(isSuccess){
+		
+		loadServicePermission($(elem).val());
+	});
+}		
+function loadUsers_old(){
 	ajaxRequest({
 		type: 'post',
 		//url: '../User/UserAction.php',
@@ -44,7 +61,7 @@ function loadUsers(){
 		isLoader:0,
 		loaderElem:$('body')
 	});
-}		
+}
 function loadServicePermission(userID){
 	//alert('loadServicePermission=userID='+userID);
 	
@@ -188,7 +205,7 @@ function initPage(){
 		loadServicePermission(-1);//-1 is userID for GeneralRecharge
 	else
 		loadUsers(); */
-	loadUsers();
+	loadUsers_new();
 }
 $(function(){
 	initPage();
