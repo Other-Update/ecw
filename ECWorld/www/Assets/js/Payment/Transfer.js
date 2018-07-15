@@ -155,13 +155,13 @@ function getUserDetailsForTranser(searchStr,userElem,balanceElem,callbackFn){
 	getUserDetails(searchStr,function(json){
 		//console.log("getUserDetailsForTranser="+JSON.stringify(json));
 		if(json.isSuccess){
-			
+				debugger;
 			//ar resp=JSON.parse(json);
 			var label=$(userElem).parent().find("label");
 			if(json.ecwIsUserFound=="0")
-				$(label).html($(label).html()+"("+json.ecwMessage+")");
+				$(label).html(($(label).html().indexOf("From")!=-1?"From":"To")+"("+json.ecwMessage+")");
 			else {
-				$(label).html($(label).html()+"("+json.ecwUser.Name+")");
+				$(label).html(($(label).html().indexOf("From")!=-1?"From":"To")+"("+json.ecwUser.Name+")");
 				//$(userElem).find("label").html(json.ecwUser.Name);
 				$(userElem).val(json.ecwUser.UserID);
 			}
