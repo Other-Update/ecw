@@ -475,7 +475,7 @@ $(function(){
 	});
 	
 	$("#idSelectFromUserSearch").change(function(){
-		getUserDetailsForTranser($(this).val(),$("#idSelectFrom"),$("#idBalanceFromUser"));
+		getUserDetailsForTranser($(this).val(),$("#idSelectFromUser"),$("#idBalanceFromUser"));
 	});
 	$("#idSelectToUserSearch").change(function(){
 		getUserDetailsForTranser($(this).val(),$("#idSelectToUser"),$("#idBalanceToUser"));
