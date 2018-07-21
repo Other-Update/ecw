@@ -33,13 +33,15 @@
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
-					  <input type="text"  class="form-control" id="fromDate"  name="fromDate" placeholder="From Date">
+					  <!--<input type="text"  class="form-control" id="fromDate"  name="fromDate" placeholder="From Date">-->
+					  <input type="text"  class="form-control" id="fromDate"  name="fromDate" value="<?php echo date('Y-m-d'); ?>" readonly >
 					</div>
 				</div>
 				<div class="col-md-2">
 					<div class="form-group">
 					  
-					  <input type="text"  class="form-control" id="toDate"  name="toDate" placeholder="To Date" >
+					  <!--<input type="text"  class="form-control" id="toDate"  name="toDate" placeholder="To Date" >-->
+					  <input type="text"  class="form-control" id="toDate"  name="toDate" value="<?php echo date('Y-m-d'); ?>" readonly >
 					</div>
 				</div>
 				<div class="col-md-2">
@@ -87,18 +89,18 @@
   $(function () {
     $(".select2").select2();
   });
-$('#fromDate, #toDate').datepicker({
-	  format: 'dd-mm-yyyy',
+	$('#fromDate, #toDate').datepicker({
+	  format: 'yyyy-mm-dd',
       autoclose: true
- });
+	});	
 $(function () {
-   $('#idPaymentTransfer').DataTable({
+   /* $('#idPaymentTransfer').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": false
-    });
+    }); */
   }); 
 </script>

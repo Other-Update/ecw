@@ -105,9 +105,17 @@ function loadTransfers_DT(){
 			e.preventDefault();
 		});
 }
+
+var isDTLoaded =false;
 function reloadTransfers_DT(){
-	//loadTransfers_DT();
+	if(isDTLoaded)	{
 	$('#idPaymentTransfer').DataTable().ajax.reload();
+	}
+	else {
+		loadTransfers_DT();
+		isDTLoaded = true;
+	}
+	
 }
 function changeUserSelectionPopup(triggeredBy,from,to){	
 	if(triggeredBy=='from'){
@@ -293,7 +301,6 @@ function caluculateAmount_NIU(){
 function validateAddTransferForm(){
 	clearPopupErrors();
 	var isValidated = true;
-	//debugger;
 	var type=$("#idType").val();
 	var walletFromUser = parseFloat($("#idBalanceFromUser").val());
 	var balanceLevelFromUser = parseFloat($("#idBalanceFromUser").data("balancelevel"));
@@ -389,10 +396,9 @@ function addTransfer(){
 $(function(){
 	//getUserDetailsForTranser(200,function(){},function(){});
 
-	loadTransfers_DT();
+	//loadTransfers_DT();
 	$("#search").click(function(){
-	debugger;
-		reloadTransfers_DT();
+		reloadTransfers_DT();return false;
 	});
 	loadDDusers($("#idSelectUserID"),1,true,"2",function(){
 		//$("#idSelectUserID").val(1).select2().change();
@@ -455,7 +461,7 @@ $(function(){
 	});
 	//calculateMargin();
 	$("#idSelectUserID").change(function(){
-		reloadTransfers_DT();
+		//reloadTransfers_DT();
 	});
 	$("#idType").change(function(){
 		//alert($("#idMode").children('option').length);
