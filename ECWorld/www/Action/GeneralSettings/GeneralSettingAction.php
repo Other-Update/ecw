@@ -22,6 +22,9 @@ switch($action){
 	case 'UpsertDTHAmt':
 		UpsertDTHAmt($mysqlObj,$lang);
 		break;
+	case 'UpsertPAYAmt':
+		UpsertPAYAmt($mysqlObj,$lang);
+		break;
 	case 'UpsertUserBalance':
 		UpsertUserBalance($mysqlObj,$lang);
 		break;
@@ -78,6 +81,14 @@ function UpsertDTHAmt($mysqlObj,$lang){
 	echo json_encode($sObj->UpsertDTHAmt($sObj));
 }
 
+//Payment Amount
+function UpsertPAYAmt($mysqlObj,$lang){
+	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
+	$sObj=new b_generalsettings($loggedInUserDetails->user,$mysqlObj,$lang);
+	$sObj->PAY_MinAmt = $_POST['PAY_MinAmt'];
+	$sObj->PAY_MaxAmt = $_POST['PAY_MaxAmt'];
+	echo json_encode($sObj->UpsertPAYAmt($sObj));
+}
 //User Balance Amount
 function UpsertUserBalance($mysqlObj,$lang){
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));

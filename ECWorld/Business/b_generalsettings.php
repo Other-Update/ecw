@@ -120,6 +120,25 @@ class b_generalsettings{
 			$errorlogObj->add($ex->getMessage(),'0','Testing','Testing');
 		}
 	}
+	//Update for Payment Amount
+	function UpsertPAYAmt($payamtObj){
+		try{	
+			$resultObj = new httpresult();
+			$res = $this->dGsObj->updatePAYAmt($payamtObj);
+			$resultObj->isSuccess=$res;
+			if($res){
+				$resultObj->message=$this->lang['success'];
+			}else{
+				$resultObj->message=$this->lang['failed'];
+			}
+			return $resultObj;
+
+		}catch(Exception $ex){
+			echo '<br />BS- Error';
+			$errorlogObj = new errorlog($this);
+			$errorlogObj->add($ex->getMessage(),'0','Testing','Testing');
+		}
+	}
 	
 	//Update for User Balance Amount
 	function UpsertUserBalance($userbalanceObj){

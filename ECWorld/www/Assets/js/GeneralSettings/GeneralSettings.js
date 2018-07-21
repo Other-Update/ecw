@@ -60,6 +60,8 @@ function getGeneralSettings(){
 			$("#TA_MaxAmt").val(jsondata.TA_MaxAmt);
 			$("#DTH_MinAmt").val(jsondata.DTH_MinAmt);
 			$("#DTH_MaxAmt").val(jsondata.DTH_MaxAmt);	
+			$("#PAY_MinAmt").val(jsondata.PAY_MinAmt);
+			$("#PAY_MaxAmt").val(jsondata.PAY_MaxAmt);	
 			
 		},
 		error: function(error){
@@ -178,7 +180,32 @@ $("#idBtnUpdateDTHAmt").click(function(e){
 		loaderElem:$('.box-body')
 	});
 });
-
+//Update Payment Amount
+$("#idBtnUpdatePAYAmt").click(function(e){
+	e.preventDefault();
+	ajaxRequest({
+		type: 'post',
+		url: '../../Action/GeneralSettings/GeneralSettingAction.php',
+		data: $('form#GeneralSettingsPAYAmt').serialize(),
+		success: function(data){
+			var jsonData = JSON.parse(data);
+			var errorData = JSON.parse(jsonData.data);
+			$('#PAYAmtMsg1').fadeIn(100,function(){});
+			$('#PAYAmtMsg1').fadeOut(5000,function(){});
+			if(jsonData.isSuccess) {
+				$("#PAYAmtMsg1").html("<div class='alert alert-success alert-dismissible'><p>"+jsonData.message+"</p></div>").show();
+			}else{
+				$("#PAYAmtMsg1").html("<div class='alert alert-danger alert-dismissible'><p>"+jsonData.message+"</p></div>").show();
+			}
+		},
+		error: function(error){
+			alert('Failed');
+		}
+	},{
+		isLoader:1,
+		loaderElem:$('.box-body')
+	});
+});
 
 //Update User Balance Amount
 $("#idBtnUpdateUserBalance").click(function(e){

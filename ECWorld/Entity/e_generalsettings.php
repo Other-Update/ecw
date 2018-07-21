@@ -44,10 +44,15 @@ class e_generalsettings{
 	
 	var $RA_MinAmt;
 	var $RA_MaxAmt;
+	
 	var $TA_MinAmt;
 	var $TA_MaxAmt;
+	
 	var $DTH_MinAmt;
 	var $DTH_MaxAmt;
+	
+	var $PAY_MinAmt;
+	var $PAY_MaxAmt;
 	
 	var $CreatedDate;
 	var $CreatedBy;
