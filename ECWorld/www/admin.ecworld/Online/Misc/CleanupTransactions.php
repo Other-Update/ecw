@@ -13,6 +13,7 @@ include_once APPROOT_URL.'/Business/b_generalsettings.php';
 include_once APPROOT_URL.'/Business/b_transaction.php';
 include_once APPROOT_URL.'/Business/b_payment.php';
 
+set_time_limit(3000);//Execution timeout increased to 50minutes for this session to avoid disconnect when running this long script. this script is expected to run from 30minutes to 1hour. this duration may increase depends on number of users and transacton data. at this point in time there are 1200 users.
 //Get Token using the following url
 //http://localhost/ECWorldBB/ECWorld/www/admin.ecworld/Online/Login.php?Name=&Password=&RememberMe=0
 
