@@ -26,7 +26,7 @@
          <div id="topbar">
             <div class="line">
                <div class="s-12 m-6 l-6">
-                  <p>Mobile: <strong> +91 96XXX XXXXX</strong>  Email ID: <strong>info@ecworld.info</strong></p>
+                  <p>Mobile: <strong> +91 9940955897</strong>  Email ID: <strong>info@ecworld.info</strong></p>
                </div>
                <div class="s-12 m-6 l-6">
                   <div class="social right">
@@ -183,8 +183,8 @@
                         <p>Pollachi main road, Premier mills,</p>
                         <p>Coimbatore - 641 032 </p><br>
                         <p><strong>CONTACT</strong></p>
-                        <p>Landline: +91 96XXX XXXX</p>
-                        <p>Mobile: +91 96XXX XXXX</p><br>
+                        <p>Mobile: +91 9940955897</p>
+                        <p>Mobile: +91 8883406086</p><br>
                         <p><strong> EMAIL:<br></strong> info@ecworld.info</p>
                      </address>
                   </div>
