@@ -54,7 +54,8 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 		case "Payment":
 			//$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments==true ? true: false:false;
 			$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments:false;
-			$userId =$user->UserID;
+			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:$user->UserID;
+			//$userId =$user->UserID;
 			//echo "userId=".$userId.",";die;
 			$payObj=new b_payment($user,$mysqlObj,"");
 			$res = $payObj->getTransfersByDateRange_DT($userId,$startDate, $endDate,$onlyMyPayments,true);
