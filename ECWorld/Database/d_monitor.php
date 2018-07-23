@@ -7,6 +7,7 @@ class d_monitor{
 	
 	var $logEnabledForLoginAttempt = false;
 	var $logEnabledForUrlAccess = false;
+	var $logEnabled = false;
 	
 	public $enumLoginAttemptName = "LoginAttempt";
 	public $enumUrlAccessName = "UrlAccess";
@@ -19,6 +20,8 @@ class d_monitor{
 		if($type=="LoginAttempt" && $this->logEnabledForLoginAttempt==false )
 			return false;
 		if($type=="URL" && $this->logEnabledForUrlAccess==false )
+			return false;
+		if($this->logEnabled==false )
 			return false;
 		if(!$this->db){
 		 die('Filename='.$this->filename.'Error='.mysql_error());
