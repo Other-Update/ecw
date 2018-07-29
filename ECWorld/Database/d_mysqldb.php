@@ -98,17 +98,13 @@ class mysqldb{
 			$errorlogObj->add($e->getMessage(),'0','$classname','$query');
 		}
 	}
-	function selectArray($query,$classname){
+	function selectArray($query,$classname,$readfromreplica=false){
 		try{
 			$statement = $this->conn->query($query);
-			if (strpos($query, 'ReadFromReplica') !== false) {
+			if($readfromreplica) $statement = $this->connReplica->query($query);
+			/* if (strpos($query, 'ReadFromReplica') !== false) {
 				$statement = $this->connReplica->query($query);
-			}
-			//if($this->isReadFromReplica==true){
-				//$statement = $this->connReplica->query($query);
-				//echo "Yes, read from replica";die;
-			//}
-			//else echo "no, read from master";
+			} */
 			$statement->setFetchMode(PDO::FETCH_CLASS,$classname);
 			$arr = $statement->fetchAll();			
 			return $arr;

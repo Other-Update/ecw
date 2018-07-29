@@ -196,14 +196,14 @@ class d_service{
 	}
 	//search operator in dashboard page
 	function getServiceOperator($mobileno,$type){
-		$q="SELECT s.ServiceID, s.Name, s.RechargeCode,s.TopupCode,'yes' as ReadFromReplica FROM m_service AS s 
+		$q="SELECT s.ServiceID, s.Name, s.RechargeCode,s.TopupCode FROM m_service AS s 
 			LEFT JOIN m_auto_mnp AS am ON
 				s.NetworkProviderID = am.NetworkName 
 			LEFT JOIN m_networkprovider AS net ON
 				am.NetworkName = net.NetworkProviderID
 			WHERE am.MobileNo LIKE '".$mobileno."%' AND s.NetworkMode='$type' AND am.Active=1 "; 
 		//echo $q;
-		$arr=$this->db->selectArray($q,'e_service');
+		$arr=$this->db->selectArray($q,'e_service',1);
 		return $arr;
 	}
 	
