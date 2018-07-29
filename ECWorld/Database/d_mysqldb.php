@@ -10,23 +10,37 @@ class mysqldb{
 	private $conn;
 	public $configuration;
 	public $errorlog;
+	
+	private $driverReplica;
+	private $hostReplica;
+	private $databaseReplica;
+	private $userReplica;
+	private $passReplica;
+	private $connReplica;
+	public $isReadFromReplica=false;
 	function __construct($config){
 		try {
+			$this->isReadFromReplica=false;
 			$this->configuration = $config;
+			//MASTER Database
 			$dbConfig=$config['database'];
 			$this->driver = $dbConfig['driver'];
-			//echo $this->config['driver'];
 			$this->host = $dbConfig['host'];
-			$this->port = $dbConfig['port'];
-			
-			$this->database = $dbConfig['database'];//'ecworldserver';
+			$this->port = $dbConfig['port'];			
+			$this->database = $dbConfig['database'];
 			$this->user = $dbConfig['username'];
 			$this->pass = $dbConfig['password']; 
-			/*$this->database = 'ecworld_ecworld';
-			$this->user = 'ecworld_eworld';
-			$this->pass = '5WbE]ArJ@?Q5';*/
-		
 			$this->conn = new PDO("$this->driver:host=$this->host;port=$this->port;dbname=$this->database", $this->user, $this->pass);
+			
+			//SLAVE/Replica Database
+			$dbReplicaConfig=$config['databasereplica'];
+			$this->driverReplica = $dbReplicaConfig['driver'];
+			$this->hostReplica = $dbReplicaConfig['host'];
+			$this->portReplica = $dbReplicaConfig['port'];			
+			$this->databaseReplica = $dbReplicaConfig['database'];
+			$this->userReplica = $dbReplicaConfig['username'];
+			$this->passReplica = $dbReplicaConfig['password']; 
+			$this->connReplica = new PDO("$this->driverReplica:host=$this->hostReplica;port=$this->portReplica;dbname=$this->databaseReplica", $this->userReplica, $this->passReplica);
 		} catch (PDOException $e) {
 			return $e->getMessage();
 			die();
@@ -34,6 +48,9 @@ class mysqldb{
 	}
 	function getDBConnection(){
 		return $this->conn ? $this->conn : false;
+	}
+	function getReplicaDBConnection(){ //echo "replica";
+		return $this->connReplica ? $this->connReplica :false;// ($this->conn ? $this->conn : false);
 	}
 	function execute($dbquery){
 		try {
@@ -83,8 +100,12 @@ class mysqldb{
 	}
 	function selectArray($query,$classname){
 		try{
-			//echo "Driver=".json_encode($this->config);
 			$statement = $this->conn->query($query);
+			//if($this->isReadFromReplica==true){
+				//$statement = $this->connReplica->query($query);
+				//echo "Yes, read from replica";die;
+			//}
+			//else echo "no, read from master";
 			$statement->setFetchMode(PDO::FETCH_CLASS,$classname);
 			$arr = $statement->fetchAll();			
 			return $arr;

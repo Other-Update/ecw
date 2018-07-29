@@ -7,7 +7,7 @@ class EcwDataTable {
 	private $_db;
 	private $sEcho_Custom=3;
 	public function __construct($mySql) {
-		$this->_db=$mySql->getDBConnection();
+		$this->_db=$mySql->getReplicaDBConnection();
 	}
 	public function get($table, $index_column, $columns,$query) {
 		// Paging
