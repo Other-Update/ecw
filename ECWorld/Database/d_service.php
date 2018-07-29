@@ -160,7 +160,7 @@ class d_service{
 	function getServiceList(){
 		try{
 			$q="SELECT ServiceID,Name,RechargeCode,NetworkProviderID,NetworkMode,TopupCode FROM m_service where Active='1'";
-			$res=$this->db->selectArray($q,'e_service');
+			$res=$this->db->selectArray($q,'e_service',1);
 			return $res;
 		}catch(Exception $ex){
 			echo '<br />DB- Error';

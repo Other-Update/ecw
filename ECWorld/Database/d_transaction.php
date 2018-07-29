@@ -100,7 +100,7 @@ class d_transaction{
 		//echo $query;
 		if($isWebservice){
 			//echo $query;
-			return $this->db->selectArray($query,'e_transaction');
+			return $this->db->selectArray($query,'e_transaction',1);
 		}else{
 			return $this->dtObj->get($table, $index_column, $columns,$query);
 		}

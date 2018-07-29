@@ -61,7 +61,7 @@ class d_recharge{
 		$query .= $where.$orderby.$qlimit;
 		//echo $query;
 		if($isDataTable){
-			$arr=$this->db->selectArray($query,'e_recharge');
+			$arr=$this->db->selectArray($query,'e_recharge',1);
 			return $arr;
 		}else{
 			return $this->dtObj->get($table, $index_column, $columns,$query);

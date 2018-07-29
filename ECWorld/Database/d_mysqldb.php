@@ -98,10 +98,10 @@ class mysqldb{
 			$errorlogObj->add($e->getMessage(),'0','$classname','$query');
 		}
 	}
-	function selectArray($query,$classname,$readfromreplica=false){
+	function selectArray($query,$classname,$readfromreplica=0){
 		try{
 			$statement = $this->conn->query($query);
-			if($readfromreplica) $statement = $this->connReplica->query($query);
+			if($readfromreplica==1) $statement = $this->connReplica->query($query);
 			/* if (strpos($query, 'ReadFromReplica') !== false) {
 				$statement = $this->connReplica->query($query);
 			} */
