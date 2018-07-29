@@ -100,6 +100,7 @@ class mysqldb{
 	}
 	function selectArray($query,$classname,$readfromreplica=0){
 		try{
+		$this->errorlog->addLog("MySQL","d_mysql.php","selectArray",str_replace("'","",$query),"Select query","",0,"readfromreplica=".$readfromreplica);
 			$statement = $this->conn->query($query);
 			if($readfromreplica==1) $statement = $this->connReplica->query($query);
 			/* if (strpos($query, 'ReadFromReplica') !== false) {
