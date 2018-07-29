@@ -46,10 +46,10 @@ class mysqldb{
 			die();
 		}
 	}
-	function getDBConnection(){
+	function getDBConnection(){ //echo "master,";
 		return $this->conn ? $this->conn : false;
 	}
-	function getReplicaDBConnection(){ //echo "replica";
+	function getReplicaDBConnection(){ //echo "replica,";
 		return $this->connReplica ? $this->connReplica :false;// ($this->conn ? $this->conn : false);
 	}
 	function execute($dbquery){
@@ -101,6 +101,9 @@ class mysqldb{
 	function selectArray($query,$classname){
 		try{
 			$statement = $this->conn->query($query);
+			if (strpos($query, 'ReadFromReplica') !== false) {
+				$statement = $this->connReplica->query($query);
+			}
 			//if($this->isReadFromReplica==true){
 				//$statement = $this->connReplica->query($query);
 				//echo "Yes, read from replica";die;
