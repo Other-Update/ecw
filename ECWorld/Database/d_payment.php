@@ -87,6 +87,7 @@ class d_payment{
 		}
 	}
 	function getTransfers_DT($parentID,$fromDate,$toDate,$isDataTable=false){
+		$toDate=$fromDate;//This is for testing. remove it after sometime
 		$table = 't_payment';
 		$index_column = 'PaymentID';
 		$columns = array('PaymentID','CreatedDate', 'UserID','FromOrToUserID','DisplayUserID','Name','Mobile', 'Description', 'Amount','Commission','Type','Wallet','Remark','Mode','TotalAmount');

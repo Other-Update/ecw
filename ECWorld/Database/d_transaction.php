@@ -41,6 +41,7 @@ class d_transaction{
 	//TransactionType
 	//1-Payment,2-recharge,3-SMS,4-Add Use, 5-System
 	function getTransactionReport_DT($userId, $mobile, $network, $requestId, $fromDate, $toDate,$isWebservice){
+		$toDate=$fromDate;//This is for testing. remove it after sometime
 		//echo json_encode($this->db->executeSP("CALL UpdateWallet(1,1)"));
 		$table = 't_transaction';
 		$index_column = 'TransactionID';
