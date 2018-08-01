@@ -28,7 +28,6 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			//$fromDate = $_GET['StarteDate'];
 			//$toDate = $_GET['EndDate'];
 			$userId = $userId==""?$user->UserID:$userId;
-			$userId = $user->UserID;//This is for testing. remove it after sometime
 			//echo "userId=".$userId.",";
 			$tObj=new b_transaction($user,$mysqlObj,"");
 			echo json_encode($tObj->getTransactionReport_DT($userId, $mobile, $network, $requestId, $startDate, $endDate,true));
@@ -37,7 +36,6 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:"";
 			$mobile 	= isset($_GET['Mobile'])?$_GET['Mobile']:"";
 			$userId = $userId==""?$user->UserID:$userId;
-			$userId = $user->UserID;//This is for testing. remove it after sometime
 			//$mobile = $mobile==""?$user->Mobile:$mobile;
 			//echo "Recharge report";
 			$bGsObj = new b_generalsettings($user,$mysqlObj,"");
@@ -57,7 +55,6 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			//$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments==true ? true: false:false;
 			$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments:false;
 			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:$user->UserID;
-			$userId = $user->UserID;//This is for testing. remove it after sometime
 			//$userId =$user->UserID;
 			//echo "userId=".$userId.",";die;
 			$payObj=new b_payment($user,$mysqlObj,"");

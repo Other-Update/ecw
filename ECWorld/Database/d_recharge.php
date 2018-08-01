@@ -31,7 +31,6 @@ class d_recharge{
 	}
 	
 	function getRechargeReport_DT($userId, $mobile, $fromDate, $toDate, $limit, $isDataTable){
-		$toDate=$fromDate;//This is for testing. remove it after sometime
 		$table = 't_recharge';
 		$index_column = 'RechargeID';
 		$columns = array( 'UserID','UserDisplayID','UserName','RechargeID', 'RequestType', 'ReachargeNo', 'NetworkProviderName', 'Amount', 'Txn_Id', 'Status', 'Balance', 'ReqDateTime' );
