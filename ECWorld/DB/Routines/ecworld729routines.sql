@@ -4,7 +4,7 @@
 -- ------------------------------------------------------
 -- Server version	5.6.17
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddPayment`(IN `inFromUserID` INT(11), IN `inToUserID` INT(11), IN `inAmount` DECIMAL(13,2), IN `inCommissionPercent` DECIMAL(13,2), IN `inType` INT(11), IN `inMode` INT(11), IN `inRemark` VARCHAR(100), IN `inPaidAmount` DECIMAL(13,2), IN `inTotalAmount` DECIMAL(13,2), IN `inCommissionAmountPrevPur` DECIMAL(13,2), IN `inRequestID` INT(11))
+CREATE PROCEDURE `AddPayment`(IN `inFromUserID` INT(11), IN `inToUserID` INT(11), IN `inAmount` DECIMAL(13,2), IN `inCommissionPercent` DECIMAL(13,2), IN `inType` INT(11), IN `inMode` INT(11), IN `inRemark` VARCHAR(100), IN `inPaidAmount` DECIMAL(13,2), IN `inTotalAmount` DECIMAL(13,2), IN `inCommissionAmountPrevPur` DECIMAL(13,2), IN `inRequestID` INT(11))
     MODIFIES SQL DATA
     SQL SECURITY INVOKER
 BEGIN
@@ -113,7 +113,7 @@ INSERT INTO t_payment(UserID,FromOrToUserID,RequestID,Amount,CommissionPercent,C
 END ;;
 DELIMITER ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddRecharge`(IN `inReachargeNo` VARCHAR(100), IN `inAmount` DECIMAL(13,2), IN `inStatus` INT(11), IN `inNetworkProviderName` VARCHAR(100), IN `inRequestID` INT(11), IN `inReqDateTime` DATETIME, IN `inReqReceivedDateTime` DATETIME, IN `inCreatedDate` DATETIME, IN `inCreatedBy` INT(11), IN `inTotalAmount` DECIMAL(13,2))
+CREATE PROCEDURE `AddRecharge`(IN `inReachargeNo` VARCHAR(100), IN `inAmount` DECIMAL(13,2), IN `inStatus` INT(11), IN `inNetworkProviderName` VARCHAR(100), IN `inRequestID` INT(11), IN `inReqDateTime` DATETIME, IN `inReqReceivedDateTime` DATETIME, IN `inCreatedDate` DATETIME, IN `inCreatedBy` INT(11), IN `inTotalAmount` DECIMAL(13,2))
     MODIFIES SQL DATA
     SQL SECURITY INVOKER
 BEGIN
@@ -128,7 +128,7 @@ INSERT INTO t_recharge(UserID,ReachargeNo,Amount,NetworkProviderName,RequestID,C
 END ;;
 DELIMITER ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `AddTransaction`(IN `inTransactionType` INT(11), IN `inUserID` INT(11), IN `inType` INT(11), IN `inAmount` DECIMAL(13,2), IN `inRequestID` INT(11), IN `inClosingBalance` DECIMAL(13,2), IN `inRemark` VARCHAR(255), IN `inReferenceTable` VARCHAR(100), IN `inReferenceID` INT(11), IN `inCreatedBy` INT(11))
+CREATE PROCEDURE `AddTransaction`(IN `inTransactionType` INT(11), IN `inUserID` INT(11), IN `inType` INT(11), IN `inAmount` DECIMAL(13,2), IN `inRequestID` INT(11), IN `inClosingBalance` DECIMAL(13,2), IN `inRemark` VARCHAR(255), IN `inReferenceTable` VARCHAR(100), IN `inReferenceID` INT(11), IN `inCreatedBy` INT(11))
     NO SQL
     SQL SECURITY INVOKER
 BEGIN
@@ -168,7 +168,7 @@ END IF;
 END ;;
 DELIMITER ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RevertRecharge`(IN `inRequesterID` INT(11), IN `inRequestID` INT(11), IN `inTargetAmount` DECIMAL(13,2), IN `inRespCode` VARCHAR(10), IN `inNow` DATETIME)
+CREATE PROCEDURE `RevertRecharge`(IN `inRequesterID` INT(11), IN `inRequestID` INT(11), IN `inTargetAmount` DECIMAL(13,2), IN `inRespCode` VARCHAR(10), IN `inNow` DATETIME)
     NO SQL
 BEGIN
 
@@ -184,7 +184,7 @@ UPDATE t_request SET Status=3 WHERE RequestID=inRequestID;
 END ;;
 DELIMITER ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateRecharge`(IN `inRechargeID` INT(11), IN `inecwRCStatus` INT(11), IN `inReceivedDT` DATETIME, IN `inResponse` TEXT, IN `inRcResOpTransID` VARCHAR(100), IN `inResponseAsIs` TEXT)
+CREATE PROCEDURE `UpdateRecharge`(IN `inRechargeID` INT(11), IN `inecwRCStatus` INT(11), IN `inReceivedDT` DATETIME, IN `inResponse` TEXT, IN `inRcResOpTransID` VARCHAR(100), IN `inResponseAsIs` TEXT)
     NO SQL
 BEGIN
 
