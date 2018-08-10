@@ -164,8 +164,8 @@ try{
 	
 	$userObj = new b_users("",$mysqlObj,"");
 	$user = $userObj->getByID($token->data->userId);//TODO: get user id from token
-	//echo "<br/> userObj=".json_encode($me);
-	//echo "<br/> User=".json_encode($user);
+	//echo "<br/> userObj=".json_encode($me);die;
+	//echo "<br/> User=".json_encode($user);die;
 	//echo "<br/> Action=".$Action;
 	switch($Action){
 		case "Chat":
@@ -219,7 +219,17 @@ try{
 			$reportName = $_GET['ReportName'];
 			$startDate = $_GET['StarteDate'];
 			$endDate = $_GET['EndDate'];
-			reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDate);
+			
+			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:"";
+			$childUser = $userObj->getByID($userId);
+			if(strpos($childUser->Ancestors,$user->UserID)!==false)//Correct child
+				reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDate);
+			else //Wrong child
+			{
+				$resultObj = new httpresult();	
+				$resultObj->getHttpResult(false,"User not found","");
+				echo json_encode($resultObj);
+			}
 			break;
 		case "GetRequestStatus":
 			//echo "Recharge report";
