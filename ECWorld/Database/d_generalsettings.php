@@ -59,7 +59,7 @@ class d_generalsettings{
 	function updateTRAmt($tramtObj){
 		try{
 			$tramtObj->ModifiedBy = $this->me->UserID;
-			$q="UPDATE m_generalsettings SET TA_MinAmt='$tramtObj->TA_MinAmt', TA_MaxAmt='$tramtObj->TA_MaxAmt', ModifiedBy='$tramtObj->ModifiedBy' WHERE `GeneralSettingsID`=1 ";
+			$q="UPDATE m_generalsettings SET TA_MinAmt='$tramtObj->TA_MinAmt', TA_MaxAmt='$tramtObj->TA_MaxAmt', TA_RejectDuration='$tramtObj->TA_RejectDuration', ModifiedBy='$tramtObj->ModifiedBy' WHERE `GeneralSettingsID`=1 ";
 			$res=$this->db->execute($q);
 			return $res;
 		}catch(Exception $ex){
@@ -82,19 +82,6 @@ class d_generalsettings{
 		}
 	}
 	
-	//Update for Payment Amount
-	function updatePAYAmt($payamtObj){
-		try{
-			$payamtObj->ModifiedBy = $this->me->UserID;
-			$q="UPDATE m_generalsettings SET PAY_MinAmt='$payamtObj->PAY_MinAmt', PAY_MaxAmt='$payamtObj->PAY_MaxAmt', ModifiedBy='$payamtObj->ModifiedBy' WHERE `GeneralSettingsID`=1 ";
-			$res=$this->db->execute($q);
-			return $res;
-		}catch(Exception $ex){
-			echo '<br />DB- Error';
-			$errorlogObj = new errorlog($this);
-			$errorlogObj->add($ex->getMessage(),'0','Testing','Testing');
-		}
-	}
 	//Update for User Balance Amount
 	function updateUserBalance($userbalanceObj){
 		try{

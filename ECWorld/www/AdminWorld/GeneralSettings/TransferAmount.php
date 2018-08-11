@@ -14,6 +14,12 @@
 			<input type="number" class="form-control" id="TA_MaxAmt"  name="TA_MaxAmt">
 		  </div>
 		</div>
+		<div class="form-group">
+		  <label class="col-sm-3 control-label"><?php echo $lang['label_transfer_rejectduration']; ?></label>
+		  <div class="col-sm-4">
+			<input type="number" class="form-control" id="TA_RejectDuration"  name="TA_RejectDuration">
+		  </div>
+		</div>
 	  </div>
 	  <div class="box-footer">
 		

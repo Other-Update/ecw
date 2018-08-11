@@ -10,8 +10,8 @@ $lang['label_recharge_setting']='Recharge Setting';
 $lang['label_sms_setting']='SMS Setting';
 $lang['label_recharge_amt']='Recharge Amount';
 $lang['label_transfer_amt']='Transfer Amount';
+$lang['label_transfer_rejectduration']='Reject payment within minutes for same user same amount';
 $lang['label_dth_amt']='DTH Amount';
-$lang['label_pay_amt']='Payment';
 $lang['label_submit']='Submit'; 
 
 $lang['label_min_amt']='Minimum Amount';

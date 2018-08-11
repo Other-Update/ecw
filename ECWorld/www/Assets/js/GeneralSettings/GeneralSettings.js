@@ -58,10 +58,9 @@ function getGeneralSettings(){
 			$("#RA_MaxAmt").val(jsondata.RA_MaxAmt);
 			$("#TA_MinAmt").val(jsondata.TA_MinAmt);
 			$("#TA_MaxAmt").val(jsondata.TA_MaxAmt);
+			$("#TA_RejectDuration").val(jsondata.TA_RejectDuration);
 			$("#DTH_MinAmt").val(jsondata.DTH_MinAmt);
 			$("#DTH_MaxAmt").val(jsondata.DTH_MaxAmt);	
-			$("#PAY_MinAmt").val(jsondata.PAY_MinAmt);
-			$("#PAY_MaxAmt").val(jsondata.PAY_MaxAmt);	
 			
 		},
 		error: function(error){

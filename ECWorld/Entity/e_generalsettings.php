@@ -47,12 +47,10 @@ class e_generalsettings{
 	
 	var $TA_MinAmt;
 	var $TA_MaxAmt;
+	var $TA_RejectDuration;
 	
 	var $DTH_MinAmt;
 	var $DTH_MaxAmt;
-	
-	var $PAY_MinAmt;
-	var $PAY_MaxAmt;
 	
 	var $CreatedDate;
 	var $CreatedBy;

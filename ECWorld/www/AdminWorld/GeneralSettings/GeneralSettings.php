@@ -28,7 +28,6 @@ hr {
               <li class="DeSelectedTap" ><a href="#RCAmount_6" data-toggle="tab"><h5><?php echo $lang['label_recharge_amt']; ?></h5></a></li>
 			  <li class="DeSelectedTap"><a href="#TransferAmt_7" data-toggle="tab"><h5><?php echo $lang['label_transfer_amt']; ?></h5></a></li>
 			  <li class="DeSelectedTap" ><a href="#DTHAmount_8" data-toggle="tab"><h5><?php echo $lang['label_dth_amt']; ?></h5></a></li>
-			  <li class="DeSelectedTap" ><a href="#PAYAmount_9" data-toggle="tab"><h5><?php echo $lang['label_pay_amt']; ?></h5></a></li>
 			  
             </ul>
             <div class="tab-content">
@@ -55,9 +54,6 @@ hr {
               </div>
 			  <div class="tab-pane" id="DTHAmount_8">
 					<?php include 'DTHAmount.php'; ?>
-              </div>
-			  <div class="tab-pane" id="PAYAmount_9">
-					<?php include 'PAYAmount.php'; ?>
               </div>
             </div>
           </div>
