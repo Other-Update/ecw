@@ -3,6 +3,7 @@ include_once "../../../BaseUrl.php";
 include_once APPROOT_URL.'/www/Session/Session.php';
 include_once APPROOT_URL.'/Resource/Payment.php';
 include_once APPROOT_URL.'/Resource/Sms.php';
+include_once APPROOT_URL.'/Resource/Common.php';
 include_once APPROOT_URL.'/General/general.php';
 include_once APPROOT_URL.'/Business/b_payment.php';
 include_once APPROOT_URL.'/Business/b_distmargin.php';
@@ -16,7 +17,7 @@ $action = $_POST['Action'];
 //echo $lang['s_no'];
 switch($action){
 	case 'AddTransfer':
-		addTransfer($mysqlObj,$lang,$langSMS);
+		addTransfer($mysqlObj,$lang,$langSMS,$langCommon);
 		break;
 	case 'AddCollection':
 		addCollection($mysqlObj,$lang);
@@ -158,7 +159,7 @@ function addCollection($mysqlObj,$lang){
 	//$pObj->TotalAmount = $_POST['TotalAmount'];
 	echo json_encode($pObj->addTransfer($pObj));
 }
-function addTransfer($mysqlObj,$lang,$langSMS){	
+function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){	
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));
 	//Adding request
 	$bReqObj=new b_request($loggedInUserDetails->user,$mysqlObj,$lang);
@@ -182,49 +183,69 @@ function addTransfer($mysqlObj,$lang,$langSMS){
 	$pObj->CommissionAmountPrevPur = $_POST['CommissionAmountPrevPur'];
 	$commAmnt = ($pObj->CommissionPercent/100) * $pObj->Amount;
 	$pObj->TotalAmount = $pObj->Amount+$commAmnt+$pObj->CommissionAmountPrevPur;
-	
-	//This is to make up next purchase calculation. When 5k is transfered with 4.2% then 2k is debited. So final 3k purchase is applied with 3.7% only. So in this case this 2k debit should be mentioned that this has 3.7% margin.
-	if($pObj->Type==2)//Debit
-		$pObj->CommissionPercent = $pObj->CommissionPercent-$_POST['ExtraCommForDebit'];
-	/* echo $commAmnt;
-	echo ",";
-	echo $pObj->CommissionAmountPrevPur;
-	echo ",";
-	echo $pObj->TotalAmount; */
-	$res = $pObj->addTransfer($pObj,$bReqObj);
-	//Updating Request
-	$bReqObj->UserID = $loggedInUserDetails->user->UserID;
-	$bReqObj->TotalAmount = $pObj->TotalAmount;
-	$bReqObj->TargetAmount= $pObj->Amount;
-	$bReqObj->RequestType = "t_payment";
-	$bReqObj->TargetNo = "0";
-	
-	//SMS data
-	$bHttpObj = new b_http($loggedInUserDetails->user,$mysqlObj,"");
+	$res = "";//Declare
 	$userObj=new b_users($loggedInUserDetails->user,$mysqlObj,$lang);
-	$bSMSObj = new b_sms($loggedInUserDetails->user,$mysqlObj,$userObj,$lang,$langSMS,$bHttpObj);
 	$toUser = $userObj->getByID($pObj->ToUserID);
-	if($res->isSuccess){
-		$bReqObj->Status="3";
-		$bReqObj->Remark="Successfully Transfered";
-		if($pObj->Type=="1")
-		$bSMSObj->paymentTransfer(true,"Payment_s",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj);
-		else
-		$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$pObj->Amount,$bReqObj,"","",$toUser);
-		//echo "<br/>Message code=".$pObj->Amount;
+	//echo json_encode($toUser);
+	if(strpos($toUser->Ancestors,$pObj->FromUserID)===false && $pObj->ToUserID!=1 && $pObj->FromUserID!=1)//Wrong child
+	{
+		$resultObj = new httpresult();	
+		$resultObj->getHttpResult(false,$langCommon['InvalidUserSelected'],"");
+		$resultObj->isSuccess=$resultObj->IsSuccess;
+		$resultObj->message=$resultObj->Message;
+		echo json_encode($resultObj);
 	}else{
-		$bReqObj->Status="4";
-		$bReqObj->Remark="Failed to transfer";
-		if($pObj->Type=="1")
-		$bSMSObj->paymentTransfer(true,"Payment_f",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj);
-		else
-		$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser);
-		//echo "<br/>Message code=".$pObj->Amount;
-	}
-	//echo "<br/>Amount=".$pObj->Amount;
-	$bReqObj->update($bReqObj);
 	
-	echo json_encode($res);
+		//This is to make up next purchase calculation. When 5k is transfered with 4.2% then 2k is debited. So final 3k purchase is applied with 3.7% only. So in this case this 2k debit should be mentioned that this has 3.7% margin.
+		if($pObj->Type==2)//Debit
+			$pObj->CommissionPercent = $pObj->CommissionPercent-$_POST['ExtraCommForDebit'];
+		/* echo $commAmnt;
+		echo ",";
+		echo $pObj->CommissionAmountPrevPur;
+		echo ",";
+		echo $pObj->TotalAmount; */
+		$res = $pObj->addTransfer($pObj,$bReqObj);
+		//Updating Request
+		$bReqObj->UserID = $loggedInUserDetails->user->UserID;
+		$bReqObj->TotalAmount = $pObj->TotalAmount;
+		$bReqObj->TargetAmount= $pObj->Amount;
+		$bReqObj->RequestType = "t_payment";
+		$bReqObj->TargetNo = "0";
+		
+		//SMS data
+		$bHttpObj = new b_http($loggedInUserDetails->user,$mysqlObj,"");
+		$bSMSObj = new b_sms($loggedInUserDetails->user,$mysqlObj,$userObj,$lang,$langSMS,$bHttpObj);
+		if($res->isSuccess){
+			$bReqObj->Status="3";
+			$bReqObj->Remark="Successfully Transfered";
+			if($pObj->Type=="1")
+			$bSMSObj->paymentTransfer(true,"Payment_s",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
+			else
+			$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$pObj->Amount,$bReqObj,"","",$toUser);
+			//echo "<br/>Message code=".$pObj->Amount;
+		}else{
+			$bReqObj->Status="4";
+			$bReqObj->Remark="Failed to transfer";
+			if($pObj->Type=="1"){
+				if($res->otherInfo!=""){
+					$otherInfoArr = explode(" ", $res->otherInfo);
+					$otherInfoParam1=$otherInfoArr[0];//SMS Code
+					$otherInfoParam2=$otherInfoArr[1];//Reject within minutes
+					$res->message="You are not allowed to send the same amount to same user within ".$otherInfoParam2." minutes";
+					$bSMSObj->paymentTransfer(true,$otherInfoParam1,$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,$otherInfoParam2);
+				}else{
+					$bSMSObj->paymentTransfer(true,"Payment_f",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
+				}
+			}
+			else
+			$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser);
+			//echo "<br/>Message code=".$pObj->Amount;
+		}
+		//echo "<br/>Amount=".$pObj->Amount;
+		$bReqObj->update($bReqObj);
+		
+		echo json_encode($res);
+	}
 }
 function getTransfers_DT($mysqlObj,$lang){
 	$loggedInUserDetails = json_decode(json_decode($_SESSION['me']));

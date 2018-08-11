@@ -2,6 +2,7 @@
 include_once APPROOT_URL.'/Resource/Payment.php';
 include_once APPROOT_URL.'/Database/d_payment.php';
 include_once APPROOT_URL.'/General/general.php';
+include_once APPROOT_URL.'/Business/b_generalsettings.php';
 class b_payment{
 	private $filename='b_payment';
 	private $dbObj;
@@ -13,6 +14,7 @@ class b_payment{
 		$this->mysqlObj=$mysqlObj;
 		$this->lang=$lang;
 		$this->dbObj=new d_payment($me,$mysqlObj);
+		$this->bGsObj = new b_generalsettings($me,$mysqlObj,"");
 	}
 	function getBalanceToBePaid($userID,$parentID){
 		$res = $this->dbObj->getBalanceToBePaid($userID,$parentID);
@@ -42,9 +44,12 @@ class b_payment{
 		return $this->dbObj->getBillingByDate($userID,$date);
 	}
 	
-	
 	function getTransferSalesByDate_NIU($userID,$date){
 		return $this->dbObj->getTransferSalesByDate($userID,$date);
+	}
+	//To reject duplicate payment
+	function getDuplicatePayment($fromUserID,$toUserID,$amount,$paymentIntervalInMin){
+		return $this->dbObj->getDuplicatePayment($fromUserID,$toUserID,$amount,$paymentIntervalInMin);
 	}
 	
 	function addTransferWebservice($loggedInUser,$fromUser,$toUser,$amount,$remark,$requestObj){
@@ -65,21 +70,39 @@ class b_payment{
 		$this->dbObj=new d_payment($this->me,$this->mysqlObj);
 		return $this->addTransfer($payObj,$requestObj);
 	}
+	function isDuplicateTransfer($payObj,$rejectDuration){
+		//echo ",TA_RejectDuration=".(int)$gs->TA_RejectDuration;
+		//echo ",FromUserID=".$payObj->FromUserID;
+		//echo ",ToUserID=".$payObj->ToUserID;
+		//echo ",Amount=".$payObj->Amount;
+		$duplicatePayObj = $this->getDuplicatePayment($payObj->FromUserID,$payObj->ToUserID,$payObj->Amount,$rejectDuration);
+		//echo ",duplicatePayObj=".count($duplicatePayObj);
+		return count($duplicatePayObj)!=0;
+	}
 	function addTransfer($obj,$bReqObj){
 		$obj->RequestID = $bReqObj->RequestID;
 		try{	
 			$resultObj = new httpresult();
-			//echo 'Add';
-			$insertedID = $this->dbObj->addTransfer($obj);
-			if($insertedID>0){	
-				$resultObj->isSuccess=true;
-				$resultObj->message=$this->lang?$this->lang['success']:"Success";
-				$resultObj->otherInfo = $insertedID;
-			}else{
+			$gs = $this->bGsObj->get();
+			$isRejectedByDuplicateInMinutes = $this->isDuplicateTransfer($obj,(int)$gs->TA_RejectDuration);
+			//echo ",isRejectedByDuplicateInMinutes=".($isRejectedByDuplicateInMinutes==true?"1":"2");
+			if($isRejectedByDuplicateInMinutes){
 				$resultObj->isSuccess=false;
 				$resultObj->message=$this->lang?$this->lang['failed']:"Failed";
-				$resultObj->otherInfo = 0;
-			}
+				$resultObj->otherInfo = "Payment_f_RejectWithinMins ".(int)$gs->TA_RejectDuration;
+			}else{
+				$insertedID = $this->dbObj->addTransfer($obj);
+				if($insertedID>0){	
+					$resultObj->isSuccess=true;
+					$resultObj->message=$this->lang?$this->lang['success']:"Success";
+					$resultObj->otherInfo = $insertedID;
+				}else{
+					$resultObj->isSuccess=false;
+					$resultObj->message=$this->lang?$this->lang['failed']:"Failed";
+					$resultObj->otherInfo = 0;
+				} 	
+			}			
+			
 			//echo '<br />BS- Result1 = '.json_encode($res);
 			return $resultObj;
 		}catch(Exception $ex){

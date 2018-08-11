@@ -58,6 +58,14 @@ class d_payment{
 		else
 			return 0; */
 	}
+	//To reject duplicate payment
+	function getDuplicatePayment($fromUserID,$toUserID,$amount,$paymentIntervalInMin){
+		$q = "SELECT * FROM t_payment WHERE UserID='$fromUserID' AND FromOrToUserID='$toUserID' AND Amount='-$amount' AND (TIMESTAMPDIFF(MINUTE, CreatedDate, now())<'$paymentIntervalInMin') ORDER BY CreatedDate DESC LIMIT 1";
+		//echo ", query=".$q;
+		$res=$this->db->selectArray($q,'e_payment');
+		return $res;
+	}
+	
 	function addTransfer($obj){
 		try{
 			//echo '<br /> Add addTransfer';//test								

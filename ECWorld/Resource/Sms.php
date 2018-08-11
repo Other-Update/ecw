@@ -165,6 +165,9 @@ $langAPI['Payment_f_NoBalance']="Can't transfer this amount, your balance is low
 $langSMS['Payment_f_MinMaxTrans']="Dear [CUSTOMERNAME], You are allowed to transfer amount is from Rs.[MINIMUMTRANSFERAMOUNT] to Rs.[MAXIMUMTRANSFERAMOUNT] per member.[CUSTOMERMESSAGE]. [FOOTERMESSAGE].";//Working 36. Fixed
 $langAPI['Payment_f_MinMaxTrans']="You are allowed to transfer amount is from Rs.[MINIMUMTRANSFERAMOUNT] to Rs.[MAXIMUMTRANSFERAMOUNT] per member.";
 
+$langSMS['Payment_f_RejectWithinMins']="Dear [CUSTOMERNAME], You are not allowed to send the same amount to same user within [REJECTWITHINDURATION] minutes. Your ec world bal is:[WALLETBALANCE].[CUSTOMERMESSAGE]. [FOOTERMESSAGE].";
+$langAPI['Payment_f_RejectWithinMins']="You are not allowed to send the same amount to same user within [REJECTWITHINDURATION] minutes. Your ec world bal is [WALLETBALANCE].";
+
 $langSMS['Payment_f']="Dear [CUSTOMERNAME], Failed to transfer Rs [AMOUNT] to [RECEIVERUSERID]. Your ec world bal is:[WALLETBALANCE].[CUSTOMERMESSAGE]. [FOOTERMESSAGE].";//Working 37.Fixed.
 $langAPI['Payment_f']="Failed to transfer Rs [AMOUNT] to [RECEIVERUSERID]. Your ec world bal is [WALLETBALANCE].";
 

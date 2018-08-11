@@ -1,6 +1,7 @@
 <?php
 include_once "../../../BaseUrl.php";
 include_once APPROOT_URL.'/Resource/Sms.php';
+include_once APPROOT_URL.'/Resource/Common.php';
 include_once APPROOT_URL.'/Business/Token/b_token.php';
 include_once APPROOT_URL.'/Business/b_users.php';
 include_once APPROOT_URL.'/Business/b_webservice.php';
@@ -222,12 +223,12 @@ try{
 			
 			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:"";
 			$childUser = $userObj->getByID($userId);
-			if(strpos($childUser->Ancestors,$user->UserID)!==false)//Correct child
+			if(strpos($childUser->Ancestors,$user->UserID)!==false || $user->UserID==$childUser->UserID || $user->UserID==1)//Correct child
 				reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDate);
 			else //Wrong child
 			{
 				$resultObj = new httpresult();	
-				$resultObj->getHttpResult(false,"User not found","");
+				$resultObj->getHttpResult(false,$langCommon['InvalidUserSelected'],"");
 				echo json_encode($resultObj);
 			}
 			break;

@@ -402,9 +402,9 @@ class b_webservice{
 				$this->bReqObj->TotalAmount = $this->bReqObj->TargetAmount = $param3;
 				$this->bReqObj->RequestType="t_payment";
 				$this->bReqObj->TargetNo=$param2;
-				//echo "<br/>FT request";
 				//echo "<br/> Req Obj =".json_encode($this->bReqObj);die;
 				$userToTransfer = $this->bUserObj->getByDisplayIDByAncestor($this->me->UserID,$param2);
+				//echo "<br/>FT request. param2=".json_encode($userToTransfer);die;
 				$fromUserWallet = $this->bUserObj->getWalletBalance($this->me->UserID);
 				$fromUserWalletJson = json_decode(json_encode($fromUserWallet));
 				if(!$userToTransfer){	
@@ -413,7 +413,7 @@ class b_webservice{
 					$this->smsCode="Payment_f_NotAuth";
 					$this->bReqObj->Status = 4;
 					$this->resultMessage=$this->resultSmsMessage = $this->langAPI[$this->smsCode];
-					$this->bSMSObj->paymentTransfer(0,$this->smsCode,$param2,"",$param3,0,0,$this->bReqObj);
+					$this->bSMSObj->paymentTransfer(0,$this->smsCode,$param2,"",$param3,0,0,$this->bReqObj,0);
 					return false;
 				}
 				$enoughBalance = $this->bUserObj->enoughBalanceInWallet($this->me,$param3);
@@ -425,7 +425,7 @@ class b_webservice{
 					
 					$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$this->langAPI[$this->smsCode]);
 					$this->resultMessage=$this->resultSmsMessage = $msg;
-					$this->bSMSObj->paymentTransfer(0,$this->smsCode,$param2,$userToTransfer,$param3,0,0,$this->bReqObj);
+					$this->bSMSObj->paymentTransfer(0,$this->smsCode,$param2,$userToTransfer,$param3,0,0,$this->bReqObj,0);
 					return false;
 				}
 				$gs = $this->bGsObj->get();
@@ -440,7 +440,7 @@ class b_webservice{
 					$this->resultMessage=$this->resultSmsMessage = "Min/Max Transfer Amount";
 					$this->isSendSMS="0";
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->paymentTransfer(0,"Payment_f_MinMaxTrans",$param2,$userToTransfer,$param3,$gs->TA_MinAmt,$gs->TA_MaxAmt,$this->bReqObj);
+					$this->bSMSObj->paymentTransfer(0,"Payment_f_MinMaxTrans",$param2,$userToTransfer,$param3,$gs->TA_MinAmt,$gs->TA_MaxAmt,$this->bReqObj,0);
 					return false;
 				}
 				//echo "<br/><br/> Request Obj=".json_encode($this->bReqObj);die;
@@ -468,22 +468,33 @@ class b_webservice{
 					$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$msg);
 					$this->resultMessage=$this->resultSmsMessage=$msg;
 					$this->bReqObj->Status = 3;
-					$this->bSMSObj->paymentTransfer(true,"Payment_s",$param2,$userToTransfer,$this->bReqObj->TotalAmount,0,0,$this->bReqObj);
+					$this->bSMSObj->paymentTransfer(true,"Payment_s",$param2,$userToTransfer,$this->bReqObj->TotalAmount,0,0,$this->bReqObj,0);
 					return true;
 				}else{
 					/* $msg = str_replace("[CUSTOMERNAME]",$this->me->Name,$this->langSMS["32"]);
 					$msg = str_replace("[AMOUNT]",$param3,$msg);
 					$msg = str_replace("[DISPLAYUSERID]",$param2,$msg); */
 					$this->resultIsSuccess = false;
-					
-					$this->smsCode="Payment_f";
+					$rejectTransferWithinMins=0;
+					if($res->otherInfo!=""){
+						$otherInfoArr = explode(" ", $res->otherInfo);
+						$otherInfoParam1=$otherInfoArr[0];//SMS Code
+						$otherInfoParam2=$otherInfoArr[1];//Reject within minutes
+						$this->smsCode=$otherInfoParam1;
+						//echo "$otherInfoParam1=".$this->langAPI[$this->smsCode];die;
+						$msg = str_replace("[REJECTWITHINDURATION]",$otherInfoParam2,$this->langAPI[$this->smsCode]);
+						$rejectTransferWithinMins = $otherInfoParam2;
+						$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$msg);
+						$this->resultMessage=$this->resultSmsMessage=$msg;
+					}else{
+						$this->smsCode="Payment_f";
+						$msg = str_replace("[AMOUNT]",$param3,$this->langAPI[$this->smsCode]);
+						$msg = str_replace("[RECEIVERUSERID]",$userToTransfer->DisplayID,$msg);
+						$this->resultMessage=$this->resultSmsMessage=$msg;
+					}
 					$this->isSendSMS="0";
-					$msg = str_replace("[AMOUNT]",$param3,$this->langAPI[$this->smsCode]);
-					$msg = str_replace("[RECEIVERUSERID]",$userToTransfer->DisplayID,$msg);
-					$msg = str_replace("[WALLETBALANCE]",$fromUserWalletJson->Wallet,$msg);
-					$this->resultMessage=$this->resultSmsMessage=$msg;
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->paymentTransfer(0,"Payment_f",$param2,$userToTransfer,$param3,0,0,$this->bReqObj);
+					$this->bSMSObj->paymentTransfer(0,$this->smsCode,$param2,$userToTransfer,$param3,0,0,$this->bReqObj,$rejectTransferWithinMins);
 					return false;
 				}
 				break;

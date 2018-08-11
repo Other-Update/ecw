@@ -422,11 +422,13 @@ function validateAddTransferForm(){
 function addTransfer(callbackFn){
 	if(validateAddTransferForm()){
 		paymentAjax($('form#idFrmAddTransfer').serialize(),function(res){
+		debugger;
 			callbackFn();
 			if(res.isSuccess){
 				onAddTransferOpeningPoup();
-			}
-			$("#idSpnSuccessErr").html(res.message).css({'color':'green'}).show();
+				$("#idSpnSuccessErr").html(res.message).css({'color':'green'}).show();
+			}else 
+				showError($("#idSpnSuccessErr"),res.message);
 			reloadTransfers_DT();
 		},function(){});
 	}else{	

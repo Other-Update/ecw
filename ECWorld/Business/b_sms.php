@@ -168,7 +168,7 @@ class b_sms{
 		
 	}
 	
-	function paymentTransfer($isSuccess,$smsCode,$toUserID,$toUser,$amount,$minAmount,$maxAmount,$reqObj){
+	function paymentTransfer($isSuccess,$smsCode,$toUserID,$toUser,$amount,$minAmount,$maxAmount,$reqObj,$rejectTransferWithinMins){
 		/* $msg = $this->langSMS['Payment_s'];
 		if(!$isSuccess) */
 		$msg_sender=$this->langSMS[$smsCode];
@@ -200,6 +200,7 @@ class b_sms{
 		if(!$isSuccess){ 
 			$msg_sender = $this->replace("[MINIMUMTRANSFERAMOUNT]",$minAmount,$msg_sender);
 			$msg_sender = $this->replace("[MAXIMUMTRANSFERAMOUNT]",$maxAmount,$msg_sender);
+			$msg_sender = $this->replace("[REJECTWITHINDURATION]",$rejectTransferWithinMins,$msg_sender);
 		}
 		
 		$this->sendSMS($this->me->Mobile,'',$msg_sender,"0",$reqObj->RequestID,"t_request","Unknown");
