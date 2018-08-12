@@ -56,6 +56,7 @@ function reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDa
 			//$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments==true ? true: false:false;
 			$onlyMyPayments = isset($onlyMyPayments)==true?$onlyMyPayments:false;
 			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:$user->UserID;
+			$userId = $userId==""?$user->UserID:$userId;
 			//$userId =$user->UserID;
 			//echo "userId=".$userId.",";die;
 			$payObj=new b_payment($user,$mysqlObj,"");
@@ -222,6 +223,7 @@ try{
 			$endDate = $_GET['EndDate'];
 			
 			$userId 	= isset($_GET['UserID'])?$_GET['UserID']:"";
+			$userId = $userId==""?$user->UserID:$userId;
 			$childUser = $userObj->getByID($userId);
 			if(strpos($childUser->Ancestors,$user->UserID)!==false || $user->UserID==$childUser->UserID || $user->UserID==1)//Correct child
 				reports($user,$mysqlObj,$langSMS,$langAPI,$reportName,$startDate,$endDate);
