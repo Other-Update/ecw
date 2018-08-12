@@ -8,8 +8,9 @@
         left join t_request as req on
             r.RequestID = req.RequestID
         left join t_transaction as trans on
-          r.RequestID = trans.RequestID  WHERE u.Active=1 AND  req.Status=1 OR req.Status=2 
+          r.RequestID = trans.RequestID  WHERE u.Active=1 AND  (req.Status=1 OR req.Status=2) AND req.CreatedDate>='2018-08-01'
           GROUP BY trans.RequestID ORDER BY r.RechargeID DESC " ;
+	// CreatedDate>='2018-08-01' is to fix many pending and suspense records on local server slow issue
     $res = $connect->query($query);
 ?>
 <style>
