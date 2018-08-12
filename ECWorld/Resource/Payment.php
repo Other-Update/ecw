@@ -39,6 +39,7 @@ $lang['pay_received'] = 'Payment Received';
 
 $lang['success'] = 'Added successfully';
 $lang['failed'] = 'Failed to add';
+$lang['duplicatepayment'] = 'You are not allowed to send the same amount to same user within [REJECTWITHINDURATION] minutes';
 
 
 ?>

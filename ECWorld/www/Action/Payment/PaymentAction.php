@@ -231,14 +231,14 @@ function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){
 					$otherInfoArr = explode(" ", $res->otherInfo);
 					$otherInfoParam1=$otherInfoArr[0];//SMS Code
 					$otherInfoParam2=$otherInfoArr[1];//Reject within minutes
-					$res->message="You are not allowed to send the same amount to same user within ".$otherInfoParam2." minutes";
-					$bSMSObj->paymentTransfer(true,$otherInfoParam1,$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,$otherInfoParam2);
+					$res->message=str_replace("[REJECTWITHINDURATION]",$otherInfoParam2,$lang['duplicatepayment']);
+					$bSMSObj->paymentTransfer(false,$otherInfoParam1,$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,$otherInfoParam2);
 				}else{
-					$bSMSObj->paymentTransfer(true,"Payment_f",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
+					$bSMSObj->paymentTransfer(false,"Payment_f",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
 				}
 			}
 			else
-			$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser);
+			$bSMSObj->revertPaymentTransfer(false,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser);
 			//echo "<br/>Message code=".$pObj->Amount;
 		}
 		//echo "<br/>Amount=".$pObj->Amount;
