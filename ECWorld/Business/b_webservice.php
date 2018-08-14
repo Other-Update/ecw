@@ -513,7 +513,7 @@ class b_webservice{
 				if(count($reqObjToRevert)<=0){
 					$this->resultSmsMessage = "Invalid Reference ID";
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser);
+					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser,0);
 					return false;					
 				}
 				$reqObjToRevert = $reqObjToRevert[0];
@@ -522,7 +522,7 @@ class b_webservice{
 				if(!$transferedUser){
 					$this->resultSmsMessage="User not found to revert transfer";
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser);
+					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser,0);
 					return false;
 				}
 				$enoughBalance = $this->bUserObj->enoughBalanceInWallet($transferedUser,$reqObjToRevert->TotalAmount);
@@ -530,7 +530,7 @@ class b_webservice{
 				if(!$enoughBalance){	
 					$this->resultSmsMessage="User Doesn't have enough balance to revert";
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser);
+					$this->bSMSObj->revertPaymentTransfer(0,"Payment_Rev_f",0,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser,0);
 					return false;
 				}
 				$remark="SMS FUND REVERSE ";
@@ -552,7 +552,7 @@ class b_webservice{
 					$msg = str_replace("[WALLETBALANCE]",$origFromUserWalletJson->Wallet,$msg);
 					$this->resultSmsMessage=$msg;
 					$this->bReqObj->Status = 3;
-					$this->bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$reqObjToRevert->TotalAmount,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser);
+					$this->bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$reqObjToRevert->TotalAmount,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser,0);
 					return true;
 				}else{
 					$this->resultIsSuccess = false;
@@ -561,7 +561,7 @@ class b_webservice{
 					$msg = str_replace("[TRANSREQUESTID]",$reqObjToRevert->DisplayID,$this->langAPI[$this->smsCode]);
 					$this->resultSmsMessage=$msg;
 					$this->bReqObj->Status = 4;
-					$this->bSMSObj->revertPaymentTransfer(0,$this->smsCode,$reqObjToRevert->TotalAmount,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser);
+					$this->bSMSObj->revertPaymentTransfer(0,$this->smsCode,$reqObjToRevert->TotalAmount,$this->bReqObj,$reqObjToRevert,$this->resultSmsMessage,$transferedUser,0);
 					return false;
 				}
 				break;

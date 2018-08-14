@@ -155,7 +155,6 @@ function getUserDetailsForTranser(searchStr,userElem,balanceElem,callbackFn){
 	getUserDetails(searchStr,function(json){
 		//console.log("getUserDetailsForTranser="+JSON.stringify(json));
 		if(json.isSuccess){
-				debugger;
 			//ar resp=JSON.parse(json);
 			var label=$(userElem).parent().find("label");
 			if(json.ecwIsUserFound=="0")
@@ -321,6 +320,13 @@ function onAddTransferOpeningPoup(){
 	$("#idRemark").val(0);
 	$("#idPaidAmount").val(0);
 	$("#idTransSendSMS").attr('checked','checked');
+	//$("#idSelectFromUser").val('');
+	//$("#idBalanceFromUser").val('');
+	$("#idSelectToUser").val('');
+	$("#idBalanceToUser").val(0);
+	$("#idBalanceToUser").data('actualbalance','0');
+	$("#idSelectToUserSearch").val('');
+	$("#idType").val('1').trigger('change');
 	clearPopupErrors();
 	/* $("#idType").val('');
 	$("#idMode").val(''); */
@@ -342,10 +348,12 @@ function caluculateAmount_NIU(){
 function validateAddTransferForm(){
 	clearPopupErrors();
 	var isValidated = true;
-	//debugger;
 	var type=$("#idType").val();
-	var walletFromUser = parseFloat($("#idBalanceFromUser").val());
+	//var walletFromUser = parseFloat($("#idBalanceFromUser").val());
+	var walletFromUser = parseFloat($("#idBalanceFromUser").data("actualbalance"));
+	var walletToUser = parseFloat($("#idBalanceToUser").data("actualbalance"));
 	var balanceLevelFromUser = parseFloat($("#idBalanceFromUser").data("balancelevel"));
+	var balanceLevelToUser = parseFloat($("#idBalanceToUser").data("balancelevel"));
 	var amountToTransfer=parseFloat($("#idAmount").val());
 	var amountTransferedToday =isNaN(touserTodayPurchase)?0:touserTodayPurchase;
 	var commission=parseFloat($("#idCommissionPercent").val());
@@ -380,8 +388,11 @@ function validateAddTransferForm(){
 		commAmnt += commissionAmntPrevPurchase;
 		var totalAmount = amountToTransfer+commAmnt;
 		//alert(totalAmount);
-		if((walletFromUser-balanceLevelFromUser)<totalAmount && $("#idSelectFromUser").val()>0){
+		if(type==1 && (walletFromUser-balanceLevelFromUser)<totalAmount && $("#idSelectFromUser").val()>0){
 			showError($("#idSpnSuccessErr"),"Amount must be less than from user balance");
+			isValidated = false;
+		}if(type!=1 && (walletToUser-balanceLevelToUser)<totalAmount && $("#idSelectToUser").val()>0){
+			showError($("#idSpnSuccessErr"),"Amount must be less than to user balance");
 			isValidated = false;
 		}else{
 			$("#idSpnSuccessErr").hide();
@@ -422,7 +433,6 @@ function validateAddTransferForm(){
 function addTransfer(callbackFn){
 	if(validateAddTransferForm()){
 		paymentAjax($('form#idFrmAddTransfer').serialize(),function(res){
-		debugger;
 			callbackFn();
 			if(res.isSuccess){
 				onAddTransferOpeningPoup();

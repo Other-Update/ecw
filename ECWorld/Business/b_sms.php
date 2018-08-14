@@ -207,7 +207,7 @@ class b_sms{
 	}
 	
 	//Both users need SMS all the time
-	function revertPaymentTransfer($isSuccess,$smsCode,$amount,$currentReqObj,$reqObjToRevert,$reason,$orignalReceiver){
+	function revertPaymentTransfer($isSuccess,$smsCode,$amount,$currentReqObj,$reqObjToRevert,$reason,$orignalReceiver,$rejectTransferWithinMins){
 		//echo "<br/>=".$smsCode;
 		$msg_original_sender=$this->langSMS[$smsCode];
 		$msg_original_sender = $this->updateCommonMsg($msg_original_sender);
@@ -227,7 +227,8 @@ class b_sms{
 			$walletJson = json_decode(json_encode($wallet));
 			$msg_original_receiver = $this->replace("[ORIGINALRECEIVERBALANCE]",$walletJson->Wallet,$msg_original_receiver);
 			$this->sendSMS($orignalReceiver->Mobile,'',$msg_original_receiver,"0",$currentReqObj->RequestID,"t_request","Unknown");
-		}
+		}else 
+			$msg_original_sender = $this->replace("[REJECTWITHINDURATION]",$rejectTransferWithinMins,$msg_original_sender);
 		$this->sendSMS($this->me->Mobile,'',$msg_original_sender,"0",$currentReqObj->RequestID,"t_request","Unknown");
 	}
 	

@@ -186,7 +186,8 @@ function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){
 	$res = "";//Declare
 	$userObj=new b_users($loggedInUserDetails->user,$mysqlObj,$lang);
 	$toUser = $userObj->getByID($pObj->ToUserID);
-	//echo json_encode($toUser);
+	//$fromUser = $userObj->getByID($pObj->FromUserID);
+	//echo json_encode($fromUser);
 	if(strpos($toUser->Ancestors,$pObj->FromUserID)===false && $pObj->ToUserID!=1 && $pObj->FromUserID!=1)//Wrong child
 	{
 		$resultObj = new httpresult();	
@@ -204,6 +205,16 @@ function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){
 		echo $pObj->CommissionAmountPrevPur;
 		echo ",";
 		echo $pObj->TotalAmount; */
+		//echo "pObj=".json_encode($pObj).".....";
+		//echo ",".json_encode($bReqObj);die;
+		//if($pObj->Type==2){
+			//$pObj->Amount=((float)$pObj->Amount)*-1;
+			//$TempID= $pObj->FromUserID;
+			//$pObj->FromUserID = $pObj->ToUserID;
+			//$pObj->FromUserID = $TempID;
+			
+		//}
+		//echo "pObj=".json_encode($pObj).".....";
 		$res = $pObj->addTransfer($pObj,$bReqObj);
 		//Updating Request
 		$bReqObj->UserID = $loggedInUserDetails->user->UserID;
@@ -219,14 +230,31 @@ function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){
 			$bReqObj->Status="3";
 			$bReqObj->Remark="Successfully Transfered";
 			if($pObj->Type=="1")
-			$bSMSObj->paymentTransfer(true,"Payment_s",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
+				$bSMSObj->paymentTransfer(true,"Payment_s",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
 			else
-			$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$pObj->Amount,$bReqObj,"","",$toUser);
+				$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_s",$pObj->Amount,$bReqObj,"","",$toUser,0);
 			//echo "<br/>Message code=".$pObj->Amount;
 		}else{
 			$bReqObj->Status="4";
 			$bReqObj->Remark="Failed to transfer";
-			if($pObj->Type=="1"){
+			
+			if($res->otherInfo!=""){
+				$otherInfoArr = explode(" ", $res->otherInfo);
+				$otherInfoParam1=$otherInfoArr[0];//SMS Code
+				$otherInfoParam2=$otherInfoArr[1];//Reject within minutes
+				$res->message=str_replace("[REJECTWITHINDURATION]",$otherInfoParam2,$lang['duplicatepayment']);
+				if($pObj->Type=="1")
+					$bSMSObj->paymentTransfer(false,$otherInfoParam1,$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,$otherInfoParam2);
+				else 
+					$bSMSObj->revertPaymentTransfer(false,$otherInfoParam1,$pObj->Amount,$bReqObj,"","",$toUser,$otherInfoParam2);
+			}else{
+				if($pObj->Type=="1")
+					$bSMSObj->paymentTransfer(true,"Payment_f",$pObj->ToUserID,$toUser,$pObj->Amount,0,0,$bReqObj,0);
+				else
+					$bSMSObj->revertPaymentTransfer(true,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser,0);
+			}
+				
+			/* if($pObj->Type=="1"){
 				if($res->otherInfo!=""){
 					$otherInfoArr = explode(" ", $res->otherInfo);
 					$otherInfoParam1=$otherInfoArr[0];//SMS Code
@@ -238,7 +266,7 @@ function addTransfer($mysqlObj,$lang,$langSMS,$langCommon){
 				}
 			}
 			else
-			$bSMSObj->revertPaymentTransfer(false,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser);
+			$bSMSObj->revertPaymentTransfer(false,"Payment_Rev_f",$pObj->Amount,$bReqObj,"","",$toUser); */
 			//echo "<br/>Message code=".$pObj->Amount;
 		}
 		//echo "<br/>Amount=".$pObj->Amount;
