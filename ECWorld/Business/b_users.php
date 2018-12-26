@@ -47,6 +47,28 @@ class b_users{
 		$this->dmObj=new b_distmargin($this->me,$this->mysqlObj,$this->lang);
 		$this->rcgObj=new b_rcusergateway($this->me,$this->mysqlObj,$this->lang);
 	}
+	//update password -- reghu
+	function changePass($userId, $password, $oldpassword) {
+		$userArr = $this->dUserObj->isPasswordMatch($userId,$oldpassword);
+		$resultObj = new httpresult();
+		if($userArr == 1){
+			$res = $this->dUserObj->changePass($userId,$password);
+			if($res){
+				$resultObj->isSuccess = true;
+				$resultObj->message = "Password updated successfully.";
+			} else {
+				$resultObj->isSuccess=false;
+				$resultObj->message = "Something went wrong. Try again...";
+			}
+		}
+		else{
+			$resultObj->isSuccess = false;
+			$resultObj->message = "Old password does not match";
+		}
+		return json_encode($resultObj);
+	}
+	//update password end -- reghu
+
 	function login($username,$password){
 		$userArr = $this->dUserObj->login($username,$password);
 		//echo "Active=".json_encode($userArr[0]).",";

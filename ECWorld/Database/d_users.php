@@ -10,6 +10,26 @@ class d_users{
 		$this->db = $mysqlObj;
 		$this->dtObj = new EcwDataTable($mysqlObj);
 	}
+
+	//Update password -- reghu
+	function isPasswordMatch($userId, $oldpassword){
+		$pass = md5($oldpassword);
+		$q="SELECT count(UserID)AS UserCount FROM m_users WHERE  Password = '$pass' AND UserID = '$userId' AND Active=1 ";
+		$arr=$this->db->selectArray($q,'e_users');
+		return $arr[0]->UserCount;
+		//print_r($arr[0]);
+		//return $arr['UserCount'] == 1 ? 1 : 0;
+	}
+
+	function changePass($userId, $password){
+		$pass = md5($password);
+		$qp="UPDATE m_users SET Password='$pass' WHERE UserID=$userId AND Active=1 ";
+		$res=$this->db->execute($qp);
+		return $res;
+	}
+	//Update password end -- reghu
+
+
 	function login($username,$password){
 		$password=md5($password);//.'_'.$password;
 		//$q="SELECT UserID,Mobile,Name,RoleID,ClientLimit,Active,DistributorFee,MandalFee,RetailerFee FROM m_users WHERE (Mobile='$username' OR DisplayID='$username') and Password='$password'";
@@ -25,7 +45,8 @@ class d_users{
 		$json=$this->db->selectArray($q,'e_users');
 		//echo $json;
 		return $json;
-	}
+	}
+
 	function updateWallet($thisUser,$userID,$amount,$reqID,$logMsg){		
 		//$obj->ModifiedBy = $thisUser->UserID;
 		/* echo $thisUser->UserID.',';
